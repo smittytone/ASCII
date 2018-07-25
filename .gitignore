@@ -1,0 +1,38 @@
+## My Files
+
+Entities/Assets.xcassets/*
+Entities/Images.xcassets/*
+
+## From GitHub
+## Build generated
+build/
+DerivedData/
+
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+## Other
+*.moved-aside
+*.xcuserstate
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+.DS_Store
+*.nut
+*.lock
+
+ASCII.xcodeproj/project.pbxproj
+ASCII.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+ASCII.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+Entities/Assets.xcassets/AppIcon.appiconset/Contents.json
