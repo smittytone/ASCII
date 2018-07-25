@@ -1,4 +1,4 @@
-# ASCII #
+# ASCII 1.1.3 #
 
 ASCII is a simple macOS tool that can be used to design and generate 8x8 glyphs for monochrome LED matrix displays.
 
