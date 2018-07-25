@@ -1,23 +1,5 @@
 ## My Files
 
-Experimental/*
-Art/*
-Art-Source/*
-#SquinterHelp/*
-Third-Party-Code/*
-SquinterTests/*
-Squinter/*.pem
-Squinter/Images.xcassets/*
-Squinter/*.icns
-*.txt
-*.pages
-
-#Podfile.lock
-#Podfile
-#Pods/*
-Squinter.xcodeproj/*
-Squinter.xcworkspace/*
-
 ## From GitHub
 ## Build generated
 build/
@@ -45,9 +27,8 @@ xcuserdata/
 *.dSYM
 .DS_Store
 *.nut
-
 *.lock
 
-Podfile.lock
-
-Pods/Manifest.lock
+ASCII.xcodeproj/project.pbxproj
+ASCII.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+ASCII.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
