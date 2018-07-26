@@ -12,11 +12,12 @@
 
 @synthesize shiftSet;
 
-- (void)flagsChanged:(NSEvent *)theEvent
 
-{
+- (void)flagsChanged:(NSEvent *)theEvent {
+
     NSUInteger value = [theEvent modifierFlags];
     shiftSet = value & NSEventModifierFlagShift ? YES : NO;
 }
+
 
 @end
