@@ -9,9 +9,19 @@
 #import <Cocoa/Cocoa.h>
 
 @interface Pixel : NSView
+{
+    BOOL mouseDown;
+    NSNotificationCenter *nc;
+    NSInteger targetColour;
+}
+
 
 - (void)update;
+- (void)passMouseDown:(NSNotification *)note;
+- (void)passMouseUp:(NSNotification *)note;
+
 
 @property (readwrite, assign) NSInteger colour;
+
 
 @end
