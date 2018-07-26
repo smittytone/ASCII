@@ -15,88 +15,91 @@
     NSInteger i;
     Pixel *aPixel;
     
-    // Insert code here to initialize your application
-    row0 = [[NSMutableArray alloc] init];
-    
+    // Set up the array that will hold all the pixel views
+    pixels = [[NSMutableArray alloc] init];
+
+    // Add the pixel views to the array
     // Naming scheme: pixel_{row}_{col}
-    [row0 addObject:pixel_0_0];
-    [row0 addObject:pixel_0_1];
-    [row0 addObject:pixel_0_2];
-    [row0 addObject:pixel_0_3];
-    [row0 addObject:pixel_0_4];
-    [row0 addObject:pixel_0_5];
-    [row0 addObject:pixel_0_6];
-    [row0 addObject:pixel_0_7];
+    [pixels addObject:pixel_0_0];
+    [pixels addObject:pixel_0_1];
+    [pixels addObject:pixel_0_2];
+    [pixels addObject:pixel_0_3];
+    [pixels addObject:pixel_0_4];
+    [pixels addObject:pixel_0_5];
+    [pixels addObject:pixel_0_6];
+    [pixels addObject:pixel_0_7];
     
-    [row0 addObject:pixel_1_0];
-    [row0 addObject:pixel_1_1];
-    [row0 addObject:pixel_1_2];
-    [row0 addObject:pixel_1_3];
-    [row0 addObject:pixel_1_4];
-    [row0 addObject:pixel_1_5];
-    [row0 addObject:pixel_1_6];
-    [row0 addObject:pixel_1_7];
+    [pixels addObject:pixel_1_0];
+    [pixels addObject:pixel_1_1];
+    [pixels addObject:pixel_1_2];
+    [pixels addObject:pixel_1_3];
+    [pixels addObject:pixel_1_4];
+    [pixels addObject:pixel_1_5];
+    [pixels addObject:pixel_1_6];
+    [pixels addObject:pixel_1_7];
     
-    [row0 addObject:pixel_2_0];
-    [row0 addObject:pixel_2_1];
-    [row0 addObject:pixel_2_2];
-    [row0 addObject:pixel_2_3];
-    [row0 addObject:pixel_2_4];
-    [row0 addObject:pixel_2_5];
-    [row0 addObject:pixel_2_6];
-    [row0 addObject:pixel_2_7];
+    [pixels addObject:pixel_2_0];
+    [pixels addObject:pixel_2_1];
+    [pixels addObject:pixel_2_2];
+    [pixels addObject:pixel_2_3];
+    [pixels addObject:pixel_2_4];
+    [pixels addObject:pixel_2_5];
+    [pixels addObject:pixel_2_6];
+    [pixels addObject:pixel_2_7];
     
-    [row0 addObject:pixel_3_0];
-    [row0 addObject:pixel_3_1];
-    [row0 addObject:pixel_3_2];
-    [row0 addObject:pixel_3_3];
-    [row0 addObject:pixel_3_4];
-    [row0 addObject:pixel_3_5];
-    [row0 addObject:pixel_3_6];
-    [row0 addObject:pixel_3_7];
+    [pixels addObject:pixel_3_0];
+    [pixels addObject:pixel_3_1];
+    [pixels addObject:pixel_3_2];
+    [pixels addObject:pixel_3_3];
+    [pixels addObject:pixel_3_4];
+    [pixels addObject:pixel_3_5];
+    [pixels addObject:pixel_3_6];
+    [pixels addObject:pixel_3_7];
     
-    [row0 addObject:pixel_4_0];
-    [row0 addObject:pixel_4_1];
-    [row0 addObject:pixel_4_2];
-    [row0 addObject:pixel_4_3];
-    [row0 addObject:pixel_4_4];
-    [row0 addObject:pixel_4_5];
-    [row0 addObject:pixel_4_6];
-    [row0 addObject:pixel_4_7];
+    [pixels addObject:pixel_4_0];
+    [pixels addObject:pixel_4_1];
+    [pixels addObject:pixel_4_2];
+    [pixels addObject:pixel_4_3];
+    [pixels addObject:pixel_4_4];
+    [pixels addObject:pixel_4_5];
+    [pixels addObject:pixel_4_6];
+    [pixels addObject:pixel_4_7];
     
-    [row0 addObject:pixel_5_0];
-    [row0 addObject:pixel_5_1];
-    [row0 addObject:pixel_5_2];
-    [row0 addObject:pixel_5_3];
-    [row0 addObject:pixel_5_4];
-    [row0 addObject:pixel_5_5];
-    [row0 addObject:pixel_5_6];
-    [row0 addObject:pixel_5_7];
+    [pixels addObject:pixel_5_0];
+    [pixels addObject:pixel_5_1];
+    [pixels addObject:pixel_5_2];
+    [pixels addObject:pixel_5_3];
+    [pixels addObject:pixel_5_4];
+    [pixels addObject:pixel_5_5];
+    [pixels addObject:pixel_5_6];
+    [pixels addObject:pixel_5_7];
     
-    [row0 addObject:pixel_6_0];
-    [row0 addObject:pixel_6_1];
-    [row0 addObject:pixel_6_2];
-    [row0 addObject:pixel_6_3];
-    [row0 addObject:pixel_6_4];
-    [row0 addObject:pixel_6_5];
-    [row0 addObject:pixel_6_6];
-    [row0 addObject:pixel_6_7];
+    [pixels addObject:pixel_6_0];
+    [pixels addObject:pixel_6_1];
+    [pixels addObject:pixel_6_2];
+    [pixels addObject:pixel_6_3];
+    [pixels addObject:pixel_6_4];
+    [pixels addObject:pixel_6_5];
+    [pixels addObject:pixel_6_6];
+    [pixels addObject:pixel_6_7];
     
-    [row0 addObject:pixel_7_0];
-    [row0 addObject:pixel_7_1];
-    [row0 addObject:pixel_7_2];
-    [row0 addObject:pixel_7_3];
-    [row0 addObject:pixel_7_4];
-    [row0 addObject:pixel_7_5];
-    [row0 addObject:pixel_7_6];
-    [row0 addObject:pixel_7_7];
+    [pixels addObject:pixel_7_0];
+    [pixels addObject:pixel_7_1];
+    [pixels addObject:pixel_7_2];
+    [pixels addObject:pixel_7_3];
+    [pixels addObject:pixel_7_4];
+    [pixels addObject:pixel_7_5];
+    [pixels addObject:pixel_7_6];
+    [pixels addObject:pixel_7_7];
     
+    // Trigger a pixel redraw
+    // NOTE May be unnecessary
     for (i = 0 ; i < 64 ; i++) {
-        aPixel = [row0 objectAtIndex:i];
-        //aPixel.colour = i % 2 == 0 ? 2 : 0;
+        aPixel = [pixels objectAtIndex:i];
         [aPixel update];
     }
 
+    // Set the row fill buttons' tooltips
     rowSwitch0.toolTip = @"Click to set row; Shift-Click to clear row";
     rowSwitch1.toolTip = rowSwitch0.toolTip;
     rowSwitch2.toolTip = rowSwitch0.toolTip;
@@ -106,6 +109,7 @@
     rowSwitch6.toolTip = rowSwitch0.toolTip;
     rowSwitch7.toolTip = rowSwitch0.toolTip;
 
+    // Set the column fill buttons' tooltips
     colSwitch0.toolTip = @"Click to set column; Shift-Click to clear column";
     colSwitch1.toolTip = colSwitch0.toolTip;
     colSwitch2.toolTip = colSwitch0.toolTip;
@@ -120,11 +124,12 @@
 
 - (IBAction)fillSet:(id)sender {
 
+    // Run through all the pixels and set them to black
     NSInteger i;
     Pixel *aPixel;
     
     for (i = 0 ; i < 64 ; i++) {
-        aPixel = [row0 objectAtIndex:i];
+        aPixel = [pixels objectAtIndex:i];
         aPixel.colour = 1;
         [aPixel update];
     }
@@ -134,11 +139,12 @@
 
 - (IBAction)clearSet:(id)sender {
 
+    // Run through all the pixels and set them to white
     NSInteger i;
     Pixel *aPixel;
     
     for (i = 0 ; i < 64 ; i++) {
-        aPixel = [row0 objectAtIndex:i];
+        aPixel = [pixels objectAtIndex:i];
         aPixel.colour = 0;
         [aPixel update];
     }
@@ -157,7 +163,7 @@
         
         for (col = 0 ; col < 8 ; col++) {
             pixl = (row * 8) + col;
-            aPixel = [row0 objectAtIndex:pixl];
+            aPixel = [pixels objectAtIndex:pixl];
             if (aPixel.colour == 1) a = a + (int)(pow(2, (8 - (col + 1))));
         }
         
@@ -176,6 +182,8 @@
 
 - (IBAction)clearRow:(id)sender {
 
+    // Run through all the pixels in the selected row
+    // and colour them white or black
     NSInteger i;
     NSInteger row = 0;
     Pixel *aPixel;
@@ -192,7 +200,7 @@
     row = row * 8;
     
     for (i = row ; i < row + 8 ; i++) {
-        aPixel = [row0 objectAtIndex:i];
+        aPixel = [pixels objectAtIndex:i];
         aPixel.colour = _window.shiftSet ? 0 : 1;
         [aPixel update];
     }
@@ -202,6 +210,8 @@
 
 - (IBAction)clearCol:(id)sender {
 
+    // Run through all the pixels in the selected column
+    // and colour them white or black
     NSInteger i;
     NSInteger row = 0;
     Pixel *aPixel;
@@ -216,9 +226,28 @@
     if (sender == colSwitch7) row = 7;
     
     for (i = row ; i < 64 ; i += 8) {
-        aPixel = [row0 objectAtIndex:i];
+        aPixel = [pixels objectAtIndex:i];
         aPixel.colour = _window.shiftSet ? 0 : 1;
         [aPixel update];
+    }
+}
+
+
+
+- (IBAction)inverse:(id)sender {
+
+    // Run through all the pixels and set the white ones black
+    // and the black ones white
+    Pixel *aPixel;
+    NSInteger row, col, index;
+
+    for (row = 0 ; row < 8 ; row++) {
+        for (col = 0 ; col < 8 ; col++) {
+            index = (row * 8) + col;
+            aPixel = [pixels objectAtIndex:index];
+            aPixel.colour = aPixel.colour == 1 ? 0 : 1;
+            [aPixel update];
+        }
     }
 }
 
@@ -254,7 +283,7 @@
             [scanner scanHexInt:&value];
             
             for (j = 0 ; j < 8 ; j++) {
-                aPixel = [row0 objectAtIndex:((line * 8) + j)];
+                aPixel = [pixels objectAtIndex:((line * 8) + j)];
                 a = value & (int)(pow(2, (7 - j)));
                 if (a > 0) aPixel.colour = 1;
                 value = value - a;
@@ -269,33 +298,18 @@
 
 
 
-- (IBAction)inverse:(id)sender {
-
-    Pixel *aPixel;
-    NSInteger row, col, pixl;
-    
-    for (row = 0 ; row < 8 ; row++) {
-        for (col = 0 ; col < 8 ; col++) {
-            pixl = (row * 8) + col;
-            aPixel = [row0 objectAtIndex:pixl];
-            aPixel.colour = aPixel.colour == 1 ? 0 : 1;
-            [aPixel update];
-        }
-    }
-}
-
-
 - (IBAction)rotate:(id)sender {
 
+    // Rotate all the pixels 90 degrees clockwise
     Pixel *aPixel;
-    NSInteger row, col, pixl;
+    NSInteger row, col, index;
     NSInteger ma[8][8];
 
     // Get the matrix values
     for (row = 0 ; row < 8 ; row++) {
         for (col = 0 ; col < 8 ; col++) {
-            pixl = (row * 8) + col;
-            aPixel = [row0 objectAtIndex:pixl];
+            index = (row * 8) + col;
+            aPixel = [pixels objectAtIndex:index];
             ma[row][col] = aPixel.colour;
         }
     }
@@ -314,10 +328,9 @@
     // Write back the rotated matrix
     for (row = 0 ; row < 8 ; row++) {
         for (col = 0 ; col < 8 ; col++) {
-            pixl = (row * 8) + col;
-            if (pixl < 64) {
-                aPixel = [row0 objectAtIndex:pixl];
-
+            index = (row * 8) + col;
+            if (index < 64) {
+                aPixel = [pixels objectAtIndex:index];
                 NSInteger temp = ma[row][col];
                 aPixel.colour = temp;
                 [aPixel update];

@@ -105,7 +105,7 @@
     
     IBOutlet NSTextField *hexField;
     
-    NSMutableArray *row0;
+    NSMutableArray *pixels;
     
     BOOL shiftSet;
 }

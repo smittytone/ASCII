@@ -15,8 +15,10 @@
 
 - (void)flagsChanged:(NSEvent *)theEvent {
 
-    NSUInteger value = [theEvent modifierFlags];
-    shiftSet = value & NSEventModifierFlagShift ? YES : NO;
+    // Remember if the Shift key is currently held down
+    // 'shiftSet' is true (Shift key held) or false (Shift key released)
+    NSUInteger eventFlags = [theEvent modifierFlags];
+    shiftSet = eventFlags & NSEventModifierFlagShift ? YES : NO;
 }
 
 
