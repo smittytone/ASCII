@@ -14,7 +14,7 @@
 
     NSInteger i;
     Pixel *aPixel;
-    
+
     // Set up the array that will hold all the pixel views
     pixels = [[NSMutableArray alloc] init];
 
@@ -28,7 +28,7 @@
     [pixels addObject:pixel_0_5];
     [pixels addObject:pixel_0_6];
     [pixels addObject:pixel_0_7];
-    
+
     [pixels addObject:pixel_1_0];
     [pixels addObject:pixel_1_1];
     [pixels addObject:pixel_1_2];
@@ -37,7 +37,7 @@
     [pixels addObject:pixel_1_5];
     [pixels addObject:pixel_1_6];
     [pixels addObject:pixel_1_7];
-    
+
     [pixels addObject:pixel_2_0];
     [pixels addObject:pixel_2_1];
     [pixels addObject:pixel_2_2];
@@ -46,7 +46,7 @@
     [pixels addObject:pixel_2_5];
     [pixels addObject:pixel_2_6];
     [pixels addObject:pixel_2_7];
-    
+
     [pixels addObject:pixel_3_0];
     [pixels addObject:pixel_3_1];
     [pixels addObject:pixel_3_2];
@@ -55,7 +55,7 @@
     [pixels addObject:pixel_3_5];
     [pixels addObject:pixel_3_6];
     [pixels addObject:pixel_3_7];
-    
+
     [pixels addObject:pixel_4_0];
     [pixels addObject:pixel_4_1];
     [pixels addObject:pixel_4_2];
@@ -64,7 +64,7 @@
     [pixels addObject:pixel_4_5];
     [pixels addObject:pixel_4_6];
     [pixels addObject:pixel_4_7];
-    
+
     [pixels addObject:pixel_5_0];
     [pixels addObject:pixel_5_1];
     [pixels addObject:pixel_5_2];
@@ -73,7 +73,7 @@
     [pixels addObject:pixel_5_5];
     [pixels addObject:pixel_5_6];
     [pixels addObject:pixel_5_7];
-    
+
     [pixels addObject:pixel_6_0];
     [pixels addObject:pixel_6_1];
     [pixels addObject:pixel_6_2];
@@ -82,7 +82,7 @@
     [pixels addObject:pixel_6_5];
     [pixels addObject:pixel_6_6];
     [pixels addObject:pixel_6_7];
-    
+
     [pixels addObject:pixel_7_0];
     [pixels addObject:pixel_7_1];
     [pixels addObject:pixel_7_2];
@@ -91,7 +91,7 @@
     [pixels addObject:pixel_7_5];
     [pixels addObject:pixel_7_6];
     [pixels addObject:pixel_7_7];
-    
+
     // Trigger a pixel redraw
     // NOTE May be unnecessary
     for (i = 0 ; i < 64 ; i++) {
@@ -127,7 +127,7 @@
     // Run through all the pixels and set them to black
     NSInteger i;
     Pixel *aPixel;
-    
+
     for (i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
         aPixel.colour = 1;
@@ -142,7 +142,7 @@
     // Run through all the pixels and set them to white
     NSInteger i;
     Pixel *aPixel;
-    
+
     for (i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
         aPixel.colour = 0;
@@ -157,16 +157,16 @@
     NSString *theHex;
     Pixel *aPixel;
     NSInteger row, col, pixl, a;
-    
+
     for (row = 0 ; row < 8 ; row++) {
         a = 0;
-        
+
         for (col = 0 ; col < 8 ; col++) {
             pixl = (row * 8) + col;
             aPixel = [pixels objectAtIndex:pixl];
             if (aPixel.colour == 1) a = a + (int)(pow(2, (8 - (col + 1))));
         }
-        
+
         if (row == 0) {
             theHex = [NSString stringWithFormat:@"[0x%lX,", (unsigned long)a];
         } else if (row == 7) {
@@ -175,7 +175,7 @@
             theHex = [theHex stringByAppendingString:[NSString stringWithFormat:@"0x%lX,", (unsigned long)a]];
         }
     }
-    
+
     [hexField setStringValue:theHex];
 }
 
@@ -187,7 +187,7 @@
     NSInteger i;
     NSInteger row = 0;
     Pixel *aPixel;
-    
+
     if (sender == rowSwitch0) row = 0;
     if (sender == rowSwitch1) row = 1;
     if (sender == rowSwitch2) row = 2;
@@ -196,9 +196,9 @@
     if (sender == rowSwitch5) row = 5;
     if (sender == rowSwitch6) row = 6;
     if (sender == rowSwitch7) row = 7;
-    
+
     row = row * 8;
-    
+
     for (i = row ; i < row + 8 ; i++) {
         aPixel = [pixels objectAtIndex:i];
         aPixel.colour = _window.shiftSet ? 0 : 1;
@@ -215,7 +215,7 @@
     NSInteger i;
     NSInteger row = 0;
     Pixel *aPixel;
-    
+
     if (sender == colSwitch0) row = 0;
     if (sender == colSwitch1) row = 1;
     if (sender == colSwitch2) row = 2;
@@ -224,7 +224,7 @@
     if (sender == colSwitch5) row = 5;
     if (sender == colSwitch6) row = 6;
     if (sender == colSwitch7) row = 7;
-    
+
     for (i = row ; i < 64 ; i += 8) {
         aPixel = [pixels objectAtIndex:i];
         aPixel.colour = _window.shiftSet ? 0 : 1;
@@ -262,17 +262,17 @@
     NSRange range;
     NSScanner *scanner;
     Pixel *aPixel;
-    
+
     line = 0;
     cursor = 0;
-    
+
     [self clearSet:nil];
-    
+
     string = [hexField stringValue];
     string = [string stringByReplacingOccurrencesOfString:@"[" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"]" withString:@""];
     string = [string stringByAppendingString:@","];
-    
+
     for (i = 0 ; i < string.length ; i++) {
         aChar = [string characterAtIndex:(NSUInteger)i];
 
@@ -281,7 +281,7 @@
             subString = [string substringWithRange:range];
             scanner = [NSScanner scannerWithString:subString];
             [scanner scanHexInt:&value];
-            
+
             for (j = 0 ; j < 8 ; j++) {
                 aPixel = [pixels objectAtIndex:((line * 8) + j)];
                 a = value & (int)(pow(2, (7 - j)));
@@ -289,7 +289,7 @@
                 value = value - a;
                 [aPixel update];
             }
-            
+
             line++;
             cursor = i + 1;
         }

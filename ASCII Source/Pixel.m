@@ -28,7 +28,7 @@
                                                                    owner:self
                                                                 userInfo:nil];
 
-        // ...and add it to the 
+        // ...and add it to the
         [self addTrackingArea:trackArea];
 
         // Set the pixel to watch for event-related messages from other pixels
