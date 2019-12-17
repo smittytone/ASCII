@@ -6,9 +6,9 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ## Release Notes ##
 
-1.1.4 *Unreleased*
+- 1.1.4 *Unreleased*
     - Click and hold to ‘paint’ pixels.
-1.1.3 *26 July 2018*
+- 1.1.3 *26 July 2018*
     - Initial release.
 
 ## Licence and Copyright ##
