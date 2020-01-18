@@ -13,6 +13,8 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 {
+    // Pixel views in the on-screen grid.
+    // Naming scheme: pixel_{row}_{col}
     IBOutlet Pixel *pixel_0_0;
     IBOutlet Pixel *pixel_0_1;
     IBOutlet Pixel *pixel_0_2;
@@ -104,10 +106,11 @@
     IBOutlet NSButton *colSwitch7;
 
     IBOutlet NSTextField *hexField;
+    IBOutlet NSButton *stringButton;
 
     NSMutableArray *pixels;
 
-    BOOL shiftSet;
+    BOOL shiftSet, outputToString;
 }
 
 - (IBAction)calcHex:(id)sender;
@@ -118,6 +121,9 @@
 - (IBAction)retroFill:(id)sender;
 - (IBAction)inverse:(id)sender;
 - (IBAction)rotate:(id)sender;
+- (IBAction)setOutputType:(id)sender;
+- (IBAction)flipHorizontal:(id)sender;
+- (IBAction)flipVertical:(id)sender;
 
 @property (assign) IBOutlet AsciiWindow *window;
 

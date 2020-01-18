@@ -118,6 +118,8 @@
     colSwitch5.toolTip = colSwitch0.toolTip;
     colSwitch6.toolTip = colSwitch0.toolTip;
     colSwitch7.toolTip = rowSwitch0.toolTip;
+
+    outputToString = true;
 }
 
 
@@ -154,30 +156,32 @@
 
 - (IBAction)calcHex:(id)sender {
 
-    NSString *theHex;
+    NSString *theHex = @"";
     Pixel *aPixel;
     NSInteger row, col, pixl, a;
 
-    for (row = 0 ; row < 8 ; row++) {
+    NSString *formatString = @"0x%02X";
+    if (outputToString) formatString = @"\\x%02X";
+
+    for (col = 0 ; col < 8 ; col++) {
         a = 0;
 
-        for (col = 0 ; col < 8 ; col++) {
+        for (row = 0 ; row < 8 ; row++) {
             pixl = (row * 8) + col;
-            aPixel = [pixels objectAtIndex:pixl];
-            if (aPixel.colour == 1) a = a + (int)(pow(2, (8 - (col + 1))));
+            aPixel = [pixels objectAtIndex: pixl];
+            if (aPixel.colour == 1) a += (int)(pow(2, (8 - (row + 1))));
         }
 
-        if (row == 0) {
-            theHex = [NSString stringWithFormat:@"[0x%lX,", (unsigned long)a];
-        } else if (row == 7) {
-            theHex = [theHex stringByAppendingString:[NSString stringWithFormat:@"0x%lX]", (unsigned long)a]];
-        } else {
-            theHex = [theHex stringByAppendingString:[NSString stringWithFormat:@"0x%lX,", (unsigned long)a]];
-        }
+        theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)a]];
+
+        if (!outputToString && col < 7) theHex = [theHex stringByAppendingString:@","];
     }
+
+    if (!outputToString) theHex = [NSString stringWithFormat:@"[%@]", theHex];
 
     [hexField setStringValue:theHex];
 }
+
 
 
 - (IBAction)clearRow:(id)sender {
@@ -197,7 +201,7 @@
     if (sender == rowSwitch6) row = 6;
     if (sender == rowSwitch7) row = 7;
 
-    row = row * 8;
+    row *= 8;
 
     for (i = row ; i < row + 8 ; i++) {
         aPixel = [pixels objectAtIndex:i];
@@ -213,19 +217,19 @@
     // Run through all the pixels in the selected column
     // and colour them white or black
     NSInteger i;
-    NSInteger row = 0;
+    NSInteger col = 0;
     Pixel *aPixel;
 
-    if (sender == colSwitch0) row = 0;
-    if (sender == colSwitch1) row = 1;
-    if (sender == colSwitch2) row = 2;
-    if (sender == colSwitch3) row = 3;
-    if (sender == colSwitch4) row = 4;
-    if (sender == colSwitch5) row = 5;
-    if (sender == colSwitch6) row = 6;
-    if (sender == colSwitch7) row = 7;
+    if (sender == colSwitch0) col = 0;
+    if (sender == colSwitch1) col = 1;
+    if (sender == colSwitch2) col = 2;
+    if (sender == colSwitch3) col = 3;
+    if (sender == colSwitch4) col = 4;
+    if (sender == colSwitch5) col = 5;
+    if (sender == colSwitch6) col = 6;
+    if (sender == colSwitch7) col = 7;
 
-    for (i = row ; i < 64 ; i += 8) {
+    for (i = col ; i < 64 ; i += 8) {
         aPixel = [pixels objectAtIndex:i];
         aPixel.colour = _window.shiftSet ? 0 : 1;
         [aPixel update];
@@ -257,8 +261,7 @@
 
     NSInteger i, j, line, cursor;
     unsigned int value, a;
-    NSString *string, *subString;
-    unichar aChar;
+    NSString *string, *substring;
     NSRange range;
     NSScanner *scanner;
     Pixel *aPixel;
@@ -269,30 +272,36 @@
     [self clearSet:nil];
 
     string = [hexField stringValue];
-    string = [string stringByReplacingOccurrencesOfString:@"[" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"]" withString:@""];
-    string = [string stringByAppendingString:@","];
 
-    for (i = 0 ; i < string.length ; i++) {
-        aChar = [string characterAtIndex:(NSUInteger)i];
+    if (!outputToString)
+    {
+        string = [string stringByReplacingOccurrencesOfString:@"[" withString:@""];
+        string = [string stringByReplacingOccurrencesOfString:@"]" withString:@""];
+        string = [string stringByReplacingOccurrencesOfString:@"0x" withString:@""];
+    }
+    else
+    {
+        string = [string stringByReplacingOccurrencesOfString:@"\\x" withString:@""];
+    }
 
-        if (aChar == 44) {
-            range = NSMakeRange(cursor, 4);
-            subString = [string substringWithRange:range];
-            scanner = [NSScanner scannerWithString:subString];
-            [scanner scanHexInt:&value];
+    string = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
 
-            for (j = 0 ; j < 8 ; j++) {
-                aPixel = [pixels objectAtIndex:((line * 8) + j)];
-                a = value & (int)(pow(2, (7 - j)));
-                if (a > 0) aPixel.colour = 1;
-                value = value - a;
-                [aPixel update];
-            }
+    for (i = 0 ; i < string.length - 1 ; i += 2) {
 
-            line++;
-            cursor = i + 1;
+        range = NSMakeRange(i, 2);
+        substring = [string substringWithRange:range];
+        scanner = [NSScanner scannerWithString:substring];
+        [scanner scanHexInt:&value];
+
+        for (j = 0 ; j < 8 ; j++) {
+            aPixel = [pixels objectAtIndex:((j * 8) + line)];
+            a = value & (int)(pow(2, (7 - j)));
+            if (a > 0) aPixel.colour = 1;
+            value -= a;
+            [aPixel update];
         }
+
+        line++;
     }
 }
 
@@ -339,6 +348,60 @@
     }
 }
 
+
+
+- (IBAction)flipHorizontal:(id)sender
+{
+
+    Pixel *aPixel;
+    NSInteger store[64];
+
+    for (NSInteger row = 0 ; row < 8 ; row++) {
+        for (NSInteger col = 0 ; col < 8 ; col++) {
+            aPixel = [pixels objectAtIndex:((row * 8) + col)];
+            store[(row * 8) + (7 - col)] = aPixel.colour;
+        }
+    }
+
+    [self clearSet:nil];
+
+    for (NSInteger i = 0 ; i < 64 ; i++) {
+        aPixel = [pixels objectAtIndex:i];
+        aPixel.colour = store[i];
+        [aPixel update];
+    }
+}
+
+
+
+- (IBAction)flipVertical:(id)sender
+{
+
+    Pixel *aPixel;
+    NSInteger store[64];
+
+    for (NSInteger row = 0 ; row < 8 ; row++) {
+        for (NSInteger col = 0 ; col < 8 ; col++) {
+            aPixel = [pixels objectAtIndex:((row * 8) + col)];
+            store[((7 - row) * 8) + col] = aPixel.colour;
+        }
+    }
+
+    [self clearSet:nil];
+
+    for (NSInteger i = 0 ; i < 64 ; i++) {
+        aPixel = [pixels objectAtIndex:i];
+        aPixel.colour = store[i];
+        [aPixel update];
+    }
+}
+
+
+
+- (IBAction)setOutputType:(id)sender
+{
+    outputToString = (stringButton.state == NSControlStateValueOn);
+}
 
 
 @end
