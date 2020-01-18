@@ -1,14 +1,14 @@
-//
-//  AppDelegate.m
-//  ASCII
-//
+
 //  Created by Tony Smith on 01/02/2014.
-//  Copyright (c) 2014-18 Tony Smith. All rights reserved.
-//
+//  Copyright (c) 2014-20 Tony Smith. All rights reserved.
+
 
 #import "AppDelegate.h"
 
+
 @implementation AppDelegate
+
+
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
@@ -119,6 +119,8 @@
     colSwitch6.toolTip = colSwitch0.toolTip;
     colSwitch7.toolTip = rowSwitch0.toolTip;
 
+    // FROM 1.2.0
+    // Set the value readout type
     outputToString = true;
 }
 
@@ -127,14 +129,7 @@
 - (IBAction)fillSet:(id)sender {
 
     // Run through all the pixels and set them to black
-    NSInteger i;
-    Pixel *aPixel;
-
-    for (i = 0 ; i < 64 ; i++) {
-        aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = 1;
-        [aPixel update];
-    }
+    [self paintAllPixels:1];
 }
 
 
@@ -142,12 +137,19 @@
 - (IBAction)clearSet:(id)sender {
 
     // Run through all the pixels and set them to white
-    NSInteger i;
-    Pixel *aPixel;
+    [self paintAllPixels:0];
+}
 
-    for (i = 0 ; i < 64 ; i++) {
+
+
+- (void)paintAllPixels:(NSUInteger)color {
+
+    // Generic all-pixel filler
+    Pixel *aPixel = nil;
+    
+    for (NSUInteger i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = 0;
+        aPixel.colour = color;
         [aPixel update];
     }
 }
@@ -156,23 +158,21 @@
 
 - (IBAction)calcHex:(id)sender {
 
+    // Read the pixel grid and generate eight hex column values
+    Pixel *aPixel = nil;
     NSString *theHex = @"";
-    Pixel *aPixel;
-    NSInteger row, col, pixl, a;
+    NSString *formatString = outputToString ? @"\\x%02X" : @"0x%02X";
 
-    NSString *formatString = @"0x%02X";
-    if (outputToString) formatString = @"\\x%02X";
+    for (NSUInteger col = 0 ; col < 8 ; col++) {
+        NSUInteger byteValue = 0;
 
-    for (col = 0 ; col < 8 ; col++) {
-        a = 0;
-
-        for (row = 0 ; row < 8 ; row++) {
-            pixl = (row * 8) + col;
-            aPixel = [pixels objectAtIndex: pixl];
-            if (aPixel.colour == 1) a += (int)(pow(2, (8 - (row + 1))));
+        for (NSUInteger row = 0 ; row < 8 ; row++) {
+            NSUInteger index = (row * 8) + col;
+            aPixel = [pixels objectAtIndex: index];
+            if (aPixel.colour == 1) byteValue += (int)(pow(2, (8 - (row + 1))));
         }
 
-        theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)a]];
+        theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)byteValue]];
 
         if (!outputToString && col < 7) theHex = [theHex stringByAppendingString:@","];
     }
@@ -188,9 +188,8 @@
 
     // Run through all the pixels in the selected row
     // and colour them white or black
-    NSInteger i;
-    NSInteger row = 0;
-    Pixel *aPixel;
+    NSUInteger row = 0;
+    Pixel *aPixel = nil;
 
     if (sender == rowSwitch0) row = 0;
     if (sender == rowSwitch1) row = 1;
@@ -203,7 +202,7 @@
 
     row *= 8;
 
-    for (i = row ; i < row + 8 ; i++) {
+    for (NSUInteger i = row ; i < row + 8 ; i++) {
         aPixel = [pixels objectAtIndex:i];
         aPixel.colour = _window.shiftSet ? 0 : 1;
         [aPixel update];
@@ -216,9 +215,8 @@
 
     // Run through all the pixels in the selected column
     // and colour them white or black
-    NSInteger i;
-    NSInteger col = 0;
-    Pixel *aPixel;
+    NSUInteger col = 0;
+    Pixel *aPixel = nil;
 
     if (sender == colSwitch0) col = 0;
     if (sender == colSwitch1) col = 1;
@@ -229,7 +227,7 @@
     if (sender == colSwitch6) col = 6;
     if (sender == colSwitch7) col = 7;
 
-    for (i = col ; i < 64 ; i += 8) {
+    for (NSUInteger i = col ; i < 64 ; i += 8) {
         aPixel = [pixels objectAtIndex:i];
         aPixel.colour = _window.shiftSet ? 0 : 1;
         [aPixel update];
@@ -242,12 +240,11 @@
 
     // Run through all the pixels and set the white ones black
     // and the black ones white
-    Pixel *aPixel;
-    NSInteger row, col, index;
+    Pixel *aPixel = nil;
 
-    for (row = 0 ; row < 8 ; row++) {
-        for (col = 0 ; col < 8 ; col++) {
-            index = (row * 8) + col;
+    for (NSUInteger row = 0 ; row < 8 ; row++) {
+        for (NSUInteger col = 0 ; col < 8 ; col++) {
+            NSUInteger index = (row * 8) + col;
             aPixel = [pixels objectAtIndex:index];
             aPixel.colour = aPixel.colour == 1 ? 0 : 1;
             [aPixel update];
@@ -259,12 +256,12 @@
 
 - (IBAction)retroFill:(id)sender {
 
-    NSInteger i, j, line, cursor;
+    NSUInteger line, cursor;
     unsigned int value, a;
     NSString *string, *substring;
     NSRange range;
     NSScanner *scanner;
-    Pixel *aPixel;
+    Pixel *aPixel = nil;
 
     line = 0;
     cursor = 0;
@@ -286,14 +283,14 @@
 
     string = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
 
-    for (i = 0 ; i < string.length - 1 ; i += 2) {
+    for (NSUInteger i = 0 ; i < string.length - 1 ; i += 2) {
 
         range = NSMakeRange(i, 2);
         substring = [string substringWithRange:range];
         scanner = [NSScanner scannerWithString:substring];
         [scanner scanHexInt:&value];
 
-        for (j = 0 ; j < 8 ; j++) {
+        for (NSUInteger j = 0 ; j < 8 ; j++) {
             aPixel = [pixels objectAtIndex:((j * 8) + line)];
             a = value & (int)(pow(2, (7 - j)));
             if (a > 0) aPixel.colour = 1;
@@ -310,13 +307,13 @@
 - (IBAction)rotate:(id)sender {
 
     // Rotate all the pixels 90 degrees clockwise
-    Pixel *aPixel;
-    NSInteger row, col, index;
-    NSInteger ma[8][8];
+    Pixel *aPixel = nil;
+    NSUInteger index;
+    NSUInteger ma[8][8];
 
     // Get the matrix values
-    for (row = 0 ; row < 8 ; row++) {
-        for (col = 0 ; col < 8 ; col++) {
+    for (NSUInteger row = 0 ; row < 8 ; row++) {
+        for (NSUInteger col = 0 ; col < 8 ; col++) {
             index = (row * 8) + col;
             aPixel = [pixels objectAtIndex:index];
             ma[row][col] = aPixel.colour;
@@ -324,8 +321,8 @@
     }
 
     // Rotate the matrix 90 degress clockwise
-    for (row = 0 ; row <= 7 / 2 ; row++) {
-        for (col = row; col < 7 - row; col++) {
+    for (NSUInteger row = 0 ; row <= 7 / 2 ; row++) {
+        for (NSUInteger col = row; col < 7 - row; col++) {
             NSInteger temp = ma[row][col];
             ma[row][col] = ma[7 - col][row];
             ma[7 - col][row] = ma[7 - row][7 - col];
@@ -335,8 +332,8 @@
     }
 
     // Write back the rotated matrix
-    for (row = 0 ; row < 8 ; row++) {
-        for (col = 0 ; col < 8 ; col++) {
+    for (NSUInteger row = 0 ; row < 8 ; row++) {
+        for (NSUInteger col = 0 ; col < 8 ; col++) {
             index = (row * 8) + col;
             if (index < 64) {
                 aPixel = [pixels objectAtIndex:index];
@@ -353,9 +350,11 @@
 - (IBAction)flipHorizontal:(id)sender
 {
 
-    Pixel *aPixel;
+    Pixel *aPixel = nil;
     NSInteger store[64];
 
+    // Write the grid values to a temporary store, converting
+    // the co-ordinates as we go
     for (NSInteger row = 0 ; row < 8 ; row++) {
         for (NSInteger col = 0 ; col < 8 ; col++) {
             aPixel = [pixels objectAtIndex:((row * 8) + col)];
@@ -363,8 +362,7 @@
         }
     }
 
-    [self clearSet:nil];
-
+    // Write the data back to the grid
     for (NSInteger i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
         aPixel.colour = store[i];
@@ -377,9 +375,11 @@
 - (IBAction)flipVertical:(id)sender
 {
 
-    Pixel *aPixel;
+    Pixel *aPixel = nil;
     NSInteger store[64];
 
+    // Write the grid values to a temporary store, converting
+    // the co-ordinates as we go
     for (NSInteger row = 0 ; row < 8 ; row++) {
         for (NSInteger col = 0 ; col < 8 ; col++) {
             aPixel = [pixels objectAtIndex:((row * 8) + col)];
@@ -387,8 +387,7 @@
         }
     }
 
-    [self clearSet:nil];
-
+    // Write the data back to the grid
     for (NSInteger i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
         aPixel.colour = store[i];
@@ -400,6 +399,8 @@
 
 - (IBAction)setOutputType:(id)sender
 {
+    // Set the flag for output type (to hex string or array of hex values)
+    // according to the state of the radio controls
     outputToString = (stringButton.state == NSControlStateValueOn);
 }
 

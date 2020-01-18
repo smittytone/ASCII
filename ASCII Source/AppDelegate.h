@@ -3,15 +3,16 @@
 //  ASCII
 //
 //  Created by Tony Smith on 01/02/2014.
-//  Copyright (c) 2014-18 Tony Smith. All rights reserved.
+//  Copyright (c) 2014-20 Tony Smith. All rights reserved.
 //
+
 
 #import <Cocoa/Cocoa.h>
 #import "Pixel.h"
 #import "AsciiWindow.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
 
+@interface AppDelegate : NSObject <NSApplicationDelegate>
 {
     // Pixel views in the on-screen grid.
     // Naming scheme: pixel_{row}_{col}
@@ -87,6 +88,7 @@
     IBOutlet Pixel *pixel_7_6;
     IBOutlet Pixel *pixel_7_7;
 
+    // Switches to paint specific rows
     IBOutlet NSButton *rowSwitch0;
     IBOutlet NSButton *rowSwitch1;
     IBOutlet NSButton *rowSwitch2;
@@ -96,6 +98,7 @@
     IBOutlet NSButton *rowSwitch6;
     IBOutlet NSButton *rowSwitch7;
 
+    // Switches to paint specific rows
     IBOutlet NSButton *colSwitch0;
     IBOutlet NSButton *colSwitch1;
     IBOutlet NSButton *colSwitch2;
@@ -113,6 +116,8 @@
     BOOL shiftSet, outputToString;
 }
 
+
+- (void)paintAllPixels:(NSUInteger)color;
 - (IBAction)calcHex:(id)sender;
 - (IBAction)clearSet:(id)sender;
 - (IBAction)fillSet:(id)sender;
@@ -125,6 +130,8 @@
 - (IBAction)flipHorizontal:(id)sender;
 - (IBAction)flipVertical:(id)sender;
 
+
 @property (assign) IBOutlet AsciiWindow *window;
+
 
 @end

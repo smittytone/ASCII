@@ -1,7 +1,10 @@
 
+//  Created by Tony Smith on 01/02/2014.
+//  Copyright (c) 2014-20 Tony Smith. All rights reserved.
 
 
 #import "Pixel.h"
+
 
 @implementation Pixel
 
@@ -28,7 +31,7 @@
                                                                    owner:self
                                                                 userInfo:nil];
 
-        // ...and add it to the
+        // ...and add it to the view
         [self addTrackingArea:trackArea];
 
         // Set the pixel to watch for event-related messages from other pixels
