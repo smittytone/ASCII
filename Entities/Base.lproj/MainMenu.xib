@@ -159,10 +159,10 @@
         <window title="ASCII" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371" customClass="AsciiWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="502" height="458"/>
+            <rect key="contentRect" x="72" y="380" width="502" height="458"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
-            <value key="minSize" type="size" width="456" height="396"/>
-            <value key="maxSize" type="size" width="456" height="396"/>
+            <value key="minSize" type="size" width="502" height="458"/>
+            <value key="maxSize" type="size" width="502" height="458"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="502" height="458"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -423,17 +423,6 @@
                         <rect key="frame" x="267" y="159" width="32" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </customView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LUw-BQ-lSD">
-                        <rect key="frame" x="346" y="84" width="142" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Grid to Values" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rBl-TR-BhH">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="calcHex:" target="494" id="3if-s6-aIc"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQy-Zq-b5Y">
                         <rect key="frame" x="346" y="348" width="142" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -555,17 +544,6 @@
                             <action selector="clearRow:" target="494" id="pQG-WK-DPk"/>
                         </connections>
                     </button>
-                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ARX-r6-L2d">
-                        <rect key="frame" x="346" y="51" width="142" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Values to Grid" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" id="VoJ-tP-4lw">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="retroFill:" target="494" id="Nul-lB-ogJ"/>
-                        </connections>
-                    </button>
                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wmn-ba-Rzy">
                         <rect key="frame" x="40" y="116" width="39" height="38"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -655,7 +633,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ojb-gD-DMW">
-                        <rect key="frame" x="345" y="284" width="143" height="32"/>
+                        <rect key="frame" x="346" y="284" width="142" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Rotate Clockwise" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bLn-tf-rn0">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -878,6 +856,28 @@
                         </buttonCell>
                         <connections>
                             <action selector="setOutputType:" target="494" id="rbP-9p-8Ru"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LUw-BQ-lSD">
+                        <rect key="frame" x="346" y="68" width="142" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Grid to Values" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rBl-TR-BhH">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="calcHex:" target="494" id="3if-s6-aIc"/>
+                        </connections>
+                    </button>
+                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ARX-r6-L2d">
+                        <rect key="frame" x="346" y="35" width="142" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Values to Grid" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" id="VoJ-tP-4lw">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="retroFill:" target="494" id="Nul-lB-ogJ"/>
                         </connections>
                     </button>
                 </subviews>
