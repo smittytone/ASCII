@@ -7,10 +7,12 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 ## Release Notes ##
 
 - 1.2.0 *Unreleased*
-    - Re-orient pixel grid co-ordinates.
-    - Click and hold to ‘paint’ pixels.
-    - Add **Flip Horizontal** and **Flip Vertical** buttons.
-    - Add **Actions** menu as alternative to buttons.
+    - Re-orient grid co-ordinates.
+    - Support click-and-hold to ‘paint’ pixels.
+    - Add horizontal and vertical flipping.
+    - Add a choice to output or input byte values in string or array forms.
+    - Add **Actions** menu as an alternative to the buttons.
+    - Support macOS Dark Mode.
 - 1.1.3 *26 July 2018*
     - Initial release.
 
