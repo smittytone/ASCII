@@ -60,33 +60,6 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Edit" id="WPY-qy-VWZ">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Edit" id="sEc-vL-p4f">
-                        <items>
-                            <menuItem title="Cut" keyEquivalent="x" id="GLl-QB-Qdi">
-                                <connections>
-                                    <action selector="cut:" target="-1" id="VR5-bH-gk7"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Copy" keyEquivalent="c" id="pN1-gU-bLn">
-                                <connections>
-                                    <action selector="copy:" target="-1" id="HJR-cP-pTN"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Paste" keyEquivalent="v" id="5Vr-5e-yuM">
-                                <connections>
-                                    <action selector="paste:" target="-1" id="SZv-4l-uae"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Select All" keyEquivalent="a" id="uJh-5O-eOn">
-                                <connections>
-                                    <action selector="selectAll:" target="-1" id="z5G-Df-fr1"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
                 <menuItem title="Actions" id="0WE-Dt-TbK" userLabel="Actions">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Actions" id="bbf-Au-Iv7">
@@ -181,17 +154,17 @@
                     </menu>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="689" y="174"/>
+            <point key="canvasLocation" x="726" y="166"/>
         </menu>
         <window title="ASCII" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371" customClass="AsciiWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="550" height="458"/>
+            <rect key="contentRect" x="335" y="390" width="502" height="458"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="456" height="396"/>
             <value key="maxSize" type="size" width="456" height="396"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="550" height="458"/>
+                <rect key="frame" x="0.0" y="0.0" width="502" height="458"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ve6-JF-nuA" customClass="Pixel">
@@ -451,7 +424,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </customView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LUw-BQ-lSD">
-                        <rect key="frame" x="359" y="84" width="125" height="32"/>
+                        <rect key="frame" x="346" y="84" width="142" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Grid to Values" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rBl-TR-BhH">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -583,7 +556,7 @@
                         </connections>
                     </button>
                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ARX-r6-L2d">
-                        <rect key="frame" x="352" y="51" width="136" height="32"/>
+                        <rect key="frame" x="346" y="51" width="142" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Values to Grid" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" id="VoJ-tP-4lw">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -693,7 +666,7 @@
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IE7-e0-MAs">
-                        <rect key="frame" x="20" y="58" width="324" height="22"/>
+                        <rect key="frame" x="20" y="58" width="314" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7LE-pF-N6J">
                             <font key="font" metaFont="system"/>
@@ -845,28 +818,6 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MLz-5s-Aob">
-                        <rect key="frame" x="19" y="33" width="59" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="String" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Q30-KC-Vix">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="setOutputType:" target="494" id="fIY-ls-JDI"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Jr-cX-JUx">
-                        <rect key="frame" x="86" y="33" width="55" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Array" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Srg-4D-KeR">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="setOutputType:" target="494" id="rbP-9p-8Ru"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahB-w8-QHN">
                         <rect key="frame" x="346" y="222" width="142" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -889,9 +840,49 @@
                             <action selector="flipHorizontal:" target="494" id="itF-gi-bu2"/>
                         </connections>
                     </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pQB-MQ-1HM">
+                        <rect key="frame" x="20" y="88" width="316" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Grid pixel values:" id="FMV-2p-onp">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h4J-NZ-hK9">
+                        <rect key="frame" x="20" y="34" width="110" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Output values as:" id="e0M-Z5-nBr">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MLz-5s-Aob">
+                        <rect key="frame" x="133" y="33" width="59" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="String" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Q30-KC-Vix">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setOutputType:" target="494" id="fIY-ls-JDI"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Jr-cX-JUx">
+                        <rect key="frame" x="200" y="33" width="55" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Array" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Srg-4D-KeR">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setOutputType:" target="494" id="rbP-9p-8Ru"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="223" y="227"/>
+            <point key="canvasLocation" x="199" y="227"/>
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
