@@ -60,6 +60,50 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Edit" id="awu-X2-sFS">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Edit" id="Tl9-8j-EaA">
+                        <items>
+                            <menuItem title="Undo" keyEquivalent="z" id="Mv2-zF-0L8">
+                                <connections>
+                                    <action selector="undo:" target="-1" id="igV-Jg-cjF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Redo" keyEquivalent="Z" id="caK-IV-9xS">
+                                <connections>
+                                    <action selector="redo:" target="-1" id="7BA-gx-pj9"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="fxi-qN-6rk"/>
+                            <menuItem title="Cut" keyEquivalent="x" id="j9c-Ys-gTp">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="0HY-oP-Tgg"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy" keyEquivalent="c" id="9Pt-GU-Iuc">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="ihZ-cj-mfQ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" keyEquivalent="v" id="oOH-f8-kIc">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="7kc-uW-Zmp"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Delete" id="GeY-xw-JOQ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="delete:" target="-1" id="MWb-5T-0rW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select All" keyEquivalent="a" id="9gJ-Sk-vV4">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="GiY-uc-yO1"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Actions" id="0WE-Dt-TbK" userLabel="Actions">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Actions" id="bbf-Au-Iv7">
