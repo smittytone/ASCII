@@ -6,7 +6,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ## Release Notes ##
 
-- 1.2.0 *Unreleased*
+- 1.2.0 *27 January 2020*
     - Re-orient grid co-ordinates.
     - Support click-and-hold to ‘paint’ pixels.
     - Add horizontal and vertical flipping.
