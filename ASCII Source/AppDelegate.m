@@ -284,21 +284,26 @@
     string = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
 
     for (NSUInteger i = 0 ; i < string.length - 1 ; i += 2) {
+        if (i < 16) {
+            // Make sure we only use the first eight pairs of digits
+            range = NSMakeRange(i, 2);
+            substring = [string substringWithRange:range];
+            scanner = [NSScanner scannerWithString:substring];
+            [scanner scanHexInt:&value];
 
-        range = NSMakeRange(i, 2);
-        substring = [string substringWithRange:range];
-        scanner = [NSScanner scannerWithString:substring];
-        [scanner scanHexInt:&value];
+            for (NSUInteger j = 0 ; j < 8 ; j++) {
+                aPixel = [pixels objectAtIndex:((j * 8) + line)];
+                a = value & (int)(pow(2, (7 - j)));
+                if (a > 0) aPixel.colour = 1;
+                value -= a;
+                [aPixel update];
+            }
 
-        for (NSUInteger j = 0 ; j < 8 ; j++) {
-            aPixel = [pixels objectAtIndex:((j * 8) + line)];
-            a = value & (int)(pow(2, (7 - j)));
-            if (a > 0) aPixel.colour = 1;
-            value -= a;
-            [aPixel update];
+            line++;
+        } else {
+            // TODO Post warning?
+            break;
         }
-
-        line++;
     }
 }
 
