@@ -10,6 +10,9 @@
 
 
 
+#pragma mark - Application Lifecycle Methods
+
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
     NSInteger i;
@@ -126,6 +129,17 @@
 
 
 
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApp
+{
+    // Return YES to quit app when user clicks on the close button
+
+    return YES;
+}
+
+
+
+#pragma mark - Pixel Grid Manipulation Methods
+
 - (IBAction)fillSet:(id)sender {
 
     // Run through all the pixels and set them to black
@@ -152,34 +166,6 @@
         aPixel.colour = color;
         [aPixel update];
     }
-}
-
-
-
-- (IBAction)calcHex:(id)sender {
-
-    // Read the pixel grid and generate eight hex column values
-    Pixel *aPixel = nil;
-    NSString *theHex = @"";
-    NSString *formatString = outputToString ? @"\\x%02X" : @"0x%02X";
-
-    for (NSUInteger col = 0 ; col < 8 ; col++) {
-        NSUInteger byteValue = 0;
-
-        for (NSUInteger row = 0 ; row < 8 ; row++) {
-            NSUInteger index = (row * 8) + col;
-            aPixel = [pixels objectAtIndex: index];
-            if (aPixel.colour == 1) byteValue += (int)(pow(2, (8 - (row + 1))));
-        }
-
-        theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)byteValue]];
-
-        if (!outputToString && col < 7) theHex = [theHex stringByAppendingString:@","];
-    }
-
-    if (!outputToString) theHex = [NSString stringWithFormat:@"[%@]", theHex];
-
-    [hexField setStringValue:theHex];
 }
 
 
@@ -248,61 +234,6 @@
             aPixel = [pixels objectAtIndex:index];
             aPixel.colour = aPixel.colour == 1 ? 0 : 1;
             [aPixel update];
-        }
-    }
-}
-
-
-
-- (IBAction)retroFill:(id)sender {
-
-    NSUInteger line, cursor;
-    unsigned int value, a;
-    NSString *string, *substring;
-    NSRange range;
-    NSScanner *scanner;
-    Pixel *aPixel = nil;
-
-    line = 0;
-    cursor = 0;
-
-    [self clearSet:nil];
-
-    string = [hexField stringValue];
-
-    if (!outputToString)
-    {
-        string = [string stringByReplacingOccurrencesOfString:@"[" withString:@""];
-        string = [string stringByReplacingOccurrencesOfString:@"]" withString:@""];
-        string = [string stringByReplacingOccurrencesOfString:@"0x" withString:@""];
-    }
-    else
-    {
-        string = [string stringByReplacingOccurrencesOfString:@"\\x" withString:@""];
-    }
-
-    string = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
-
-    for (NSUInteger i = 0 ; i < string.length - 1 ; i += 2) {
-        if (i < 16) {
-            // Make sure we only use the first eight pairs of digits
-            range = NSMakeRange(i, 2);
-            substring = [string substringWithRange:range];
-            scanner = [NSScanner scannerWithString:substring];
-            [scanner scanHexInt:&value];
-
-            for (NSUInteger j = 0 ; j < 8 ; j++) {
-                aPixel = [pixels objectAtIndex:((j * 8) + line)];
-                a = value & (int)(pow(2, (7 - j)));
-                if (a > 0) aPixel.colour = 1;
-                value -= a;
-                [aPixel update];
-            }
-
-            line++;
-        } else {
-            // TODO Post warning?
-            break;
         }
     }
 }
@@ -402,12 +333,98 @@
 
 
 
+#pragma mark - Grid I/O Methods
+
 - (IBAction)setOutputType:(id)sender
 {
     // Set the flag for output type (to hex string or array of hex values)
     // according to the state of the radio controls
     outputToString = (stringButton.state == NSControlStateValueOn);
 }
+
+
+
+- (IBAction)calcHex:(id)sender {
+
+    // Read the pixel grid and generate eight hex column values
+    Pixel *aPixel = nil;
+    NSString *theHex = @"";
+    NSString *formatString = outputToString ? @"\\x%02X" : @"0x%02X";
+
+    for (NSUInteger col = 0 ; col < 8 ; col++) {
+        NSUInteger byteValue = 0;
+
+        for (NSUInteger row = 0 ; row < 8 ; row++) {
+            NSUInteger index = (row * 8) + col;
+            aPixel = [pixels objectAtIndex: index];
+            if (aPixel.colour == 1) byteValue += (int)(pow(2, (8 - (row + 1))));
+        }
+
+        theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)byteValue]];
+
+        if (!outputToString && col < 7) theHex = [theHex stringByAppendingString:@","];
+    }
+
+    if (!outputToString) theHex = [NSString stringWithFormat:@"[%@]", theHex];
+
+    [hexField setStringValue:theHex];
+}
+
+
+
+- (IBAction)retroFill:(id)sender {
+
+    NSUInteger line, cursor;
+    unsigned int value, a;
+    NSString *string, *substring;
+    NSRange range;
+    NSScanner *scanner;
+    Pixel *aPixel = nil;
+
+    line = 0;
+    cursor = 0;
+
+    [self clearSet:nil];
+
+    string = [hexField stringValue];
+
+    if (!outputToString)
+    {
+        string = [string stringByReplacingOccurrencesOfString:@"[" withString:@""];
+        string = [string stringByReplacingOccurrencesOfString:@"]" withString:@""];
+        string = [string stringByReplacingOccurrencesOfString:@"0x" withString:@""];
+    }
+    else
+    {
+        string = [string stringByReplacingOccurrencesOfString:@"\\x" withString:@""];
+    }
+
+    string = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
+
+    for (NSUInteger i = 0 ; i < string.length - 1 ; i += 2) {
+        if (i < 16) {
+            // Make sure we only use the first eight pairs of digits
+            range = NSMakeRange(i, 2);
+            substring = [string substringWithRange:range];
+            scanner = [NSScanner scannerWithString:substring];
+            [scanner scanHexInt:&value];
+
+            for (NSUInteger j = 0 ; j < 8 ; j++) {
+                aPixel = [pixels objectAtIndex:((j * 8) + line)];
+                a = value & (int)(pow(2, (7 - j)));
+                if (a > 0) aPixel.colour = 1;
+                value -= a;
+                [aPixel update];
+            }
+
+            line++;
+        } else {
+            // TODO Post warning?
+            break;
+        }
+    }
+}
+
 
 
 @end

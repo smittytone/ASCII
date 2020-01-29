@@ -8,6 +8,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 - 1.2.1 *Unreleased*
     - Fix cut'n'paste in hex code entry/readout field.
+    - App now quits when the window is closed.
     - New app icon.
 - 1.2.0 *27 January 2020*
     - Re-orient grid co-ordinates.
