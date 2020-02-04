@@ -6,7 +6,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ## Release Notes ##
 
-- 1.2.1 *Unreleased*
+- 1.2.1 *4 February 2020*
     - Fix cut'n'paste in hex code entry/readout field.
     - App now quits when the window is closed.
     - New app icon.
