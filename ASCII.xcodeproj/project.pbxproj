@@ -45,9 +45,8 @@
 		3B4625B22108517400BD2468 = {
 			isa = PBXGroup;
 			children = (
-				3B4625BD2108517400BD2468 /* ASCII Source */,
+				3B4625BD2108517400BD2468 /* Source */,
 				3B4625D6210851E900BD2468 /* Entities */,
-				3B4625D5210851CE00BD2468 /* Misc Files */,
 				3B4625BC2108517400BD2468 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,7 +59,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3B4625BD2108517400BD2468 /* ASCII Source */ = {
+		3B4625BD2108517400BD2468 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				3B4625BE2108517400BD2468 /* AppDelegate.h */,
@@ -70,17 +69,7 @@
 				3B4625D3210851BE00BD2468 /* Pixel.h */,
 				3B4625D2210851BE00BD2468 /* Pixel.m */,
 			);
-			path = "ASCII Source";
-			sourceTree = "<group>";
-		};
-		3B4625D5210851CE00BD2468 /* Misc Files */ = {
-			isa = PBXGroup;
-			children = (
-				3B4625C62108517700BD2468 /* Info.plist */,
-				3B4625C72108517700BD2468 /* main.m */,
-				3BBA220C2108575F00FEE2DD /* en.lproj */,
-			);
-			path = "Misc Files";
+			path = Source;
 			sourceTree = "<group>";
 		};
 		3B4625D6210851E900BD2468 /* Entities */ = {
@@ -88,6 +77,9 @@
 			children = (
 				3B4625C12108517700BD2468 /* Assets.xcassets */,
 				3B4625C32108517700BD2468 /* MainMenu.xib */,
+				3B4625C62108517700BD2468 /* Info.plist */,
+				3B4625C72108517700BD2468 /* main.m */,
+				3BBA220C2108575F00FEE2DD /* en.lproj */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -118,7 +110,7 @@
 		3B4625B32108517400BD2468 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Tony Smith";
 				TargetAttributes = {
 					3B4625BA2108517400BD2468 = {
@@ -239,7 +231,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "Misc Files/Info.plist";
+				INFOPLIST_FILE = Entities/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -292,7 +284,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "Misc Files/Info.plist";
+				INFOPLIST_FILE = Entities/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -306,10 +298,10 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = Y5J3K52DNA;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "Misc Files/Info.plist";
+				INFOPLIST_FILE = Entities/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -328,10 +320,10 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = Y5J3K52DNA;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "Misc Files/Info.plist";
+				INFOPLIST_FILE = Entities/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
