@@ -2,7 +2,7 @@
 
 ASCII is a simple macOS tool that can be used to design and generate 8x8 glyphs for monochrome LED matrix displays.
 
-For more information on using ASCII &mdash; and a binary download &mdash; please see [this page](https://smittytone.github.io/ascii/index.html).
+For more information on using ASCII &mdash; and a binary download &mdash; please see [this page](https://smittytone.net/ascii/index.html).
 
 ## Release Notes ##
 
