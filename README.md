@@ -7,7 +7,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 ## Release Notes ##
 
 - 1.2.1 *4 February 2020*
-    - Fix cut'n'paste in hex code entry/readout field.
+    - Fix cut’n’paste in hex code entry/readout field.
     - App now quits when the window is closed.
     - New app icon.
 - 1.2.0 *27 January 2020*
@@ -24,4 +24,4 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ASCII’s source code is licensed under the MIT license.
 
-ASCII source code, artwork and UI design is copyright &copy; 2014-20, Tony Smith.
+ASCII source code, artwork and UI design is copyright &copy; 2020, Tony Smith.
