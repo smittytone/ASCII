@@ -117,6 +117,7 @@
     IBOutlet NSButton *redButton;
     IBOutlet NSButton *yellowButton;
     IBOutlet NSButton *greenButton;
+    IBOutlet NSButton *inverseButton;
 
     NSMutableArray *pixels;
 

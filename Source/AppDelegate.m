@@ -127,6 +127,7 @@
     outputToString = true;
 
     // FROM 1.3.0
+    // Support three-colour LEDs
     colourSwitch.state = NSControlStateValueOff;
     redButton.enabled = NO;
     yellowButton.enabled = NO;
@@ -136,8 +137,8 @@
 
 
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApp
-{
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApp {
+
     // Return YES to quit app when user clicks on the close button
 
     return YES;
@@ -150,6 +151,7 @@
 - (IBAction)fillSet:(id)sender {
 
     // Run through all the pixels and set them to black
+
     [self paintAllPixels:inkColour];
 }
 
@@ -158,6 +160,7 @@
 - (IBAction)clearSet:(id)sender {
 
     // Run through all the pixels and set them to white
+
     [self paintAllPixels:kColourWhite];
 }
 
@@ -166,6 +169,7 @@
 - (void)paintAllPixels:(NSUInteger)color {
 
     // Generic all-pixel filler
+
     Pixel *aPixel = nil;
     
     for (NSUInteger i = 0 ; i < 64 ; i++) {
@@ -181,6 +185,7 @@
 
     // Run through all the pixels in the selected row
     // and colour them white or black
+
     NSUInteger row = 0;
     Pixel *aPixel = nil;
 
@@ -234,16 +239,13 @@
     // Run through all the pixels and set the white ones black
     // and the black ones white
 
-    // Can't inverse colours
-    if (colourSwitch.state == NSControlStateValueOn) return;
-
     Pixel *aPixel = nil;
 
     for (NSUInteger row = 0 ; row < 8 ; row++) {
         for (NSUInteger col = 0 ; col < 8 ; col++) {
             NSUInteger index = (row * 8) + col;
             aPixel = [pixels objectAtIndex:index];
-            aPixel.colour = aPixel.colour == 1 ? 0 : inkColour;
+            aPixel.colour = aPixel.colour != kColourWhite ? kColourWhite : inkColour;
             [aPixel update];
         }
     }
@@ -254,14 +256,14 @@
 - (IBAction)rotate:(id)sender {
 
     // Rotate all the pixels 90 degrees clockwise
+    
     Pixel *aPixel = nil;
-    NSUInteger index;
     NSUInteger ma[8][8];
 
     // Get the matrix values
     for (NSUInteger row = 0 ; row < 8 ; row++) {
         for (NSUInteger col = 0 ; col < 8 ; col++) {
-            index = (row * 8) + col;
+            NSUInteger index = (row * 8) + col;
             aPixel = [pixels objectAtIndex:index];
             ma[row][col] = aPixel.colour;
         }
@@ -281,7 +283,7 @@
     // Write back the rotated matrix
     for (NSUInteger row = 0 ; row < 8 ; row++) {
         for (NSUInteger col = 0 ; col < 8 ; col++) {
-            index = (row * 8) + col;
+            NSUInteger index = (row * 8) + col;
             if (index < 64) {
                 aPixel = [pixels objectAtIndex:index];
                 NSInteger temp = ma[row][col];
@@ -357,6 +359,7 @@
     redButton.enabled = inColourMode;
     yellowButton.enabled = inColourMode;
     greenButton.enabled = inColourMode;
+    inverseButton.enabled = !inColourMode;
 
     // Select the ink colour
     if (inColourMode) {

@@ -990,6 +990,7 @@
                 <outlet property="colourSwitch" destination="5x1-OJ-cBb" id="jnW-9Y-5xw"/>
                 <outlet property="greenButton" destination="hjt-Qa-B5F" id="SrB-62-sHE"/>
                 <outlet property="hexField" destination="IE7-e0-MAs" id="hFR-0w-yXh"/>
+                <outlet property="inverseButton" destination="Wdz-GE-lz4" id="7RE-Oi-qEc"/>
                 <outlet property="pixel_0_0" destination="Ve6-JF-nuA" id="etf-Tq-Tg1"/>
                 <outlet property="pixel_0_1" destination="JjG-Tl-khT" id="1gE-Bt-vF9"/>
                 <outlet property="pixel_0_2" destination="gna-Ue-qyX" id="UEp-69-WCb"/>
