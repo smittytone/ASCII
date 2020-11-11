@@ -136,14 +136,12 @@
 }
 
 
-
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApp {
 
     // Return YES to quit app when user clicks on the close button
 
     return YES;
 }
-
 
 
 #pragma mark - Pixel Grid Manipulation Methods
@@ -156,14 +154,12 @@
 }
 
 
-
 - (IBAction)clearSet:(id)sender {
 
     // Run through all the pixels and set them to white
 
     [self paintAllPixels:kColourWhite];
 }
-
 
 
 - (void)paintAllPixels:(NSUInteger)color {
@@ -178,7 +174,6 @@
         [aPixel update];
     }
 }
-
 
 
 - (IBAction)clearRow:(id)sender {
@@ -208,7 +203,6 @@
 }
 
 
-
 - (IBAction)clearCol:(id)sender {
 
     // Run through all the pixels in the selected column
@@ -233,7 +227,6 @@
 }
 
 
-
 - (IBAction)inverse:(id)sender {
 
     // Run through all the pixels and set the white ones black
@@ -250,7 +243,6 @@
         }
     }
 }
-
 
 
 - (IBAction)rotate:(id)sender {
@@ -295,7 +287,6 @@
 }
 
 
-
 - (IBAction)flipHorizontal:(id)sender {
 
     Pixel *aPixel = nil;
@@ -319,7 +310,6 @@
 }
 
 
-
 - (IBAction)flipVertical:(id)sender {
 
     Pixel *aPixel = nil;
@@ -341,7 +331,6 @@
         [aPixel update];
     }
 }
-
 
 
 #pragma mark - Colour Manipulation Methods
@@ -434,7 +423,6 @@
 }
 
 
-
 #pragma mark - Grid I/O Methods
 
 - (IBAction)setOutputType:(id)sender
@@ -443,7 +431,6 @@
     // according to the state of the radio controls
     outputToString = (stringButton.state == NSControlStateValueOn);
 }
-
 
 
 - (IBAction)calcHex:(id)sender {
@@ -492,7 +479,7 @@
 - (IBAction)retroFill:(id)sender {
 
     NSUInteger line, cursor;
-    unsigned int value, a;
+    unsigned int value, value2, a, b;
     NSString *string, *substring;
     NSRange range;
     NSScanner *scanner;
@@ -500,45 +487,58 @@
 
     line = 0;
     cursor = 0;
+    value = 0;
+    value2 = 0;
+
+    // Is the mode enabled? Record state in 'inColourMode'
+    bool inColourMode = colourSwitch.state == NSControlStateValueOn;
 
     [self clearSet:nil];
 
     string = [hexField stringValue];
 
-    if (!outputToString)
-    {
+    if (!outputToString) {
         string = [string stringByReplacingOccurrencesOfString:@"[" withString:@""];
         string = [string stringByReplacingOccurrencesOfString:@"]" withString:@""];
         string = [string stringByReplacingOccurrencesOfString:@"0x" withString:@""];
-    }
-    else
-    {
+    } else {
         string = [string stringByReplacingOccurrencesOfString:@"\\x" withString:@""];
     }
 
     string = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
 
-    for (NSUInteger i = 0 ; i < string.length - 1 ; i += 2) {
-        if (i < 16) {
-            // Make sure we only use the first eight pairs of digits
-            range = NSMakeRange(i, 2);
+    while (cursor < string.length - 1) {
+        range = NSMakeRange(cursor, 2);
+        substring = [string substringWithRange:range];
+        scanner = [NSScanner scannerWithString:substring];
+        [scanner scanHexInt:&value];
+        cursor += 2;
+
+        if (inColourMode) {
+            range = NSMakeRange(cursor, 2);
             substring = [string substringWithRange:range];
             scanner = [NSScanner scannerWithString:substring];
-            [scanner scanHexInt:&value];
+            [scanner scanHexInt:&value2];
+            cursor += 2;
+        }
 
-            for (NSUInteger j = 0 ; j < 8 ; j++) {
-                aPixel = [pixels objectAtIndex:((j * 8) + line)];
-                a = value & (int)(pow(2, (7 - j)));
-                if (a > 0) aPixel.colour = inkColour;
-                value -= a;
-                [aPixel update];
+        for (NSUInteger j = 0 ; j < 8 ; j++) {
+            aPixel = [pixels objectAtIndex:((j * 8) + line)];
+            a = value & (int)(1 << (7 - j));
+
+            if (inColourMode) {
+                b = value2 & (int)(1 << (7 - j));
+                if (a != 0 | b != 0) aPixel.colour = ((a >> (7 - j)) << 1) | (b >> (7 - j));
+            } else {
+                if (a != 0) aPixel.colour = kColourBlack;
             }
 
-            line++;
-        } else {
-            // TODO Post warning?
-            break;
+            [aPixel update];
         }
+
+        if (inColourMode && cursor > 28) break;
+        if (!inColourMode && cursor > 14) break;
+        line++;
     }
 }
 
