@@ -1,4 +1,4 @@
-# ASCII 1.2.1 #
+# ASCII 1.3.0 #
 
 ASCII is a simple macOS tool that can be used to design and generate 8x8 glyphs for monochrome LED matrix displays.
 
@@ -6,6 +6,9 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ## Release Notes ##
 
+- 1.3.0 *Unreleased*
+    - Support three-colour matrices.
+    - Apple Silicon support.
 - 1.2.1 *4 February 2020*
     - Fix cut’n’paste in hex code entry/readout field.
     - App now quits when the window is closed.
