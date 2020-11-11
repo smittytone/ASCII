@@ -8,7 +8,7 @@
 
 @implementation Pixel
 
-@synthesize colour, targetColour;
+@synthesize colour, drawColour;
 
 
 
@@ -19,7 +19,7 @@
     if (self) {
         // Initialize the pixel's properties
         colour = 0;
-        targetColour = kColourBlack;
+        drawColour = kColourBlack;
         mouseDown = NO;
 
         // Establish a mouse-tracking area...
@@ -79,7 +79,7 @@
 - (void)mouseDown:(NSEvent *)event {
 
     // Change the pixel's colour
-    colour = colour == targetColour ? 0 : targetColour;
+    colour = colour == drawColour ? 0 : drawColour;
     mouseDown = YES;
 
     // Tell all the other pixels that the mouse has been released
@@ -98,7 +98,7 @@
     // pixel and 'mouseDown' is true, we need to paint this pixel with the
     // same colour as is the first painted pixel
     if (mouseDown) {
-        colour = targetColour;
+        colour = drawColour;
         [self setNeedsDisplay:YES];
     }
 }
@@ -112,10 +112,10 @@
     if (!mouseDown) {
         mouseDown = YES;
 
-        // Get the source pixel's new colour and record as 'targetColour'
+        // Get the source pixel's new colour and record as 'drawColour'
         NSDictionary *dict = (NSDictionary *)note.userInfo;
         NSNumber *num = [dict objectForKey:@"colour"];
-        targetColour = num.integerValue;
+        drawColour = num.integerValue;
     }
 }
 

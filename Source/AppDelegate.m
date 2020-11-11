@@ -170,7 +170,7 @@
     
     for (NSUInteger i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = inkColour;
+        aPixel.colour = color;
         [aPixel update];
     }
 }
@@ -364,7 +364,7 @@
         if (redButton.state == NSControlStateValueOn) inkColour = kColourRed;
         if (yellowButton.state == NSControlStateValueOn) inkColour = kColourYellow;
     } else {
-        inkColour = 0x04;
+        inkColour = kColourBlack;
     }
 
     // Flip all the pixels from mono to colour, or vice versa
@@ -389,10 +389,12 @@
                     aPixel.colour =  aPixel.colour | 0x04;
                 }
 
-                // Set the new target colour - what we will paint - and update
-                aPixel.targetColour = inkColour;
+                // Update the pixel
                 [aPixel setNeedsDisplay:YES];
             }
+
+            // Set the new target colour - what we will paint
+            aPixel.drawColour = inkColour;
         }
     }
 }
@@ -403,7 +405,7 @@
     // Triggered when the user selects on the the colour radio buttons
     // NOTE These are only enabled in Colour mode
 
-    Pixel *aPixel = nil;
+
 
     // Set the ink colour according to the selection
     if (sender == greenButton) inkColour = kColourGreen;
@@ -411,10 +413,19 @@
     if (sender == yellowButton) inkColour = kColourYellow;
 
     // Set every pixel's target colour
+    [self setPixelDrawColour:inkColour];
+}
+
+
+- (void)setPixelDrawColour:(NSUInteger)colour {
+
+    // Set every pixel's target colour
+
+    Pixel *aPixel = nil;
     for (NSInteger row = 0 ; row < 8 ; row++) {
         for (NSInteger col = 0 ; col < 8 ; col++) {
             aPixel = [pixels objectAtIndex:((row * 8) + col)];
-            aPixel.targetColour = inkColour;
+            aPixel.drawColour = colour;
         }
     }
 }

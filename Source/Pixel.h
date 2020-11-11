@@ -20,7 +20,7 @@
 
 
 @property (readwrite, assign) NSInteger colour;
-@property (readwrite, assign) NSInteger targetColour;
+@property (readwrite, assign) NSInteger drawColour;
 
 
 @end
