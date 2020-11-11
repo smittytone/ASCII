@@ -8,6 +8,7 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "Constants.h"
 #import "Pixel.h"
 #import "AsciiWindow.h"
 
@@ -111,9 +112,19 @@
     IBOutlet NSTextField *hexField;
     IBOutlet NSButton *stringButton;
 
+    // FROM 1.3.0
+    IBOutlet NSSwitch *colourSwitch;
+    IBOutlet NSButton *redButton;
+    IBOutlet NSButton *yellowButton;
+    IBOutlet NSButton *greenButton;
+
     NSMutableArray *pixels;
 
     BOOL shiftSet, outputToString;
+
+    // FROM 1.3.0
+    // Record the current colour
+    NSInteger inkColour;
 }
 
 
@@ -129,6 +140,10 @@
 - (IBAction)setOutputType:(id)sender;
 - (IBAction)flipHorizontal:(id)sender;
 - (IBAction)flipVertical:(id)sender;
+
+// FROM 1.3.0
+- (IBAction)flipColourSwitch:(id)sender;
+- (IBAction)setColour:(id)sender;
 
 
 @property (assign) IBOutlet AsciiWindow *window;

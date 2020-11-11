@@ -8,7 +8,7 @@
 
 @implementation Pixel
 
-@synthesize colour;
+@synthesize colour, targetColour;
 
 
 
@@ -19,7 +19,7 @@
     if (self) {
         // Initialize the pixel's properties
         colour = 0;
-        targetColour = 0;
+        targetColour = kColourBlack;
         mouseDown = NO;
 
         // Establish a mouse-tracking area...
@@ -57,7 +57,7 @@
 - (void)drawRect:(NSRect)rect {
 
     // Fill the pixel with the desired colour and give it a grey frame
-    NSColor *frameColor = colour == 1 ? [NSColor blackColor] : [NSColor whiteColor];
+    NSColor *frameColor = [self pickColour];
     NSBezierPath *thePath = [NSBezierPath bezierPathWithRect:rect];
     thePath.lineWidth = 0.5;
     [frameColor setFill];
@@ -79,7 +79,7 @@
 - (void)mouseDown:(NSEvent *)event {
 
     // Change the pixel's colour
-    colour = colour == 1 ? 0 : 1;
+    colour = colour == targetColour ? 0 : targetColour;
     mouseDown = YES;
 
     // Tell all the other pixels that the mouse has been released
@@ -136,5 +136,22 @@
 }
 
 
+- (NSColor *)pickColour {
+
+    // Return the appropriate NSColor based on the current colour int value
+
+    switch(colour) {
+        case kColourWhite:
+            return [NSColor whiteColor];
+        case kColourRed:
+            return [NSColor redColor];
+        case kColourGreen:
+            return [NSColor greenColor];
+        case kColourYellow:
+            return [NSColor orangeColor];
+    }
+
+    return [NSColor blackColor];
+}
 
 @end

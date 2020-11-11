@@ -4,13 +4,13 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "Constants.h"
 
 
 @interface Pixel : NSView
 {
     BOOL mouseDown;
     NSNotificationCenter *nc;
-    NSInteger targetColour;
 }
 
 
@@ -20,6 +20,7 @@
 
 
 @property (readwrite, assign) NSInteger colour;
+@property (readwrite, assign) NSInteger targetColour;
 
 
 @end

@@ -125,6 +125,13 @@
     // FROM 1.2.0
     // Set the value readout type
     outputToString = true;
+
+    // FROM 1.3.0
+    colourSwitch.state = NSControlStateValueOff;
+    redButton.enabled = NO;
+    yellowButton.enabled = NO;
+    greenButton.enabled = NO;
+    inkColour = kColourBlack;
 }
 
 
@@ -143,7 +150,7 @@
 - (IBAction)fillSet:(id)sender {
 
     // Run through all the pixels and set them to black
-    [self paintAllPixels:1];
+    [self paintAllPixels:inkColour];
 }
 
 
@@ -151,7 +158,7 @@
 - (IBAction)clearSet:(id)sender {
 
     // Run through all the pixels and set them to white
-    [self paintAllPixels:0];
+    [self paintAllPixels:kColourWhite];
 }
 
 
@@ -163,7 +170,7 @@
     
     for (NSUInteger i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = color;
+        aPixel.colour = inkColour;
         [aPixel update];
     }
 }
@@ -190,7 +197,7 @@
 
     for (NSUInteger i = row ; i < row + 8 ; i++) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = _window.shiftSet ? 0 : 1;
+        aPixel.colour = _window.shiftSet ? 0 : inkColour;
         [aPixel update];
     }
 }
@@ -215,7 +222,7 @@
 
     for (NSUInteger i = col ; i < 64 ; i += 8) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = _window.shiftSet ? 0 : 1;
+        aPixel.colour = _window.shiftSet ? 0 : inkColour;
         [aPixel update];
     }
 }
@@ -226,13 +233,17 @@
 
     // Run through all the pixels and set the white ones black
     // and the black ones white
+
+    // Can't inverse colours
+    if (colourSwitch.state == NSControlStateValueOn) return;
+
     Pixel *aPixel = nil;
 
     for (NSUInteger row = 0 ; row < 8 ; row++) {
         for (NSUInteger col = 0 ; col < 8 ; col++) {
             NSUInteger index = (row * 8) + col;
             aPixel = [pixels objectAtIndex:index];
-            aPixel.colour = aPixel.colour == 1 ? 0 : 1;
+            aPixel.colour = aPixel.colour == 1 ? 0 : inkColour;
             [aPixel update];
         }
     }
@@ -283,8 +294,7 @@
 
 
 
-- (IBAction)flipHorizontal:(id)sender
-{
+- (IBAction)flipHorizontal:(id)sender {
 
     Pixel *aPixel = nil;
     NSInteger store[64];
@@ -308,8 +318,7 @@
 
 
 
-- (IBAction)flipVertical:(id)sender
-{
+- (IBAction)flipVertical:(id)sender {
 
     Pixel *aPixel = nil;
     NSInteger store[64];
@@ -333,6 +342,85 @@
 
 
 
+#pragma mark - Colour Manipulation Methods
+
+- (IBAction)flipColourSwitch:(id)sender {
+
+    // The user has enabled or disable colour mode
+
+    Pixel *aPixel = nil;
+
+    // Is the mode enabled? Record state in 'inColourMode'
+    bool inColourMode = colourSwitch.state == NSControlStateValueOn;
+
+    // Enable or disable the radio buttons accordingly
+    redButton.enabled = inColourMode;
+    yellowButton.enabled = inColourMode;
+    greenButton.enabled = inColourMode;
+
+    // Select the ink colour
+    if (inColourMode) {
+        if (greenButton.state == NSControlStateValueOn) inkColour = kColourGreen;
+        if (redButton.state == NSControlStateValueOn) inkColour = kColourRed;
+        if (yellowButton.state == NSControlStateValueOn) inkColour = kColourYellow;
+    } else {
+        inkColour = 0x04;
+    }
+
+    // Flip all the pixels from mono to colour, or vice versa
+    // NOTE Pixel colours are 3-bit binary values:
+    //      b100 is always black, b000 is always white,
+    //      b001 = green, b010 = red, b011 = orange
+    //      This way we can switch modes without losing colour info
+    for (NSInteger row = 0 ; row < 8 ; row++) {
+        for (NSInteger col = 0 ; col < 8 ; col++) {
+            aPixel = [pixels objectAtIndex:((row * 8) + col)];
+            if (aPixel.colour != 0) {
+                if (inColourMode) {
+                    // Unset the 'is black' bit
+                    aPixel.colour = aPixel.colour & 0x03;
+
+                    // If the pixel is now white, set it to the current colour,
+                    // ie. black -> red, not black -> white
+                    if (aPixel.colour == 0) aPixel.colour = inkColour;
+                } else {
+                    // Just set the 'is black' bit to preserve the colour
+                    // info in bits 0 and  1
+                    aPixel.colour =  aPixel.colour | 0x04;
+                }
+
+                // Set the new target colour - what we will paint - and update
+                aPixel.targetColour = inkColour;
+                [aPixel setNeedsDisplay:YES];
+            }
+        }
+    }
+}
+
+
+- (IBAction)setColour:(id)sender {
+
+    // Triggered when the user selects on the the colour radio buttons
+    // NOTE These are only enabled in Colour mode
+
+    Pixel *aPixel = nil;
+
+    // Set the ink colour according to the selection
+    if (sender == greenButton) inkColour = kColourGreen;
+    if (sender == redButton) inkColour = kColourRed;
+    if (sender == yellowButton) inkColour = kColourYellow;
+
+    // Set every pixel's target colour
+    for (NSInteger row = 0 ; row < 8 ; row++) {
+        for (NSInteger col = 0 ; col < 8 ; col++) {
+            aPixel = [pixels objectAtIndex:((row * 8) + col)];
+            aPixel.targetColour = inkColour;
+        }
+    }
+}
+
+
+
 #pragma mark - Grid I/O Methods
 
 - (IBAction)setOutputType:(id)sender
@@ -351,16 +439,31 @@
     NSString *theHex = @"";
     NSString *formatString = outputToString ? @"\\x%02X" : @"0x%02X";
 
+    // Is the mode enabled? Record state in 'inColourMode'
+    bool inColourMode = colourSwitch.state == NSControlStateValueOn;
+
     for (NSUInteger col = 0 ; col < 8 ; col++) {
         NSUInteger byteValue = 0;
+        NSUInteger byteValue2 = 0;
 
         for (NSUInteger row = 0 ; row < 8 ; row++) {
             NSUInteger index = (row * 8) + col;
             aPixel = [pixels objectAtIndex: index];
-            if (aPixel.colour == 1) byteValue += (int)(pow(2, (8 - (row + 1))));
+
+            if (inColourMode) {
+                // Two bytes per column
+                NSUInteger colour = aPixel.colour & 0x03;
+                if ((colour & 0x02) != 0) byteValue += (int)(pow(2, (8 - (row + 1))));
+                if ((colour & 0x01) != 0) byteValue2 += (int)(pow(2, (8 - (row + 1))));
+            } else {
+                // Mono mode: just assume any colour value is not zero
+                if (aPixel.colour != 0x00) byteValue += (int)(pow(2, (8 - (row + 1))));
+            }
         }
 
+
         theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)byteValue]];
+        if (inColourMode) theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)byteValue2]];
 
         if (!outputToString && col < 7) theHex = [theHex stringByAppendingString:@","];
     }
@@ -412,7 +515,7 @@
             for (NSUInteger j = 0 ; j < 8 ; j++) {
                 aPixel = [pixels objectAtIndex:((j * 8) + line)];
                 a = value & (int)(pow(2, (7 - j)));
-                if (a > 0) aPixel.colour = 1;
+                if (a > 0) aPixel.colour = inkColour;
                 value -= a;
                 [aPixel update];
             }
