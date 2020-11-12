@@ -10,7 +10,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
     - Support three-colour LED matrices.
     - Apple Silicon support.
 - 1.2.1 *4 February 2020*
-    - Fix cut’n’paste in hex code entry/readout field.
+    - Fix cut-and-paste in hex code entry/readout field.
     - App now quits when the window is closed.
     - New app icon.
 - 1.2.0 *27 January 2020*
