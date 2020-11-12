@@ -136,6 +136,10 @@
     redColourMenuItem.enabled = NO;
     yellowColourMenuItem.enabled = NO;
     inkColour = kColourBlack;
+
+    // Centre the window and show it
+    [_window center];
+    [_window makeKeyAndOrderFront:self];
 }
 
 
