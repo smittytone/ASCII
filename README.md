@@ -7,7 +7,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 ## Release Notes ##
 
 - 1.3.0 *Unreleased*
-    - Support three-colour matrices.
+    - Support three-colour LED matrices.
     - Apple Silicon support.
 - 1.2.1 *4 February 2020*
     - Fix cut’n’paste in hex code entry/readout field.
