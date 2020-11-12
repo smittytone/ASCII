@@ -223,7 +223,7 @@
                         <items>
                             <menuItem title="ASCII Help" keyEquivalent="?" id="492">
                                 <connections>
-                                    <action selector="showHelp:" target="-1" id="493"/>
+                                    <action selector="showOnlineHelp:" target="494" id="D5C-i2-4Li"/>
                                 </connections>
                             </menuItem>
                         </items>

@@ -150,6 +150,7 @@
 // FROM 1.3.0
 - (IBAction)flipColourSwitch:(id)sender;
 - (IBAction)setColour:(id)sender;
+- (IBAction)showOnlineHelp:(id)sender;
 - (void)setPaintColourMenuStates:(NSUInteger)colour;
 - (NSUInteger)getHexValue:(NSInteger)index :(NSString *)string;
 - (void)showError:(NSString *)title :(NSString *)message;

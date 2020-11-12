@@ -630,6 +630,8 @@
 }
 
 
+#pragma mark - Misc Methods
+
 - (void)showError:(NSString *)title :(NSString *)message {
 
     // Generic error display routine
@@ -643,5 +645,11 @@
 }
 
 
+- (IBAction)showOnlineHelp:(id)sender {
+
+    // Open online help
+
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://www.smittytone.net/ascii/index.html"]];
+}
 
 @end
