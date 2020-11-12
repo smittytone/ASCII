@@ -145,6 +145,8 @@
 // FROM 1.3.0
 - (IBAction)flipColourSwitch:(id)sender;
 - (IBAction)setColour:(id)sender;
+- (NSUInteger)getHexValue:(NSInteger)index :(NSString *)string;
+- (void)showError:(NSString *)title :(NSString *)message;
 
 
 @property (assign) IBOutlet AsciiWindow *window;

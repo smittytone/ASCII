@@ -444,8 +444,8 @@
     bool inColourMode = colourSwitch.state == NSControlStateValueOn;
 
     for (NSUInteger col = 0 ; col < 8 ; col++) {
-        NSUInteger byteValue = 0;
-        NSUInteger byteValue2 = 0;
+        NSUInteger byteValueLeft = 0;
+        NSUInteger byteValueRight = 0;
 
         for (NSUInteger row = 0 ; row < 8 ; row++) {
             NSUInteger index = (row * 8) + col;
@@ -454,17 +454,16 @@
             if (inColourMode) {
                 // Two bytes per column
                 NSUInteger colour = aPixel.colour & 0x03;
-                if ((colour & 0x02) != 0) byteValue += (int)(pow(2, (8 - (row + 1))));
-                if ((colour & 0x01) != 0) byteValue2 += (int)(pow(2, (8 - (row + 1))));
+                if ((colour & 0x02) != 0) byteValueLeft += (int)(pow(2, (8 - (row + 1))));
+                if ((colour & 0x01) != 0) byteValueRight += (int)(pow(2, (8 - (row + 1))));
             } else {
                 // Mono mode: just assume any colour value is not zero
-                if (aPixel.colour != 0x00) byteValue += (int)(pow(2, (8 - (row + 1))));
+                if (aPixel.colour != 0x00) byteValueLeft += (int)(pow(2, (8 - (row + 1))));
             }
         }
 
-
-        theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)byteValue]];
-        if (inColourMode) theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)byteValue2]];
+        theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)byteValueLeft]];
+        if (inColourMode) theHex = [theHex stringByAppendingString:[NSString stringWithFormat:formatString, (unsigned long)byteValueRight]];
 
         if (!outputToString && col < 7) theHex = [theHex stringByAppendingString:@","];
     }
@@ -478,25 +477,19 @@
 
 - (IBAction)retroFill:(id)sender {
 
-    NSUInteger line, cursor;
-    unsigned int value, value2, a, b;
-    NSString *string, *substring;
-    NSRange range;
-    NSScanner *scanner;
+    NSUInteger valueLeft, valueRight, byteLeft, byteRight, line, cursor;
     Pixel *aPixel = nil;
-
-    line = 0;
-    cursor = 0;
-    value = 0;
-    value2 = 0;
 
     // Is the mode enabled? Record state in 'inColourMode'
     bool inColourMode = colourSwitch.state == NSControlStateValueOn;
 
-    [self clearSet:nil];
+    // Get the entered string, if there is one
+    NSString *string = [hexField stringValue];
 
-    string = [hexField stringValue];
+    // Make sure we have a string to work with
+    if (string.length == 0) return;
 
+    // Tidy up the string as best as possible
     if (!outputToString) {
         string = [string stringByReplacingOccurrencesOfString:@"[" withString:@""];
         string = [string stringByReplacingOccurrencesOfString:@"]" withString:@""];
@@ -507,39 +500,88 @@
 
     string = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
 
+    // Check the validity of the string
+    if (string.length % 2 != 0) {
+        [self showError:@"Bad Hex String" :@"Enter a string that contains an even number of hex characters"];
+        return;
+    }
+
+    // Chomp strings to the expected length
+    if (inColourMode && string.length > 32) string = [string substringToIndex:32];
+    if (!inColourMode && string.length > 16) string = [string substringToIndex:16];
+
+    // Clear the grid
+    [self clearSet:nil];
+
+    line = 0;
+    cursor = 0;
+    valueLeft = 0;
+    valueRight = 0;
     while (cursor < string.length - 1) {
-        range = NSMakeRange(cursor, 2);
-        substring = [string substringWithRange:range];
-        scanner = [NSScanner scannerWithString:substring];
-        [scanner scanHexInt:&value];
+        valueLeft = [self getHexValue:cursor :string];
+        if (valueLeft == -1) return;
         cursor += 2;
 
         if (inColourMode) {
-            range = NSMakeRange(cursor, 2);
-            substring = [string substringWithRange:range];
-            scanner = [NSScanner scannerWithString:substring];
-            [scanner scanHexInt:&value2];
+            valueRight = [self getHexValue:cursor :string];
+            if (valueRight == -1) return;
             cursor += 2;
         }
 
         for (NSUInteger j = 0 ; j < 8 ; j++) {
             aPixel = [pixels objectAtIndex:((j * 8) + line)];
-            a = value & (int)(1 << (7 - j));
+            byteLeft = valueLeft & (1 << (7 - j));
 
             if (inColourMode) {
-                b = value2 & (int)(1 << (7 - j));
-                if (a != 0 | b != 0) aPixel.colour = ((a >> (7 - j)) << 1) | (b >> (7 - j));
+                byteRight = valueRight & (1 << (7 - j));
+                if (byteLeft != 0 | byteRight != 0) aPixel.colour = ((byteLeft >> (7 - j)) << 1) | (byteRight >> (7 - j));
             } else {
-                if (a != 0) aPixel.colour = kColourBlack;
+                if (byteLeft != 0) aPixel.colour = kColourBlack;
             }
 
             [aPixel update];
         }
 
-        if (inColourMode && cursor > 28) break;
+        if ( inColourMode && cursor > 28) break;
         if (!inColourMode && cursor > 14) break;
         line++;
     }
+}
+
+
+- (NSUInteger)getHexValue:(NSInteger)index :(NSString *)string {
+
+    // Extracts a two-character substring from the supplied string, at location 'index'
+    // and returns the integer value of those hex characters
+
+    unsigned int returnValue;
+    NSRange range = NSMakeRange(index, 2);
+    NSString *substring = [string substringWithRange:range];
+    NSScanner *scanner = [NSScanner scannerWithString:substring];
+
+    // Check if the scanning acutally worked
+    bool success = [scanner scanHexInt:&returnValue];
+
+    // It didn't, so show an error and bail
+    if (!success) {
+        [self showError:@"Bad Hex String" :@"Enter a string that only contains hex characters"];
+        return -1;
+    }
+
+    return (NSUInteger)returnValue;
+}
+
+
+- (void)showError:(NSString *)title :(NSString *)message {
+
+    // Generic error display routine
+
+    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : title,
+                                NSLocalizedRecoverySuggestionErrorKey : message };
+    NSError *error = [NSError errorWithDomain:@"ASCII"
+                                         code:400
+                                     userInfo:userInfo];
+    [_window presentError:error];
 }
 
 
