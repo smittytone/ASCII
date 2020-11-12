@@ -15,4 +15,6 @@
 #define kColourYellow           3
 #define kColourBlack            4
 
+#define kHexValueError          999
+
 #endif /* Constants_h */

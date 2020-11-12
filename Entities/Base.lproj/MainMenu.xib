@@ -106,7 +106,7 @@
                 </menuItem>
                 <menuItem title="Actions" id="0WE-Dt-TbK" userLabel="Actions">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Actions" id="bbf-Au-Iv7">
+                    <menu key="submenu" title="Actions" autoenablesItems="NO" id="bbf-Au-Iv7">
                         <items>
                             <menuItem title="Fill Grid" id="scV-3n-IWo">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -146,6 +146,38 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="R72-8p-Im0"/>
+                            <menuItem title="Switch to Colour Mode" id="n9r-Xc-yh8">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="flipColourSwitch:" target="494" id="eYH-3j-AI0"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paint Colour" id="CO6-Xk-3fu">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Paint Colour" autoenablesItems="NO" id="zDc-cZ-N6M">
+                                    <items>
+                                        <menuItem title="Red" state="on" id="xsf-5s-NMG">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="setColour:" target="494" id="XcA-wf-HU6"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Green" id="fKe-GF-U1Q">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="setColour:" target="494" id="euo-I5-oZp"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Orange" id="dQn-RZ-Qlj">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="setColour:" target="494" id="dDn-SY-7qD"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="lS3-19-R8h"/>
                             <menuItem title="Convert Grid to Values" id="xWT-pT-soY">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -913,19 +945,8 @@
                             <action selector="setColour:" target="494" id="2jN-Ua-B0N"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f8b-Ou-53b">
-                        <rect key="frame" x="351" y="138" width="130" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="radio" title="Yellow" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Bnl-Cm-TwY">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="setColour:" target="494" id="OBb-8d-Ohf"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hjt-Qa-B5F">
-                        <rect key="frame" x="351" y="116" width="130" height="18"/>
+                        <rect key="frame" x="351" y="138" width="130" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="radio" title="Green" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Sbk-Id-7v1">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -973,6 +994,17 @@
                             <action selector="retroFill:" target="494" id="Nul-lB-ogJ"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f8b-Ou-53b">
+                        <rect key="frame" x="351" y="116" width="130" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="radio" title="Orange" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Bnl-Cm-TwY">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setColour:" target="494" id="OBb-8d-Ohf"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <point key="canvasLocation" x="199" y="227"/>
@@ -988,9 +1020,12 @@
                 <outlet property="colSwitch6" destination="s52-yi-rF1" id="W0C-ud-d0X"/>
                 <outlet property="colSwitch7" destination="CBg-6U-jQ1" id="oaq-sG-HpT"/>
                 <outlet property="colourSwitch" destination="5x1-OJ-cBb" id="jnW-9Y-5xw"/>
+                <outlet property="colourSwitchMenuItem" destination="n9r-Xc-yh8" id="PZ6-SD-ssL"/>
                 <outlet property="greenButton" destination="hjt-Qa-B5F" id="SrB-62-sHE"/>
+                <outlet property="greenColourMenuItem" destination="fKe-GF-U1Q" id="ZVX-QV-fmo"/>
                 <outlet property="hexField" destination="IE7-e0-MAs" id="hFR-0w-yXh"/>
                 <outlet property="inverseButton" destination="Wdz-GE-lz4" id="7RE-Oi-qEc"/>
+                <outlet property="inverseMenuItem" destination="Vxe-YQ-7FL" id="wau-8j-xcc"/>
                 <outlet property="pixel_0_0" destination="Ve6-JF-nuA" id="etf-Tq-Tg1"/>
                 <outlet property="pixel_0_1" destination="JjG-Tl-khT" id="1gE-Bt-vF9"/>
                 <outlet property="pixel_0_2" destination="gna-Ue-qyX" id="UEp-69-WCb"/>
@@ -1056,6 +1091,7 @@
                 <outlet property="pixel_7_6" destination="R6a-8K-ecK" id="tUj-1u-cDC"/>
                 <outlet property="pixel_7_7" destination="MCW-o2-gmo" id="Wja-Mj-Ax9"/>
                 <outlet property="redButton" destination="FII-OP-qKP" id="rLi-99-QtD"/>
+                <outlet property="redColourMenuItem" destination="xsf-5s-NMG" id="yEF-pB-ToT"/>
                 <outlet property="rowSwitch0" destination="v23-xj-srA" id="X8m-YP-efl"/>
                 <outlet property="rowSwitch1" destination="xMo-BM-o4z" id="Il3-2r-2MD"/>
                 <outlet property="rowSwitch2" destination="g3A-km-GDI" id="X6U-pq-Plb"/>
@@ -1067,6 +1103,7 @@
                 <outlet property="stringButton" destination="MLz-5s-Aob" id="U5c-wh-Rhg"/>
                 <outlet property="window" destination="371" id="532"/>
                 <outlet property="yellowButton" destination="f8b-Ou-53b" id="u1s-b0-c5b"/>
+                <outlet property="yellowColourMenuItem" destination="dQn-RZ-Qlj" id="yqH-K3-7KE"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>

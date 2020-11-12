@@ -132,6 +132,9 @@
     redButton.enabled = NO;
     yellowButton.enabled = NO;
     greenButton.enabled = NO;
+    greenColourMenuItem.enabled = NO;
+    redColourMenuItem.enabled = NO;
+    yellowColourMenuItem.enabled = NO;
     inkColour = kColourBlack;
 }
 
@@ -341,6 +344,10 @@
 
     Pixel *aPixel = nil;
 
+    if (sender == colourSwitchMenuItem) {
+        colourSwitch.state = !colourSwitch.state;
+    }
+
     // Is the mode enabled? Record state in 'inColourMode'
     bool inColourMode = colourSwitch.state == NSControlStateValueOn;
 
@@ -348,15 +355,25 @@
     redButton.enabled = inColourMode;
     yellowButton.enabled = inColourMode;
     greenButton.enabled = inColourMode;
-    inverseButton.enabled = !inColourMode;
 
-    // Select the ink colour
+    // Handle the paint colour menu items
+    greenColourMenuItem.enabled = inColourMode;
+    redColourMenuItem.enabled = inColourMode;
+    yellowColourMenuItem.enabled = inColourMode;
+
+    // Handle the invert controls
+    inverseButton.enabled = !inColourMode;
+    inverseMenuItem.enabled = !inColourMode;
+
+    // Select the ink colour and the menu state
     if (inColourMode) {
         if (greenButton.state == NSControlStateValueOn) inkColour = kColourGreen;
         if (redButton.state == NSControlStateValueOn) inkColour = kColourRed;
         if (yellowButton.state == NSControlStateValueOn) inkColour = kColourYellow;
+        colourSwitchMenuItem.title = @"Switch to Mono Mode";
     } else {
         inkColour = kColourBlack;
+        colourSwitchMenuItem.title = @"Switch to Colour Mode";
     }
 
     // Flip all the pixels from mono to colour, or vice versa
@@ -397,15 +414,42 @@
     // Triggered when the user selects on the the colour radio buttons
     // NOTE These are only enabled in Colour mode
 
-
-
     // Set the ink colour according to the selection
     if (sender == greenButton) inkColour = kColourGreen;
     if (sender == redButton) inkColour = kColourRed;
     if (sender == yellowButton) inkColour = kColourYellow;
 
+    if (sender == greenColourMenuItem) {
+        inkColour = kColourGreen;
+        greenButton.state = NSControlStateValueOn;
+    }
+
+    if (sender == redColourMenuItem) {
+        inkColour = kColourRed;
+        redButton.state = NSControlStateValueOn;
+    }
+
+    if (sender == yellowColourMenuItem) {
+        inkColour = kColourYellow;
+        yellowButton.state = NSControlStateValueOn;
+    }
+
     // Set every pixel's target colour
     [self setPixelDrawColour:inkColour];
+
+    [self setPaintColourMenuStates:inkColour];
+}
+
+
+- (void)setPaintColourMenuStates:(NSUInteger)colour {
+
+    // Set and unset Paint Colour sub-menu items' state according to 'colour'
+    bool state1 = ((colour & 1) > 0);
+    bool state2 = ((colour & 2) > 0);
+
+    greenColourMenuItem.state = !state1 && state2 ? NSControlStateValueOn : NSControlStateValueOff;
+    redColourMenuItem.state = state1 && !state2 ? NSControlStateValueOn : NSControlStateValueOff;
+    yellowColourMenuItem.state = state1 && state2 ? NSControlStateValueOn : NSControlStateValueOff;
 }
 
 
@@ -477,7 +521,7 @@
 
 - (IBAction)retroFill:(id)sender {
 
-    NSUInteger valueLeft, valueRight, byteLeft, byteRight, line, cursor;
+    NSUInteger valueLeft, valueRight, byteLeft, byteRight, row, cursor;
     Pixel *aPixel = nil;
 
     // Is the mode enabled? Record state in 'inColourMode'
@@ -513,38 +557,52 @@
     // Clear the grid
     [self clearSet:nil];
 
-    line = 0;
+    // Set the pixels according to the supplied hex values
+    row = 0;
     cursor = 0;
     valueLeft = 0;
     valueRight = 0;
     while (cursor < string.length - 1) {
         valueLeft = [self getHexValue:cursor :string];
-        if (valueLeft == -1) return;
+        if (valueLeft == kHexValueError) return;
         cursor += 2;
 
         if (inColourMode) {
             valueRight = [self getHexValue:cursor :string];
-            if (valueRight == -1) return;
+            if (valueRight == kHexValueError) return;
             cursor += 2;
         }
 
         for (NSUInteger j = 0 ; j < 8 ; j++) {
-            aPixel = [pixels objectAtIndex:((j * 8) + line)];
+            aPixel = [pixels objectAtIndex:((j * 8) + row)];
             byteLeft = valueLeft & (1 << (7 - j));
 
             if (inColourMode) {
+                // Use the bit values not only to determine if a pixel is set (either bit is 1)
+                // but the colour of the set pixel:
+                // Byte 1 Bit | Byte 2 Bit | Colour
+                // -----------+------------+--------
+                //     0      |      0     | None
+                //     1      |      0     | Green
+                //     0      |      1     | Red
+                //     1      |      1     | Orange
                 byteRight = valueRight & (1 << (7 - j));
                 if (byteLeft != 0 | byteRight != 0) aPixel.colour = ((byteLeft >> (7 - j)) << 1) | (byteRight >> (7 - j));
             } else {
+                // For a mono display, if the bit is set, the pixel is lit
                 if (byteLeft != 0) aPixel.colour = kColourBlack;
             }
 
-            [aPixel update];
+            // Fill in the pixel if it is lit
+            if (aPixel.colour != kColourWhite) [aPixel update];
         }
 
+        // Check that we're not going to break the loop
         if ( inColourMode && cursor > 28) break;
         if (!inColourMode && cursor > 14) break;
-        line++;
+
+        // Move to the next row
+        row++;
     }
 }
 
@@ -565,7 +623,7 @@
     // It didn't, so show an error and bail
     if (!success) {
         [self showError:@"Bad Hex String" :@"Enter a string that only contains hex characters"];
-        return -1;
+        return kHexValueError;
     }
 
     return (NSUInteger)returnValue;
@@ -577,7 +635,7 @@
     // Generic error display routine
 
     NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : title,
-                                NSLocalizedRecoverySuggestionErrorKey : message };
+                               NSLocalizedRecoverySuggestionErrorKey : message };
     NSError *error = [NSError errorWithDomain:@"ASCII"
                                          code:400
                                      userInfo:userInfo];

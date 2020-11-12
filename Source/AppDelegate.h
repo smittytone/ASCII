@@ -118,6 +118,11 @@
     IBOutlet NSButton *yellowButton;
     IBOutlet NSButton *greenButton;
     IBOutlet NSButton *inverseButton;
+    IBOutlet NSMenuItem *inverseMenuItem;
+    IBOutlet NSMenuItem *colourSwitchMenuItem;
+    IBOutlet NSMenuItem *greenColourMenuItem;
+    IBOutlet NSMenuItem *redColourMenuItem;
+    IBOutlet NSMenuItem *yellowColourMenuItem;
 
     NSMutableArray *pixels;
 
@@ -145,6 +150,7 @@
 // FROM 1.3.0
 - (IBAction)flipColourSwitch:(id)sender;
 - (IBAction)setColour:(id)sender;
+- (void)setPaintColourMenuStates:(NSUInteger)colour;
 - (NSUInteger)getHexValue:(NSInteger)index :(NSString *)string;
 - (void)showError:(NSString *)title :(NSString *)message;
 
