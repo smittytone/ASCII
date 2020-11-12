@@ -11,6 +11,7 @@
 {
     BOOL mouseDown;
     NSNotificationCenter *nc;
+    NSInteger storeColour;
 }
 
 

@@ -79,7 +79,7 @@
 - (void)mouseDown:(NSEvent *)event {
 
     // Change the pixel's colour
-    colour = colour == drawColour ? 0 : drawColour;
+    colour = colour == drawColour ? kColourWhite : drawColour;
     mouseDown = YES;
 
     // Tell all the other pixels that the mouse has been released
@@ -115,6 +115,7 @@
         // Get the source pixel's new colour and record as 'drawColour'
         NSDictionary *dict = (NSDictionary *)note.userInfo;
         NSNumber *num = [dict objectForKey:@"colour"];
+        storeColour = drawColour;
         drawColour = num.integerValue;
     }
 }
@@ -126,6 +127,7 @@
     // A pixel (it might be this one) has signalled a mouse-up event,
     // so if the sender was not this pixel, 'mouseDown' will be true
     if (mouseDown) mouseDown = NO;
+    drawColour = storeColour;
 }
 
 
