@@ -6,7 +6,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ## Release Notes ##
 
-- 1.3.0 *Unreleased*
+- 1.3.0 *13 November 2020*
     - Support three-colour LED matrices.
     - Apple Silicon support.
 - 1.2.1 *4 February 2020*
