@@ -108,12 +108,13 @@
 
 - (void)passedMouseDown:(NSNotification *)note {
 
-    // A pixel (it might be this one) has signalled a mouse-down event,
-    // so if the sender was not this pixel
+    // A pixel (it might be this one) has signalled a mouse-down event
+    // so treat it as a mouse-down event on this pixel too
+    // NOTE This is called for ALL pixels
     if (!mouseDown) {
         mouseDown = YES;
 
-        // Get the source pixel's new colour and this pixel ink 'drawColour' to match
+        // Update the pixel's colour from the source pixel's new colour
         NSDictionary *dict = (NSDictionary *)note.userInfo;
         NSNumber *num = [dict objectForKey:@"PixelColour"];
         storeColour = drawColour;
@@ -125,8 +126,9 @@
 
 - (void)passedMouseUp:(NSNotification *)note {
 
-    // A pixel (it might be this one) has signalled a mouse-up event,
-    // so if the sender was not this pixel, 'mouseDown' will be true
+    // A pixel (it might be this one) has signalled a mouse-up event
+    // so treat it at a mouse-up even on this pixel too
+    // NOTE This is called for ALL pixels
     if (mouseDown) {
         mouseDown = NO;
         drawColour = storeColour;
