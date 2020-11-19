@@ -16,11 +16,11 @@
 
 
 - (void)update;
-- (void)passMouseDown:(NSNotification *)note;
-- (void)passMouseUp:(NSNotification *)note;
+- (void)passedMouseDown:(NSNotification *)note;
+- (void)passedMouseUp:(NSNotification *)note;
 
 
-@property (readwrite, assign) NSInteger colour;
+@property (readwrite, assign) NSInteger pixelColour;
 @property (readwrite, assign) NSInteger drawColour;
 
 

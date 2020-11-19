@@ -15,7 +15,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 
-    NSInteger i;
     Pixel *aPixel;
 
     // Set up the array that will hold all the pixel views
@@ -97,7 +96,7 @@
 
     // Trigger a pixel redraw
     // NOTE May be unnecessary
-    for (i = 0 ; i < 64 ; i++) {
+    for (NSUInteger i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
         [aPixel update];
     }
@@ -177,7 +176,7 @@
     
     for (NSUInteger i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = color;
+        aPixel.pixelColour = color;
         [aPixel update];
     }
 }
@@ -204,7 +203,7 @@
 
     for (NSUInteger i = row ; i < row + 8 ; i++) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = _window.shiftSet ? 0 : inkColour;
+        aPixel.pixelColour = _window.shiftSet ? 0 : inkColour;
         [aPixel update];
     }
 }
@@ -228,7 +227,7 @@
 
     for (NSUInteger i = col ; i < 64 ; i += 8) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = _window.shiftSet ? 0 : inkColour;
+        aPixel.pixelColour = _window.shiftSet ? 0 : inkColour;
         [aPixel update];
     }
 }
@@ -245,7 +244,7 @@
         for (NSUInteger col = 0 ; col < 8 ; col++) {
             NSUInteger index = (row * 8) + col;
             aPixel = [pixels objectAtIndex:index];
-            aPixel.colour = aPixel.colour != kColourWhite ? kColourWhite : inkColour;
+            aPixel.pixelColour = aPixel.pixelColour != kColourWhite ? kColourWhite : inkColour;
             [aPixel update];
         }
     }
@@ -264,7 +263,7 @@
         for (NSUInteger col = 0 ; col < 8 ; col++) {
             NSUInteger index = (row * 8) + col;
             aPixel = [pixels objectAtIndex:index];
-            ma[row][col] = aPixel.colour;
+            ma[row][col] = aPixel.pixelColour;
         }
     }
 
@@ -286,7 +285,7 @@
             if (index < 64) {
                 aPixel = [pixels objectAtIndex:index];
                 NSInteger temp = ma[row][col];
-                aPixel.colour = temp;
+                aPixel.pixelColour = temp;
                 [aPixel update];
             }
         }
@@ -304,14 +303,14 @@
     for (NSInteger row = 0 ; row < 8 ; row++) {
         for (NSInteger col = 0 ; col < 8 ; col++) {
             aPixel = [pixels objectAtIndex:((row * 8) + col)];
-            store[(row * 8) + (7 - col)] = aPixel.colour;
+            store[(row * 8) + (7 - col)] = aPixel.pixelColour;
         }
     }
 
     // Write the data back to the grid
     for (NSInteger i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = store[i];
+        aPixel.pixelColour = store[i];
         [aPixel update];
     }
 }
@@ -327,14 +326,14 @@
     for (NSInteger row = 0 ; row < 8 ; row++) {
         for (NSInteger col = 0 ; col < 8 ; col++) {
             aPixel = [pixels objectAtIndex:((row * 8) + col)];
-            store[((7 - row) * 8) + col] = aPixel.colour;
+            store[((7 - row) * 8) + col] = aPixel.pixelColour;
         }
     }
 
     // Write the data back to the grid
     for (NSInteger i = 0 ; i < 64 ; i++) {
         aPixel = [pixels objectAtIndex:i];
-        aPixel.colour = store[i];
+        aPixel.pixelColour = store[i];
         [aPixel update];
     }
 }
@@ -388,18 +387,18 @@
     for (NSInteger row = 0 ; row < 8 ; row++) {
         for (NSInteger col = 0 ; col < 8 ; col++) {
             aPixel = [pixels objectAtIndex:((row * 8) + col)];
-            if (aPixel.colour != 0) {
+            if (aPixel.pixelColour != 0) {
                 if (inColourMode) {
                     // Unset the 'is black' bit
-                    aPixel.colour = aPixel.colour & 0x03;
+                    aPixel.pixelColour = aPixel.pixelColour & 0x03;
 
                     // If the pixel is now white, set it to the current colour,
                     // ie. black -> red, not black -> white
-                    if (aPixel.colour == 0) aPixel.colour = inkColour;
+                    if (aPixel.pixelColour == 0) aPixel.pixelColour = inkColour;
                 } else {
                     // Just set the 'is black' bit to preserve the colour
                     // info in bits 0 and  1
-                    aPixel.colour =  aPixel.colour | 0x04;
+                    aPixel.pixelColour =  aPixel.pixelColour | 0x04;
                 }
 
                 // Update the pixel
@@ -501,12 +500,12 @@
 
             if (inColourMode) {
                 // Two bytes per column
-                NSUInteger colour = aPixel.colour & 0x03;
+                NSUInteger colour = aPixel.pixelColour & 0x03;
                 if ((colour & 0x02) != 0) byteValueLeft += (int)(pow(2, (8 - (row + 1))));
                 if ((colour & 0x01) != 0) byteValueRight += (int)(pow(2, (8 - (row + 1))));
             } else {
                 // Mono mode: just assume any colour value is not zero
-                if (aPixel.colour != 0x00) byteValueLeft += (int)(pow(2, (8 - (row + 1))));
+                if (aPixel.pixelColour != 0x00) byteValueLeft += (int)(pow(2, (8 - (row + 1))));
             }
         }
 
@@ -591,14 +590,14 @@
                 //     0      |      1     | Red
                 //     1      |      1     | Orange
                 byteRight = valueRight & (1 << (7 - j));
-                if (byteLeft != 0 | byteRight != 0) aPixel.colour = ((byteLeft >> (7 - j)) << 1) | (byteRight >> (7 - j));
+                if (byteLeft != 0 | byteRight != 0) aPixel.pixelColour = ((byteLeft >> (7 - j)) << 1) | (byteRight >> (7 - j));
             } else {
                 // For a mono display, if the bit is set, the pixel is lit
-                if (byteLeft != 0) aPixel.colour = kColourBlack;
+                if (byteLeft != 0) aPixel.pixelColour = kColourBlack;
             }
 
             // Fill in the pixel if it is lit
-            if (aPixel.colour != kColourWhite) [aPixel update];
+            if (aPixel.pixelColour != kColourWhite) [aPixel update];
         }
 
         // Check that we're not going to break the loop

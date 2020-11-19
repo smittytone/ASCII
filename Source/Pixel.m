@@ -8,7 +8,7 @@
 
 @implementation Pixel
 
-@synthesize colour, drawColour;
+@synthesize pixelColour, drawColour;
 
 
 
@@ -18,8 +18,9 @@
 
     if (self) {
         // Initialize the pixel's properties
-        colour = 0;
+        pixelColour = 0;
         drawColour = kColourBlack;
+        storeColour = kColourBlack;
         mouseDown = NO;
 
         // Establish a mouse-tracking area...
@@ -38,12 +39,12 @@
         nc = NSNotificationCenter.defaultCenter;
 
         [nc addObserver:self
-               selector:@selector(passMouseDown:)
+               selector:@selector(passedMouseDown:)
                    name:@"PixelMouseDown"
                  object:nil];
 
         [nc addObserver:self
-               selector:@selector(passMouseUp:)
+               selector:@selector(passedMouseUp:)
                    name:@"PixelMouseUp"
                  object:nil];
 
@@ -56,7 +57,7 @@
 
 - (void)drawRect:(NSRect)rect {
 
-    // Fill the pixel with the desired colour and give it a grey frame
+    // Fill the pixel with the desired pixelColour and give it a grey frame
     NSColor *frameColor = [self pickColour];
     NSBezierPath *thePath = [NSBezierPath bezierPathWithRect:rect];
     thePath.lineWidth = 0.5;
@@ -68,26 +69,26 @@
 
 
 
-- (void)mouseUp:(NSEvent *)event {
+- (void)mouseDown:(NSEvent *)event {
 
-    // Tell all the other pixels that the mouse has been released
-    [nc postNotificationName:@"PixelMouseUp" object:self userInfo:nil];
+    // Change the clicked pixel's pixelColour
+    pixelColour = pixelColour == drawColour ? kColourWhite : drawColour;
+
+    // Paint the clicked pixel
+    [self setNeedsDisplay:YES];
+
+    // Tell ALL the pixels that the mouse has been pressed and pass the clicked
+    // pixel's colour - this will become ALL pixels' new ink colour
+    NSDictionary *dict = @{ @"PixelColour" : [NSNumber numberWithInteger:pixelColour]};
+    [nc postNotificationName:@"PixelMouseDown" object:self userInfo:dict];
 }
 
 
 
-- (void)mouseDown:(NSEvent *)event {
+- (void)mouseUp:(NSEvent *)event {
 
-    // Change the pixel's colour
-    colour = colour == drawColour ? kColourWhite : drawColour;
-    mouseDown = YES;
-
-    // Tell all the other pixels that the mouse has been released
-    NSDictionary *dict = @{ @"colour" : [NSNumber numberWithInteger:colour]};
-    [nc postNotificationName:@"PixelMouseDown" object:self userInfo:dict];
-
-    // Update the display
-    [self setNeedsDisplay:YES];
+    // Tell ALL the pixels that the mouse has been released
+    [nc postNotificationName:@"PixelMouseUp" object:self userInfo:nil];
 }
 
 
@@ -96,25 +97,25 @@
 
     // We are trakcing mouse movements across pixel boundaries. If we enter a
     // pixel and 'mouseDown' is true, we need to paint this pixel with the
-    // same colour as is the first painted pixel
+    // same pixelColour as the first painted pixel
     if (mouseDown) {
-        colour = drawColour;
+        pixelColour = drawColour;
         [self setNeedsDisplay:YES];
     }
 }
 
 
 
-- (void)passMouseDown:(NSNotification *)note {
+- (void)passedMouseDown:(NSNotification *)note {
 
     // A pixel (it might be this one) has signalled a mouse-down event,
-    // so if the sender was not this pixel, 'mouseDown' will be false
+    // so if the sender was not this pixel
     if (!mouseDown) {
         mouseDown = YES;
 
-        // Get the source pixel's new colour and record as 'drawColour'
+        // Get the source pixel's new colour and this pixel ink 'drawColour' to match
         NSDictionary *dict = (NSDictionary *)note.userInfo;
-        NSNumber *num = [dict objectForKey:@"colour"];
+        NSNumber *num = [dict objectForKey:@"PixelColour"];
         storeColour = drawColour;
         drawColour = num.integerValue;
     }
@@ -122,27 +123,30 @@
 
 
 
-- (void)passMouseUp:(NSNotification *)note {
+- (void)passedMouseUp:(NSNotification *)note {
 
     // A pixel (it might be this one) has signalled a mouse-up event,
     // so if the sender was not this pixel, 'mouseDown' will be true
-    if (mouseDown) mouseDown = NO;
-    drawColour = storeColour;
+    if (mouseDown) {
+        mouseDown = NO;
+        drawColour = storeColour;
+    }
 }
 
 
 
 - (void)update {
 
+    // Pixel paint trigger for other classes to trigger
     [self setNeedsDisplay:YES];
 }
 
 
 - (NSColor *)pickColour {
 
-    // Return the appropriate NSColor based on the current colour int value
+    // Return the appropriate NSColor based on the current pixelColour int value
 
-    switch(colour) {
+    switch(pixelColour) {
         case kColourWhite:
             return [NSColor whiteColor];
         case kColourRed:
