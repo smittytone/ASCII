@@ -108,44 +108,63 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Actions" autoenablesItems="NO" id="bbf-Au-Iv7">
                         <items>
-                            <menuItem title="Fill Grid" id="scV-3n-IWo">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Fill Grid" keyEquivalent="f" id="scV-3n-IWo">
                                 <connections>
                                     <action selector="fillSet:" target="494" id="2ef-5Q-eyr"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Clear Grid" id="8bt-k8-Jek">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Clear Grid" keyEquivalent="k" id="8bt-k8-Jek">
                                 <connections>
                                     <action selector="clearSet:" target="494" id="a0d-pd-UQZ"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Invert Grid" id="Vxe-YQ-7FL">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Invert Grid" keyEquivalent="i" id="Vxe-YQ-7FL">
                                 <connections>
                                     <action selector="inverse:" target="494" id="Fkj-y0-x0t"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1Hn-yz-wYW"/>
-                            <menuItem title="Rotate Grid Clockwise" id="Rn4-3K-0Bo">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Rotate Grid Clockwise" keyEquivalent="r" id="Rn4-3K-0Bo">
                                 <connections>
                                     <action selector="rotate:" target="494" id="d8t-GA-RrD"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Flip Grid Horizontal" id="1Z6-Jv-Ltw">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Flip Grid Horizontal" keyEquivalent="H" id="1Z6-Jv-Ltw">
                                 <connections>
                                     <action selector="flipHorizontal:" target="494" id="wLQ-SN-rXN"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Flip Grid Vertical" id="QKX-Tu-LL9">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Flip Grid Vertical" keyEquivalent="V" id="QKX-Tu-LL9">
                                 <connections>
                                     <action selector="flipVertical:" target="494" id="2hl-VW-0xD"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="R72-8p-Im0"/>
+                            <menuItem title="Shift Pixels Left" keyEquivalent="" id="Nbj-o7-XPV">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="shiftLeft:" target="494" id="Xob-Jk-De3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Shift Pixels Right" keyEquivalent="" id="aso-3x-Bc0">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="shiftRight:" target="494" id="naX-zH-4HE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Shift Pixels Up" keyEquivalent="" id="OdI-f9-lgw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="shiftUp:" target="494" id="ikF-db-aRm"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Shift Pixels Down" keyEquivalent="" id="cd1-fX-kea">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="shiftDown:" target="494" id="PGp-DH-ETs"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="VVY-jX-mZe"/>
                             <menuItem title="Switch to Colour Mode" id="n9r-Xc-yh8">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -178,14 +197,12 @@
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="lS3-19-R8h"/>
-                            <menuItem title="Convert Grid to Values" id="xWT-pT-soY">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Convert Grid to Values" keyEquivalent="g" id="xWT-pT-soY">
                                 <connections>
                                     <action selector="calcHex:" target="494" id="6fL-5Z-0qd"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Convert Values to Grid" id="UdI-fk-Uzf">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Convert Values to Grid" keyEquivalent="G" id="UdI-fk-Uzf">
                                 <connections>
                                     <action selector="retroFill:" target="494" id="I3i-YP-278"/>
                                 </connections>
@@ -235,7 +252,7 @@
         <window title="ASCII" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="371" customClass="AsciiWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="233" y="809" width="502" height="458"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
             <value key="minSize" type="size" width="502" height="458"/>
             <value key="maxSize" type="size" width="502" height="458"/>
             <value key="minFullScreenContentSize" type="size" width="502" height="458"/>

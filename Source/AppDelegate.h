@@ -155,6 +155,13 @@
 - (NSUInteger)getHexValue:(NSInteger)index :(NSString *)string;
 - (void)showError:(NSString *)title :(NSString *)message;
 
+// FROM 1.4.0
+- (IBAction)shiftLeft:(id)sender;
+- (IBAction)shiftRight:(id)sender;
+- (IBAction)shiftUp:(id)sender;
+- (IBAction)shiftDown:(id)sender;
+- (void)updateAll;
+
 
 @property (assign) IBOutlet AsciiWindow *window;
 

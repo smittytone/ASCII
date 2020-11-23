@@ -339,6 +339,90 @@
 }
 
 
+- (IBAction)shiftLeft:(id)sender {
+    
+    // Move all the pixels left one column
+    Pixel *destPixel = nil;
+    Pixel *srcPixel = nil;
+    
+    for (NSInteger col = 1 ; col < 8 ; col++) {
+        for (NSInteger row = 0 ; row < 8 ; row++) {
+            srcPixel = [pixels objectAtIndex:((row << 3) + col)];
+            destPixel = [pixels objectAtIndex:((row << 3) + col - 1)];
+            destPixel.pixelColour = srcPixel.pixelColour;
+            if (col == 7) srcPixel.pixelColour = kColourWhite;
+        }
+    }
+    
+    [self updateAll];
+}
+
+
+- (IBAction)shiftRight:(id)sender {
+    
+    // Move all the pixels left one column
+    Pixel *destPixel = nil;
+    Pixel *srcPixel = nil;
+    
+    for (NSInteger col = 7 ; col > 0 ; col--) {
+        for (NSInteger row = 0 ; row < 8 ; row++) {
+            destPixel = [pixels objectAtIndex:((row << 3) + col)];
+            srcPixel = [pixels objectAtIndex:((row << 3) + col - 1)];
+            destPixel.pixelColour = srcPixel.pixelColour;
+            if (col == 1) srcPixel.pixelColour = kColourWhite;
+        }
+    }
+    
+    [self updateAll];
+}
+
+
+- (IBAction)shiftUp:(id)sender {
+    
+    // Move all the pixels left one column
+    Pixel *destPixel = nil;
+    Pixel *srcPixel = nil;
+    
+    for (NSInteger row = 1 ; row < 8 ; row++) {
+        for (NSInteger col = 0 ; col < 8 ; col++) {
+            destPixel = [pixels objectAtIndex:(((row - 1) << 3) + col)];
+            srcPixel = [pixels objectAtIndex:((row << 3) + col)];
+            destPixel.pixelColour = srcPixel.pixelColour;
+            if (row == 7) srcPixel.pixelColour = kColourWhite;
+        }
+    }
+    
+    [self updateAll];
+}
+
+
+- (IBAction)shiftDown:(id)sender {
+    
+    // Move all the pixels left one column
+    Pixel *destPixel = nil;
+    Pixel *srcPixel = nil;
+    
+    for (NSInteger row = 7 ; row > 0 ; row--) {
+        for (NSInteger col = 0 ; col < 8 ; col++) {
+            srcPixel = [pixels objectAtIndex:(((row - 1) << 3) + col)];
+            destPixel = [pixels objectAtIndex:((row << 3) + col)];
+            destPixel.pixelColour = srcPixel.pixelColour;
+            if (row == 1) srcPixel.pixelColour = kColourWhite;
+        }
+    }
+    
+    [self updateAll];
+}
+
+
+- (void)updateAll {
+    
+    for (NSInteger i = 0 ; i < 64 ; i++) {
+        [[pixels objectAtIndex:i] update];
+    }
+}
+
+
 #pragma mark - Colour Manipulation Methods
 
 - (IBAction)flipColourSwitch:(id)sender {
