@@ -6,7 +6,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ## Release Notes ##
 
-- 1.3.1 *Unreleased*
+- 1.3.1 *23 November 2020*
     - Fix 'stuck' pixels.
 - 1.3.0 *13 November 2020*
     - Support three-colour LED matrices.
