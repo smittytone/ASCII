@@ -1,11 +1,15 @@
-# ASCII 1.3.1 #
+# ASCII 1.4.0 #
 
-ASCII is a simple macOS tool that can be used to design and generate 8x8 glyphs for monochrome and bi-colour LED matrix displays.
+ASCII is a simple macOS tool that can be used to design and generate 8x8 glyphs and icons for electronics projects based on monochrome and bi-colour LED matrix displays.
 
 For more information on using ASCII &mdash; and a binary download &mdash; please see [this page](https://smittytone.net/ascii/index.html).
 
 ## Release Notes ##
 
+- 1.4.0 *Unreleased*
+    - Add pixel shifting: left, right, up and down.
+    - Add keyboard shortcuts.
+    - Big Sur-style icon.
 - 1.3.1 *23 November 2020*
     - Fix 'stuck' pixels.
 - 1.3.0 *13 November 2020*
