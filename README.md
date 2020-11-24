@@ -7,7 +7,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 ## Release Notes ##
 
 - 1.4.0 *Unreleased*
-    - Add pixel shifting: left, right, up and down.
+    - Add pixel shifting: left, right, up and down with <kbd>Cmd-arrow</kbd>.
     - Add keyboard shortcuts.
     - Big Sur-style icon.
 - 1.3.1 *23 November 2020*
@@ -33,4 +33,4 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ASCII’s source code is licensed under the MIT license.
 
-ASCII source code, artwork and UI design is copyright &copy; 2020, Tony Smith.
+ASCII source code, artwork and UI design are copyright &copy; 2020, Tony Smith.
