@@ -360,7 +360,7 @@
 
 - (IBAction)shiftRight:(id)sender {
     
-    // Move all the pixels left one column
+    // Move all the pixels right one column
     Pixel *destPixel = nil;
     Pixel *srcPixel = nil;
     
@@ -379,7 +379,7 @@
 
 - (IBAction)shiftUp:(id)sender {
     
-    // Move all the pixels left one column
+    // Move all the pixels up one row
     Pixel *destPixel = nil;
     Pixel *srcPixel = nil;
     
@@ -398,7 +398,7 @@
 
 - (IBAction)shiftDown:(id)sender {
     
-    // Move all the pixels left one column
+    // Move all the pixels down one row
     Pixel *destPixel = nil;
     Pixel *srcPixel = nil;
     
