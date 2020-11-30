@@ -1,5 +1,5 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\rtf1\ansi\ansicpg1252\cocoartf2577
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
 {\*\expandedcolortbl;;}
 \paperw11900\paperh16840\vieww9600\viewh8400\viewkind0
@@ -9,26 +9,36 @@
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\b0 \cf0 Use ASCII to create glyphs for 8x8 LED matrix displays. \
+\f1\b0 \cf0 Use ASCII to create glyphs for monochrome and bi-colour 8x8 LED matrix displays. \
 \
 Click 
-\b Values
-\b0  to retrieve hex column values to paste into your project code. For an example, see {\field{\*\fldinst{HYPERLINK "https://github.com/smittytone/Weather"}}{\fldrslt https://github.com/smittytone/Weather}}, which displays weather icons generated using ASCII.\
+\f0\b Grid to Values
+\f1\b0  to retrieve hex column values to paste into your project code. You can choose whether the values are presented as a string or an array of hex bytes, according to the needs of your code. \
+\
+For an example, see {\field{\*\fldinst{HYPERLINK "https://github.com/smittytone/Weather"}}{\fldrslt https://github.com/smittytone/Weather}}, which displays weather forecast icons generated using ASCII.\
 \
 Existing value sequences can be pasted into the value field \'97 click 
-\b Write
-\b0  to display their matrix pattern.\
+\f0\b Values to Grid
+\f1\b0  to display their matrix pattern.\
 \
 
-\b Fill
-\b0  fills the entire grid; 
-\b Clear
-\b0  erases it. 
-\b Inverse
-\b0  flips all the pixels, black to white (on to off) and white to black (off to on). 
-\b Rotate
-\b0  rotates the matrix 90 degrees clockwise.\
+\f0\b Fill
+\f1\b0  fills the entire grid; 
+\f0\b Clear
+\f1\b0  erases it. 
+\f0\b Inverse
+\f1\b0  flips all the pixels, black to white (on to off) and white to black (off to on). 
+\f0\b Rotate
+\f1\b0  rotates the matrix 90 degrees clockwise. 
+\f0\b Flip Horizontal
+\f1\b0  and 
+\f0\b Flip Vertical
+\f1\b0  produce mirror images on the specified axis.\
 \
 The round row and column buttons can be click to set the entire row or column, or shift-clicked to clear the entire row or column.\
+\
+ASCII supports three-colour displays \'97\'a0technically, bi-colour LEDs. Flip the 
+\f0\b Colour
+\f1\b0  switch to enable colour then select one of the three ink colours.\
 \
 It is called ASCII because it was developed to create Ascii characters for a project using an 8x8 LED matrix.}
