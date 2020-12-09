@@ -757,7 +757,7 @@
 
     // Open online help
 
-    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://www.smittytone.net/ascii/index.html"]];
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://smittytone.net/ascii/index.html"]];
 }
 
 @end
