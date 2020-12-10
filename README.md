@@ -6,7 +6,7 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ## Release Notes ##
 
-- 1.4.0 *Unreleased*
+- 1.4.0 *10 December 2020*
     - Add pixel shifting: left, right, up and down with <kbd>Cmd-arrow</kbd>.
     - Add keyboard shortcuts.
     - Big Sur-style icon.
