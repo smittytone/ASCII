@@ -2,7 +2,7 @@
     AppDelegate.h
     ASCII
 
-    Copyright © 2020 Tony Smith. All rights reserved.
+    Copyright © 2025 Tony Smith. All rights reserved.
 
     MIT License
     Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -179,6 +179,9 @@
 - (IBAction)shiftUp:(id)sender;
 - (IBAction)shiftDown:(id)sender;
 - (void)updateAll;
+
+// FROM 1.4.1
+- (IBAction)flipOutput:(id)sender;
 
 
 @property (assign) IBOutlet AsciiWindow *window;
