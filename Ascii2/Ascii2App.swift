@@ -34,6 +34,9 @@ struct Ascii2App: App {
     // Hack required to remove the redundant View menu
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    // Customise the About... window
+    @Environment(\.openWindow) private var openWindow
+    
     // Make the openURL function available
     @Environment(\.openURL) private var openURL
     
@@ -63,6 +66,13 @@ struct Ascii2App: App {
                     }
                 }
                 .keyboardShortcut("h", modifiers: [.command, .shift])
+            }
+            // MARK: APP MENU
+            CommandGroup(replacing: CommandGroupPlacement.appInfo) {
+                Button("About ASCII") {
+                    // Open the About.. window
+                    openWindow(id: "com.bps.ascii.about")
+                }
             }
             // MARK: ACTIONS MENU
             CommandMenu("Actions") {
@@ -130,6 +140,14 @@ struct Ascii2App: App {
                 .keyboardShortcut("g", modifiers: [.command, .shift])
             }
         }
+        // MARK: ABOUT WINDOW
+        Window("About ASCII", id: "com.bps.ascii.about") {
+            AboutView()
+                .frame(width: 320, height: 240)
+        }
+        .windowResizability(.contentSize)
+        .windowToolbarStyle(.unified)
+        .defaultPosition(.center)
     }
 }
 

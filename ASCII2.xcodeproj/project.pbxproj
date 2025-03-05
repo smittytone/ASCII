@@ -17,10 +17,12 @@
 		3B128C492D77559300FC6670 /* PixelGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C482D77559300FC6670 /* PixelGrid.swift */; };
 		3B128C4B2D77711900FC6670 /* MainViewFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C4A2D77711900FC6670 /* MainViewFunctions.swift */; };
 		3B128C552D785CA500FC6670 /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C542D785CA500FC6670 /* Enumerations.swift */; };
+		3B128C5F2D7865C300FC6670 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C5E2D7865C300FC6670 /* AboutView.swift */; };
+		3B128C612D786C0600FC6670 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C602D786C0600FC6670 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3B128C012D771AA900FC6670 /* Ascii.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ascii.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B128C012D771AA900FC6670 /* ASCII.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASCII.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B128C2F2D771AC600FC6670 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3B128C312D771AC600FC6670 /* Ascii2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ascii2.entitlements; sourceTree = "<group>"; };
 		3B128C322D771AC600FC6670 /* Ascii2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ascii2App.swift; sourceTree = "<group>"; };
@@ -34,6 +36,8 @@
 		3B128C542D785CA500FC6670 /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		3B128C5B2D7861FB00FC6670 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		3B128C5C2D7861FB00FC6670 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		3B128C5E2D7865C300FC6670 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		3B128C602D786C0600FC6670 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,8 +54,8 @@
 		3B128BF82D771AA900FC6670 = {
 			isa = PBXGroup;
 			children = (
-				3B128C5D2D78620300FC6670 /* Misc */,
 				3B128C352D771AC600FC6670 /* Ascii2 */,
+				3B128C5D2D78620300FC6670 /* Misc */,
 				3B128C022D771AA900FC6670 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,7 +63,7 @@
 		3B128C022D771AA900FC6670 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3B128C012D771AA900FC6670 /* Ascii.app */,
+				3B128C012D771AA900FC6670 /* ASCII.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,12 +80,14 @@
 			isa = PBXGroup;
 			children = (
 				3B128C322D771AC600FC6670 /* Ascii2App.swift */,
-				3B128C542D785CA500FC6670 /* Enumerations.swift */,
 				3B128C342D771AC600FC6670 /* MainView.swift */,
 				3B128C4A2D77711900FC6670 /* MainViewFunctions.swift */,
 				3B128C3A2D77250200FC6670 /* PixelGridView.swift */,
 				3B128C3C2D772AEC00FC6670 /* PixelView.swift */,
 				3B128C3E2D772BBD00FC6670 /* RowButton.swift */,
+				3B128C5E2D7865C300FC6670 /* AboutView.swift */,
+				3B128C542D785CA500FC6670 /* Enumerations.swift */,
+				3B128C602D786C0600FC6670 /* Extensions.swift */,
 				3B128C482D77559300FC6670 /* PixelGrid.swift */,
 				3B128C312D771AC600FC6670 /* Ascii2.entitlements */,
 				3B128C332D771AC600FC6670 /* Assets.xcassets */,
@@ -102,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3B128C002D771AA900FC6670 /* Ascii */ = {
+		3B128C002D771AA900FC6670 /* ASCII */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3B128C262D771AAA00FC6670 /* Build configuration list for PBXNativeTarget "Ascii" */;
+			buildConfigurationList = 3B128C262D771AAA00FC6670 /* Build configuration list for PBXNativeTarget "ASCII" */;
 			buildPhases = (
 				3B128BFD2D771AA900FC6670 /* Sources */,
 				3B128BFE2D771AA900FC6670 /* Frameworks */,
@@ -114,11 +120,11 @@
 			);
 			dependencies = (
 			);
-			name = Ascii;
+			name = ASCII;
 			packageProductDependencies = (
 			);
 			productName = Ascii2;
-			productReference = 3B128C012D771AA900FC6670 /* Ascii.app */;
+			productReference = 3B128C012D771AA900FC6670 /* ASCII.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -144,13 +150,12 @@
 				Base,
 			);
 			mainGroup = 3B128BF82D771AA900FC6670;
-			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3B128C022D771AA900FC6670 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3B128C002D771AA900FC6670 /* Ascii */,
+				3B128C002D771AA900FC6670 /* ASCII */,
 			);
 		};
 /* End PBXProject section */
@@ -176,6 +181,8 @@
 				3B128C3B2D77250200FC6670 /* PixelGridView.swift in Sources */,
 				3B128C372D771AC600FC6670 /* MainView.swift in Sources */,
 				3B128C3F2D772BBD00FC6670 /* RowButton.swift in Sources */,
+				3B128C5F2D7865C300FC6670 /* AboutView.swift in Sources */,
+				3B128C612D786C0600FC6670 /* Extensions.swift in Sources */,
 				3B128C4B2D77711900FC6670 /* MainViewFunctions.swift in Sources */,
 				3B128C492D77559300FC6670 /* PixelGrid.swift in Sources */,
 				3B128C3D2D772AEC00FC6670 /* PixelView.swift in Sources */,
@@ -318,7 +325,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_CFBundleDisplayName = ASCII;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "ASCII © 2025, Tony Smith";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -346,7 +355,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_CFBundleDisplayName = ASCII;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "ASCII © 2025, Tony Smith";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -372,7 +383,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3B128C262D771AAA00FC6670 /* Build configuration list for PBXNativeTarget "Ascii" */ = {
+		3B128C262D771AAA00FC6670 /* Build configuration list for PBXNativeTarget "ASCII" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B128C272D771AAA00FC6670 /* Debug */,
