@@ -32,8 +32,6 @@ struct MainView: View {
     @Environment(PixelGrid.self) internal var model: PixelGrid
     
     @State var values: String = ""
-    @State var outputChoice = 1
-    @State var currentColour: PixelColour = .black
     
     
     var body: some View {
@@ -49,9 +47,9 @@ struct MainView: View {
                 }
                 TextField("", text: $values)
                 HStack {
-                    Picker(selection: $outputChoice, label: Text("Output values as:")) {
-                        Text("String").tag(1)
-                        Text("Array").tag(2)
+                    Picker(selection: $boundModel.outputChoice, label: Text("Output values as:")) {
+                        Text("String").tag(OutputType.string.rawValue)
+                        Text("Array").tag(OutputType.array.rawValue)
                     }
                     .pickerStyle(.radioGroup)
                     .horizontalRadioGroupLayout()
@@ -126,6 +124,12 @@ struct MainView: View {
             }
             .padding(16)
             .frame(width: 180)
+            .onChange(of: self.model.outputToString) {
+                // If the TextField contains data, update it if the mode changes
+                if !self.values.isEmpty {
+                    self.g2v()
+                }
+            }
         }
     }
 }

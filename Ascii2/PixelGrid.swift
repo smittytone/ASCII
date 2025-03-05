@@ -69,6 +69,16 @@ class PixelGrid {
         }
     }
     
+    
+    var outputChoice: Int {
+        get {
+            return self.outputToString ? OutputType.string.rawValue : OutputType.array.rawValue
+        }
+        set {
+            outputToString = (newValue == OutputType.string.rawValue)
+        }
+    }
+    
     var values: String {
         get {
             var theHex = ""

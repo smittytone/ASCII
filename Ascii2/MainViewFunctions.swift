@@ -97,8 +97,6 @@ extension MainView {
      */
     func g2v() {
         
-        //self.model.inColourMode = self.colourSelected
-        self.model.outputToString = (self.outputChoice == 1)
         self.values = "\(self.model.values)"
     }
     
@@ -109,8 +107,6 @@ extension MainView {
      */
     func v2g() {
         
-        //self.model.inColourMode = self.colourSelected
-        self.model.outputToString = (self.outputChoice == 1)
         self.model.retroFill(self.values)
     }
     

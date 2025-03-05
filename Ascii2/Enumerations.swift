@@ -32,3 +32,9 @@ enum PixelColour: Int {
     case orange =   3
     case black =    4
 }
+
+
+enum OutputType: Int {
+    case string =   1
+    case array =    2
+}
