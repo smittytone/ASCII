@@ -36,29 +36,43 @@ struct Ascii2App: App {
     
     // Customise the About... window
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismiss) private var dismiss
     
     // Make the openURL function available
     @Environment(\.openURL) private var openURL
-    
-    @Environment(\.scenePhase) private var scenePhase
     
     
     @State private var model = PixelGrid()
     @State private var actionMenuColourTitles = ["Switch to Colour Mode", "Switch to Mono Mode"]
     @State private var actionMenuColourTitleIndex = 0
+    @State private var showingAboutWindow = false
     
     
     var body: some Scene {
         // MARK: ASCII WINDOW
-        Window("ASCII 2", id: "main") {
+        Window("ASCII", id: "main") {
             MainView()
                 .environment(self.model)
-                //.frame(width: 540, height: 458)
+                .frame(width: 548, height: 458)
+                // The following added for macOS 15 builds which enforces appearance of the zoom button
+                .onReceive(NotificationCenter.default.publisher(for:
+                    NSWindow.didBecomeKeyNotification)) { notification in
+                    if let window = notification.object as? NSWindow {
+                        // Remove the zoom button for all windows
+                        window.standardWindowButton(.zoomButton)?.isHidden = true
+                        if self.showingAboutWindow {
+                            // Remove the miniaturize button if we're making the `about` window key
+                            window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+                            self.showingAboutWindow = false
+                        }
+                    }
+                }
         }
         .windowResizability(.contentSize)
         .windowToolbarStyle(.unified)
         .defaultPosition(.center)
         .defaultSize(CGSize(width: 548, height: 458))
+        .restorationBehavior(.disabled) // macOS 15+ only
         .commands {
             // MARK: HELP MENU
             CommandGroup(replacing: .help) {
@@ -74,6 +88,7 @@ struct Ascii2App: App {
             CommandGroup(replacing: CommandGroupPlacement.appInfo) {
                 Button("About ASCII") {
                     // Open the About.. window
+                    self.showingAboutWindow = true
                     openWindow(id: "com.bps.ascii.about")
                 }
             }
@@ -143,22 +158,31 @@ struct Ascii2App: App {
                 .keyboardShortcut("g", modifiers: [.command, .shift])
             }
         }
-        .onChange(of: scenePhase, initial: false) { outPhase, inPhase in
-            if inPhase == .background {
-                // Perform cleanup when all scenes within
-                // MyApp go to the background.
-            }
-        }
         // MARK: ABOUT WINDOW
         Window("About ASCII", id: "com.bps.ascii.about") {
             AboutView()
-                //.frame(width: 320, height: 240)
+                .frame(width: 320, height: 240)
+                /*
+                .background {
+                    if self.aboutWindow == nil {
+                        Color.clear.onReceive(NotificationCenter.default.publisher(for:
+                            NSWindow.didBecomeKeyNotification)) { notification in
+                            if let window = notification.object as? NSWindow {
+                                if window == self.aboutWindow {
+                                    window.standardWindowButton(.zoomButton)?.isHidden = true
+                                    window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+                                }
+                            }
+                        }
+                    }
+                }
+                 */
         }
         .windowResizability(.contentSize)
-        .windowToolbarStyle(.unified)
+        .windowStyle(.hiddenTitleBar)
         .defaultPosition(.center)
         .defaultSize(CGSize(width: 320, height: 240))
-        // macOS 15 + .restorationBehavior(.disabled)
+        .restorationBehavior(.disabled) // macOS 15+ only
     }
 }
 

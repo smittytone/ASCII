@@ -37,6 +37,8 @@ struct RowButton: View {
     @State var rowNumber = 0
     @State var isColumn = false
     
+    @State private var shiftKeyPressed: Bool = false
+    
     
     var body: some View {
         
@@ -45,6 +47,9 @@ struct RowButton: View {
             .foregroundColor(Color.white)
             .background(Color.accentColor)
             .clipShape(Circle())
+            .onModifierKeysChanged(mask: .shift) { old, new in // macOS 15+ only
+                self.shiftKeyPressed = !new.isEmpty
+            }
     }
     
     
@@ -54,9 +59,9 @@ struct RowButton: View {
     func paintRow() {
         
         if self.isColumn {
-            self.model.fillColumn(self.rowNumber)
+            self.model.fillColumn(self.rowNumber, self.model.currentColour, self.shiftKeyPressed)
         } else {
-            self.model.fillRow(self.rowNumber)
+            self.model.fillRow(self.rowNumber, self.model.currentColour, self.shiftKeyPressed)
         }
     }
 }

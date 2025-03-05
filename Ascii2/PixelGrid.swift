@@ -163,11 +163,11 @@ class PixelGrid {
         - row:    The row's Y co-ordinate.
         - colour: The pixel's colour. Default: .black
      */
-    func fillRow(_ row: Int, _ colour: PixelColour = .black) {
+    func fillRow(_ row: Int, _ colour: PixelColour = .black, _ doClear: Bool = false) {
         
         guard (row >= 0 && row < 8) else { return }
         for col in 0..<8 {
-            self.grid[col][row] = colour
+            self.grid[col][row] = doClear ? .white : colour
         }
     }
     
@@ -179,11 +179,11 @@ class PixelGrid {
         - col:    The row's Y co-ordinate.
         - colour: The pixel's colour. Default: .black
      */
-    func fillColumn(_ col: Int, _ colour: PixelColour = .black) {
+    func fillColumn(_ col: Int, _ colour: PixelColour = .black, _ doClear: Bool = false) {
         
         guard (col >= 0 && col < 8) else { return }
         for row in 0..<8 {
-            self.grid[col][row] = colour
+            self.grid[col][row] = doClear ? .white : colour
         }
     }
     
