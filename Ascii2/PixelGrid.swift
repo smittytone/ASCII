@@ -124,6 +124,9 @@ class PixelGrid {
     
     init() {
         grid = Array(repeating: Array(repeating: .white, count: 8), count: 8)
+        
+        // Kind of a UI thing so should not be here!
+        UserDefaults.standard.setValue(false, forKey: "NSQuitAlwaysKeepsWindows")
     }
     
     

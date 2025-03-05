@@ -36,12 +36,13 @@ struct AboutView: View {
                 .frame(width: 64.0, height: 64.0)
             Text("ASCII \(Bundle.main.version) (\(Bundle.main.build))")
                 .foregroundStyle(.primary)
-            Text("\nUse ASCII to create glyphs for monochrome and bi-colour 8x8 LED matrix displays.")
+            Text("\nUse ASCII to create custom glyphs and images for monochrome and bi-colour 8x8 LED matrix displays.")
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
             Spacer()
-            Text("ASCII © 2025 Tony Smith (@smittytone)")
+            Text("ASCII © 2025 Tony Smith (@smittytone).\nAll rights reserved")
                 .foregroundStyle(.primary)
+                .multilineTextAlignment(.center)
         }
         .padding(16)
     }

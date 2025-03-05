@@ -40,6 +40,8 @@ struct Ascii2App: App {
     // Make the openURL function available
     @Environment(\.openURL) private var openURL
     
+    @Environment(\.scenePhase) private var scenePhase
+    
     
     @State private var model = PixelGrid()
     @State private var actionMenuColourTitles = ["Switch to Colour Mode", "Switch to Mono Mode"]
@@ -51,11 +53,12 @@ struct Ascii2App: App {
         Window("ASCII 2", id: "main") {
             MainView()
                 .environment(self.model)
-                .frame(width: 540, height: 458)
+                //.frame(width: 540, height: 458)
         }
         .windowResizability(.contentSize)
         .windowToolbarStyle(.unified)
         .defaultPosition(.center)
+        .defaultSize(CGSize(width: 548, height: 458))
         .commands {
             // MARK: HELP MENU
             CommandGroup(replacing: .help) {
@@ -140,33 +143,50 @@ struct Ascii2App: App {
                 .keyboardShortcut("g", modifiers: [.command, .shift])
             }
         }
+        .onChange(of: scenePhase, initial: false) { outPhase, inPhase in
+            if inPhase == .background {
+                // Perform cleanup when all scenes within
+                // MyApp go to the background.
+            }
+        }
         // MARK: ABOUT WINDOW
         Window("About ASCII", id: "com.bps.ascii.about") {
             AboutView()
-                .frame(width: 320, height: 240)
+                //.frame(width: 320, height: 240)
         }
         .windowResizability(.contentSize)
         .windowToolbarStyle(.unified)
         .defaultPosition(.center)
+        .defaultSize(CGSize(width: 320, height: 240))
+        // macOS 15 + .restorationBehavior(.disabled)
     }
 }
 
 
 /*
  This is part of the hack to remove the View menu.
- 
  See https://gist.github.com/othyn/98f35abf988bdcfb6a118b8573d46b3b
+ 
+ It is also used to quit the app when the last window (`main` or `about`) closes, which
+ otherwise does not occur. This is sub-optimal so may warrant removing the custom
+ `about` window altogether.
  
  NOTE Other menus may be removed this way: just replicate the inner statement
       and specify a different menu title.
  */
 final class AppDelegate: NSObject, NSApplicationDelegate {
-
+    
     func applicationWillUpdate(_ notification: Notification) {
         if let menu = NSApplication.shared.mainMenu {
             if let file = menu.items.first(where: { $0.title == "View"}) {
                 menu.removeItem(file);
             }
         }
+    }
+    
+    
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        
+        return true
     }
 }
