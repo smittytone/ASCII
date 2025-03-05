@@ -42,13 +42,14 @@ struct RowButtonView: View {
     
     var body: some View {
         
-        Button(action: self.paintRow) {}
+        Image(systemName: "paintbrush.fill")
+            .resizable(resizingMode: .stretch)
             .frame(width: 16, height: 16)
-            .foregroundColor(Color.white)
-            .background(Color.accentColor)
-            .clipShape(Circle())
             .onModifierKeysChanged(mask: .shift) { old, new in // macOS 15+ only
                 self.shiftKeyPressed = !new.isEmpty
+            }
+            .onTapGesture {
+                self.paintRow()
             }
     }
     
