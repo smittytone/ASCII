@@ -37,8 +37,7 @@ extension MainView {
      */
     func fill() {
         
-        let colour = indexToColour()
-        self.model.fillAll(colour)
+        self.model.fillAll(indexToColour())
     }
     
     
@@ -97,7 +96,7 @@ extension MainView {
      */
     func g2v() {
         
-        self.values = "\(self.model.values)"
+        self.model.hexValues = "\(self.model.values)"
     }
     
     
@@ -107,7 +106,8 @@ extension MainView {
      */
     func v2g() {
         
-        self.model.retroFill(self.values)
+        guard !self.model.hexValues.isEmpty else { return }
+        self.model.retroFill(self.model.hexValues)
     }
     
     
@@ -117,17 +117,7 @@ extension MainView {
     func indexToColour() -> PixelColour {
         
         if self.model.inColourMode {
-            switch self.model.colourChoice {
-                case 1:
-                    return .red
-                case 2:
-                    return .green
-                case 3:
-                    return .orange
-                default:
-                    return .black
-                
-            }
+            return PixelColour(rawValue: self.model.colourChoice) ?? .red
         }
         
         return .black

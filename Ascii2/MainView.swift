@@ -31,7 +31,7 @@ struct MainView: View {
     
     @Environment(PixelGrid.self) internal var model: PixelGrid
     
-    @State var values: String = ""
+    //@State var values: String = ""
     
     
     var body: some View {
@@ -45,7 +45,7 @@ struct MainView: View {
                     Text("Grid pixel values:")
                     Spacer()
                 }
-                TextField("", text: $values)
+                TextField("", text: $boundModel.hexValues)
                 HStack {
                     Picker(selection: $boundModel.outputChoice, label: Text("Output values as:")) {
                         Text("String").tag(OutputType.string.rawValue)
@@ -126,7 +126,7 @@ struct MainView: View {
             .frame(width: 180)
             .onChange(of: self.model.outputToString) {
                 // If the TextField contains data, update it if the mode changes
-                if !self.values.isEmpty {
+                if !self.model.hexValues.isEmpty {
                     self.g2v()
                 }
             }

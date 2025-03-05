@@ -149,36 +149,20 @@ struct Ascii2App: App {
                 .disabled(!self.model.inColourMode)
                 Divider()
                 Button("Convert Grid to Values") {
-                    // TODO How to pass this through?
+                    self.model.hexValues = "\(self.model.values)"
                 }
                 .keyboardShortcut("g", modifiers: .command)
-                .disabled(true)
                 Button("Write Values to Grid") {
-                    // TODO How to pass this through?
+                    guard !self.model.hexValues.isEmpty else { return }
+                    self.model.retroFill(self.model.hexValues)
                 }
                 .keyboardShortcut("g", modifiers: [.command, .shift])
-                .disabled(true)
             }
         }
         // MARK: ABOUT WINDOW
         Window("About ASCII", id: "com.bps.ascii.about") {
             AboutView()
                 .frame(width: 320, height: 240)
-                /*
-                .background {
-                    if self.aboutWindow == nil {
-                        Color.clear.onReceive(NotificationCenter.default.publisher(for:
-                            NSWindow.didBecomeKeyNotification)) { notification in
-                            if let window = notification.object as? NSWindow {
-                                if window == self.aboutWindow {
-                                    window.standardWindowButton(.zoomButton)?.isHidden = true
-                                    window.standardWindowButton(.miniaturizeButton)?.isHidden = true
-                                }
-                            }
-                        }
-                    }
-                }
-                 */
         }
         .windowResizability(.contentSize)
         .windowStyle(.hiddenTitleBar)

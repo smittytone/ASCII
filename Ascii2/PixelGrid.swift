@@ -36,7 +36,7 @@ class PixelGrid {
     var grid: [[PixelColour]] =         []
     var outputToString =                true
     var currentColour: PixelColour =    .black
-    
+    var hexValues: String =             ""
     
     // MARK: - Public Computed Properties
     
@@ -146,13 +146,19 @@ class PixelGrid {
      Set a specific pixel's colour.
      
      - Parameters
-        - x:      The pixel's X co-ordinate.
-        - y:      The pixel's Y co-ordinate.
+        - col:    The pixel's X co-ordinate.
+        - row:    The pixel's Y co-ordinate.
         - colour: The pixel's colour. Default: .black
      */
-    func plot(_ x: Int, _ y: Int, _ colour: PixelColour = .black) {
+    func plot(_ col: Int, _ row: Int, _ colour: PixelColour = .black) {
         
-        self.grid[x][y] = colour
+        self.grid[col][row] = colour
+    }
+    
+    
+    func colour(_ col: Int, _ row: Int) -> PixelColour {
+        
+        return self.grid[col][row]
     }
     
     
