@@ -77,7 +77,7 @@ struct Ascii2App: App {
             // MARK: HELP MENU
             CommandGroup(replacing: .help) {
                 // Update the Help command to open a browser and get web-sourced help
-                Button("ASCII 2 Help") {
+                Button("ASCII Help") {
                     if let url = URL(string: "https://smittytone.net/ascii/index.html") {
                         openURL(url)
                     }
@@ -152,10 +152,12 @@ struct Ascii2App: App {
                     // TODO How to pass this through?
                 }
                 .keyboardShortcut("g", modifiers: .command)
+                .disabled(true)
                 Button("Write Values to Grid") {
                     // TODO How to pass this through?
                 }
                 .keyboardShortcut("g", modifiers: [.command, .shift])
+                .disabled(true)
             }
         }
         // MARK: ABOUT WINDOW

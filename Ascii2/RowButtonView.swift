@@ -30,7 +30,7 @@ import SwiftUI
 /*
  This builds a row or column filler button.
  */
-struct RowButton: View {
+struct RowButtonView: View {
     
     @Environment(PixelGrid.self) private var model: PixelGrid
     

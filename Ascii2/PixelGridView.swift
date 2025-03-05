@@ -46,62 +46,62 @@ struct PixelGridView: View {
                 Text("7")
                     .padding(.trailing)
                 ForEach(0..<8) { x in PixelView(x: x, y: 7) }
-                RowButton(rowNumber: 7)
+                RowButtonView(rowNumber: 7)
                     .padding(.leading)
             }
             GridRow {
                 Text("6")
                     .padding(.trailing)
                 ForEach(0..<8) { x in PixelView(x: x, y: 6) }
-                RowButton(rowNumber: 6)
+                RowButtonView(rowNumber: 6)
                     .padding(.leading)
             }
             GridRow {
                 Text("5")
                     .padding(.trailing)
                 ForEach(0..<8) { x in PixelView(x: x, y: 5) }
-                RowButton(rowNumber: 5)
+                RowButtonView(rowNumber: 5)
                     .padding(.leading)
             }
             GridRow {
                 Text("4")
                     .padding(.trailing)
                 ForEach(0..<8) { x in PixelView(x: x, y: 4) }
-                RowButton(rowNumber: 4)
+                RowButtonView(rowNumber: 4)
                     .padding(.leading)
             }
             GridRow {
                 Text("3")
                     .padding(.trailing)
                 ForEach(0..<8) { x in PixelView(x: x, y: 3) }
-                RowButton(rowNumber: 3)
+                RowButtonView(rowNumber: 3)
                     .padding(.leading)
             }
             GridRow {
                 Text("2")
                     .padding(.trailing)
                 ForEach(0..<8) { x in PixelView(x: x, y: 2) }
-                RowButton(rowNumber: 2)
+                RowButtonView(rowNumber: 2)
                     .padding(.leading)
             }
             GridRow {
                 Text("1")
                     .padding(.trailing)
                 ForEach(0..<8) { x in PixelView(x: x, y: 1) }
-                RowButton(rowNumber: 1)
+                RowButtonView(rowNumber: 1)
                     .padding(.leading)
             }
             GridRow {
                 Text("0")
                     .padding(.trailing)
                 ForEach(0..<8) { x in PixelView(x: x, y: 0) }
-                RowButton(rowNumber: 0)
+                RowButtonView(rowNumber: 0)
                     .padding(.leading)
             }
             GridRow {
                 Text(" ")
                 ForEach(0..<8) { i in
-                    RowButton(rowNumber: i, isColumn: true)
+                    RowButtonView(rowNumber: i, isColumn: true)
                         .padding(.top)
                 }
             }
