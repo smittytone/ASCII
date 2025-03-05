@@ -1,11 +1,13 @@
-# ASCII 1.4.0 #
+# ASCII 2.0.0
 
 ASCII is a simple macOS tool that can be used to design and generate 8x8 glyphs and icons for electronics projects based on monochrome and bi-colour LED matrix displays.
 
 For more information on using ASCII &mdash; and a binary download &mdash; please see [this page](https://smittytone.net/ascii/index.html).
 
-## Release Notes ##
+## Release Notes
 
+- 2.0.0 *Unreleased*
+    - Ground-up rewrite in Swift and SwiftUI.
 - 1.4.0 *10 December 2020*
     - Add pixel shifting: left, right, up and down with <kbd>Cmd-arrow</kbd>.
     - Add keyboard shortcuts.
@@ -33,4 +35,4 @@ For more information on using ASCII &mdash; and a binary download &mdash; please
 
 ASCII’s source code is licensed under the MIT license.
 
-ASCII source code, artwork and UI design are copyright &copy; 2020, Tony Smith.
+ASCII source code, artwork and UI design are copyright &copy; 2025, Tony Smith.
