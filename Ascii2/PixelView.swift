@@ -37,23 +37,11 @@ struct PixelView: View {
     @State var x = 0
     @State var y = 0
     
-    
     var body: some View {
         
         Color(getColour(self.model.colour(x, y)))
             .border(Color.gray, width: 0.75)
             .frame(width: 32.0, height: 32.0)
-            .onTapGesture {
-                // Apply colour on white, or white if the cell is already coloured
-                let newColour = self.model.colour(x, y) == self.model.currentColour ? .white : self.model.currentColour
-                self.model.plot(x, y, newColour)
-            }
-            .gesture(
-                DragGesture(coordinateSpace: .local)
-                    .onChanged { value in
-                        print("drag location: \(value.location)")
-                    }
-            )
     }
     
     
