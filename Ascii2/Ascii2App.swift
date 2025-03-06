@@ -34,18 +34,13 @@ struct Ascii2App: App {
     // Hack required to remove the redundant View menu
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    // Customise the About... window
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismiss) private var dismiss
-    
-    // Make the openURL function available
-    @Environment(\.openURL) private var openURL
-    
-    
     @State private var model = PixelGrid()
-    @State private var actionMenuColourTitles = ["Switch to Colour Mode", "Switch to Mono Mode"]
     @State private var actionMenuColourTitleIndex = 0
     @State private var showingAboutWindow = false
+    
+    private let ACTION_MENU_COLOUR_TITLES = ["Switch to Colour Mode", "Switch to Mono Mode"]
+    private let WINDOW_WIDTH: CGFloat = 530
+    private let WINDOW_HEIGHT: CGFloat = 458
     
     
     var body: some Scene {
@@ -53,7 +48,7 @@ struct Ascii2App: App {
         Window("ASCII", id: "main") {
             MainView()
                 .environment(self.model)
-                .frame(width: 548, height: 458)
+                .frame(width: WINDOW_WIDTH, height: WINDOW_HEIGHT)
                 // The following added for macOS 15 builds which enforces appearance of the zoom button
                 .onReceive(NotificationCenter.default.publisher(for:
                     NSWindow.didBecomeKeyNotification)) { notification in
@@ -61,7 +56,7 @@ struct Ascii2App: App {
                         // Remove the zoom button for all windows
                         window.standardWindowButton(.zoomButton)?.isHidden = true
                         if self.showingAboutWindow {
-                            // Remove the miniaturize button if we're making the `about` window key
+                            // Remove the miniaturize button if we're making the About window key
                             window.standardWindowButton(.miniaturizeButton)?.isHidden = true
                             self.showingAboutWindow = false
                         }
@@ -70,28 +65,13 @@ struct Ascii2App: App {
         }
         .windowResizability(.contentSize)
         .windowToolbarStyle(.unified)
-        .defaultPosition(.center)
-        .defaultSize(CGSize(width: 548, height: 458))
+        .defaultWindowPlacement(self.centreWindow)
+        .defaultSize(CGSize(width: WINDOW_WIDTH, height: WINDOW_HEIGHT))
         .restorationBehavior(.disabled) // macOS 15+ only
         .commands {
-            // MARK: HELP MENU
-            CommandGroup(replacing: .help) {
-                // Update the Help command to open a browser and get web-sourced help
-                Button("ASCII Help") {
-                    if let url = URL(string: "https://smittytone.net/ascii/index.html") {
-                        openURL(url)
-                    }
-                }
-                .keyboardShortcut("h", modifiers: [.command, .shift])
-            }
             // MARK: APP MENU
-            CommandGroup(replacing: CommandGroupPlacement.appInfo) {
-                Button("About ASCII") {
-                    // Open the About.. window
-                    self.showingAboutWindow = true
-                    openWindow(id: "com.bps.ascii.about")
-                }
-            }
+            AboutCommand(title: "About ASCII",
+                         blurb: "Use ASCII to create custom glyphs and images for monochrome and bi-colour 8x8 LED matrix displays.")
             // MARK: ACTIONS MENU
             CommandMenu("Actions") {
                 Button("Fill Grid") {
@@ -106,6 +86,7 @@ struct Ascii2App: App {
                     self.model.invertAll()
                 }
                 .keyboardShortcut("i", modifiers: .command)
+                .disabled(self.model.inColourMode)
                 Divider()
                 Button("Rotate Grid Clockwise") {
                     self.model.rotate()
@@ -137,7 +118,7 @@ struct Ascii2App: App {
                 }
                 .keyboardShortcut(.downArrow, modifiers: .command)
                 Divider()
-                Button(self.actionMenuColourTitles[self.actionMenuColourTitleIndex]) {
+                Button(self.ACTION_MENU_COLOUR_TITLES[self.actionMenuColourTitleIndex]) {
                     self.model.inColourMode.toggle()
                     self.actionMenuColourTitleIndex = (self.actionMenuColourTitleIndex + 1) % 2
                 }
@@ -158,28 +139,27 @@ struct Ascii2App: App {
                 }
                 .keyboardShortcut("g", modifiers: [.command, .shift])
             }
+            // MARK: HELP MENU
+            HelpCommand(title: "ASCII Help", link: "https://smittytone.net/ascii/index.html")
         }
-        // MARK: ABOUT WINDOW
-        Window("About ASCII", id: "com.bps.ascii.about") {
-            AboutView()
-                .frame(width: 320, height: 240)
-        }
-        .windowResizability(.contentSize)
-        .windowStyle(.hiddenTitleBar)
-        .defaultPosition(.center)
-        .defaultSize(CGSize(width: 320, height: 240))
-        .restorationBehavior(.disabled) // macOS 15+ only
     }
+    
+    
+    func centreWindow(_ content: WindowLayoutRoot, _ context: WindowPlacementContext) -> WindowPlacement {
+        
+        // Center that so and so
+        let windowSize = content.sizeThatFits(.unspecified)
+        let x = (context.defaultDisplay.bounds.width - windowSize.width) / 2
+        let y = (context.defaultDisplay.bounds.height - windowSize.height) / 2
+        return WindowPlacement(CGPoint(x: x, y: y), size: windowSize)
+    }
+
 }
 
 
 /*
- This is part of the hack to remove the View menu.
+ This is part of the hack to remove the View and Window menus.
  See https://gist.github.com/othyn/98f35abf988bdcfb6a118b8573d46b3b
- 
- It is also used to quit the app when the last window (`main` or `about`) closes, which
- otherwise does not occur. This is sub-optimal so may warrant removing the custom
- `about` window altogether.
  
  NOTE Other menus may be removed this way: just replicate the inner statement
       and specify a different menu title.
@@ -187,16 +167,16 @@ struct Ascii2App: App {
 final class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillUpdate(_ notification: Notification) {
+        
         if let menu = NSApplication.shared.mainMenu {
             if let file = menu.items.first(where: { $0.title == "View"}) {
                 menu.removeItem(file);
             }
+            
+            if let file = menu.items.first(where: { $0.title == "Window"}) {
+                menu.removeItem(file);
+            }
         }
     }
-    
-    
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        
-        return true
-    }
+
 }

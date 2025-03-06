@@ -17,8 +17,9 @@
 		3B128C492D77559300FC6670 /* PixelGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C482D77559300FC6670 /* PixelGrid.swift */; };
 		3B128C4B2D77711900FC6670 /* MainViewFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C4A2D77711900FC6670 /* MainViewFunctions.swift */; };
 		3B128C552D785CA500FC6670 /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C542D785CA500FC6670 /* Enumerations.swift */; };
-		3B128C5F2D7865C300FC6670 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C5E2D7865C300FC6670 /* AboutView.swift */; };
 		3B128C612D786C0600FC6670 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C602D786C0600FC6670 /* Extensions.swift */; };
+		3BFBBE962D79D23B00298EE9 /* AboutCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFBBE952D79D23B00298EE9 /* AboutCommand.swift */; };
+		3BFBBE982D79D56700298EE9 /* HelpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFBBE972D79D56700298EE9 /* HelpCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +36,9 @@
 		3B128C542D785CA500FC6670 /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		3B128C5B2D7861FB00FC6670 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		3B128C5C2D7861FB00FC6670 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		3B128C5E2D7865C300FC6670 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		3B128C602D786C0600FC6670 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		3BFBBE952D79D23B00298EE9 /* AboutCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCommand.swift; sourceTree = "<group>"; };
+		3BFBBE972D79D56700298EE9 /* HelpCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +86,8 @@
 				3B128C3A2D77250200FC6670 /* PixelGridView.swift */,
 				3B128C3C2D772AEC00FC6670 /* PixelView.swift */,
 				3B128C3E2D772BBD00FC6670 /* RowButtonView.swift */,
-				3B128C5E2D7865C300FC6670 /* AboutView.swift */,
+				3BFBBE952D79D23B00298EE9 /* AboutCommand.swift */,
+				3BFBBE972D79D56700298EE9 /* HelpCommand.swift */,
 				3B128C542D785CA500FC6670 /* Enumerations.swift */,
 				3B128C602D786C0600FC6670 /* Extensions.swift */,
 				3B128C482D77559300FC6670 /* PixelGrid.swift */,
@@ -179,11 +182,12 @@
 				3B128C3B2D77250200FC6670 /* PixelGridView.swift in Sources */,
 				3B128C372D771AC600FC6670 /* MainView.swift in Sources */,
 				3B128C3F2D772BBD00FC6670 /* RowButtonView.swift in Sources */,
-				3B128C5F2D7865C300FC6670 /* AboutView.swift in Sources */,
+				3BFBBE962D79D23B00298EE9 /* AboutCommand.swift in Sources */,
 				3B128C612D786C0600FC6670 /* Extensions.swift in Sources */,
 				3B128C4B2D77711900FC6670 /* MainViewFunctions.swift in Sources */,
 				3B128C492D77559300FC6670 /* PixelGrid.swift in Sources */,
 				3B128C3D2D772AEC00FC6670 /* PixelView.swift in Sources */,
+				3BFBBE982D79D56700298EE9 /* HelpCommand.swift in Sources */,
 				3B128C552D785CA500FC6670 /* Enumerations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,7 +322,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Ascii2/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = Y5J3K52DNA;
@@ -327,7 +331,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ASCII;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "ASCII © 2025, Tony Smith";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "ASCII © 2025 Tony Smith (@smittytone). All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -351,7 +355,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Ascii2/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = Y5J3K52DNA;
@@ -360,7 +364,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ASCII;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "ASCII © 2025, Tony Smith";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "ASCII © 2025 Tony Smith (@smittytone). All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
