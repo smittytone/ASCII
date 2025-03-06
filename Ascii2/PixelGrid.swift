@@ -33,11 +33,11 @@ class PixelGrid {
     
     // MARK: - Public Properties
     
-    var grid: [[PixelColour]] =         []
     var outputToString =                true
     var currentColour: PixelColour =    .black
     var hexValues: String =             ""
-    
+
+
     // MARK: - Public Computed Properties
     
     var inColourMode: Bool {
@@ -69,7 +69,6 @@ class PixelGrid {
         }
     }
     
-    
     var outputChoice: Int {
         get {
             return self.outputToString ? OutputType.string.rawValue : OutputType.array.rawValue
@@ -92,15 +91,15 @@ class PixelGrid {
                         // Two bytes per column
                         let indexColour = self.grid[col][row].rawValue
                         if indexColour & 0x02 != 0 {
-                            byteValueLeft += (1 << (7 - row))
+                            byteValueLeft += (1 << row)
                         }
                         
                         if indexColour & 0x01 != 0 {
-                            byteValueRight += (1 << (7 - row))
+                            byteValueRight += (1 << row)
                         }
                     } else {
                         if self.grid[col][row] != .white {
-                            byteValueLeft += (1 << (7 - row))
+                            byteValueLeft += (1 << row)
                         }
                     }
                 }
@@ -122,14 +121,15 @@ class PixelGrid {
             return theHex
         }
     }
-    
-    
+
+
     // MARK: - Private Properties
     
+    private var grid: [[PixelColour]] = []
     private var _colourMode = false
     private var _colourChoice = PixelColour.red.rawValue
     
-    
+
     // MARK: - Lifecycle Functions
     
     init() {
@@ -138,8 +138,8 @@ class PixelGrid {
         // Kind of a UI thing so should not be here!
         UserDefaults.standard.setValue(false, forKey: "NSQuitAlwaysKeepsWindows")
     }
-    
-    
+
+
     // MARK: - Graphics Functons
     
     /**
@@ -154,14 +154,23 @@ class PixelGrid {
         
         self.grid[col][row] = colour
     }
-    
-    
+
+
+    /**
+     Get the colour value of a specified grid cell.
+     
+     - Parameters
+        - col: The cell's column.
+        - row: The cell's row.
+     
+     - Returns The colour value
+     */
     func colour(_ col: Int, _ row: Int) -> PixelColour {
         
         return self.grid[col][row]
     }
-    
-    
+
+
     /**
      Set a row of pixels to the same colour.
      
@@ -176,8 +185,8 @@ class PixelGrid {
             self.grid[col][row] = doClear ? .white : colour
         }
     }
-    
-    
+
+
     /**
      Set a column of pixels to the same colour.
      
@@ -192,8 +201,8 @@ class PixelGrid {
             self.grid[col][row] = doClear ? .white : colour
         }
     }
-    
-    
+
+
     /**
      Set all pixels to the same colour.
      
@@ -208,8 +217,8 @@ class PixelGrid {
             }
         }
     }
-    
-    
+
+
     /**
      Reverse all pixels: set to unset, unset to set
      */
@@ -221,8 +230,8 @@ class PixelGrid {
             }
         }
     }
-    
-    
+
+
     /**
      Flip the grid horizontally, ie. reverse the row order.
      */
@@ -238,8 +247,8 @@ class PixelGrid {
         
         self.grid = tempGrid
     }
-    
-    
+
+
     /**
      Flip the grid vertically, ie. reverse the column order.
      */
@@ -255,8 +264,8 @@ class PixelGrid {
         
         self.grid = tempGrid
     }
-    
-    
+
+
     /**
      Rotate the grid 90 degrees clockwise.
      */
@@ -276,8 +285,8 @@ class PixelGrid {
         
         self.grid = tempGrid
     }
-    
-    
+
+
     /**
      Move the grid one column to the left.
      */
@@ -291,8 +300,8 @@ class PixelGrid {
         
         fillColumn(7, .white)
     }
-    
-    
+
+
     /**
      Move the grid one column to the right.
      */
@@ -306,8 +315,8 @@ class PixelGrid {
         
         fillColumn(0, .white)
     }
-    
-    
+
+
     /**
      Move the grid one row down.
      */
@@ -321,8 +330,8 @@ class PixelGrid {
         
         fillRow(7, .white)
     }
-    
-    
+
+
     /**
      Move the grid one row up.
      */
@@ -336,8 +345,8 @@ class PixelGrid {
         
         fillRow(0, .white)
     }
-    
-    
+
+
     /**
      Populate the grid from a string of hex values.
      There are 16 values (32 characters) for a colour grid, or
@@ -406,7 +415,7 @@ class PixelGrid {
             }
             
             for j in 0..<8 {
-                byteLeft = valueLeft & (1 << (7 - j))
+                byteLeft = valueLeft & (1 << j)
                 
                 if self.inColourMode {
                     // Use the bit values not only to determine if a pixel is set (either bit is 1)
@@ -417,9 +426,9 @@ class PixelGrid {
                     //     1      |      0     | Green
                     //     0      |      1     | Red
                     //     1      |      1     | Orange
-                    byteRight = valueRight & (1 << (7 - j))
+                    byteRight = valueRight & (1 << j)
                     if byteLeft != 0 || byteRight != 0 {
-                        self.grid[col][j] = PixelColour(rawValue: ((byteLeft >> (7 - j)) << 1) | (byteRight >> (7 - j))) ?? .red
+                        self.grid[col][j] = PixelColour(rawValue: ((byteLeft >> j) << 1) | (byteRight >> j)) ?? .red
                     }
                 } else {
                     // For a mono display, if the bit is set, the pixel is lit
@@ -466,8 +475,8 @@ class PixelGrid {
         
         return nil
     }
-    
-    
+
+
     /**
      Set any black pixels to the current non-black colour.
      This is called if the user moves from a monochrome grid to a

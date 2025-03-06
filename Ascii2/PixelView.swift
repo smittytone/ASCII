@@ -40,7 +40,7 @@ struct PixelView: View {
     var body: some View {
         
         Color(getColour(self.model.colour(x, y)))
-            .border(Color.gray, width: 0.75)
+            .border(Color.gray, width: 0.5)
             .frame(width: 32.0, height: 32.0)
     }
     
