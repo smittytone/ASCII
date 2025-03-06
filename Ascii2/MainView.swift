@@ -36,10 +36,10 @@ struct MainView: View {
     
     var body: some View {
         @Bindable var boundModel: PixelGrid = self.model
-        HStack {
+        HStack(spacing: 0) {
             // MARK: BUTTON COLUMN
             VStack {
-                PixelGridView()
+                PixelGridView()//.border(.white, width: 0.5)    // DEBUG BORDER
                 Spacer()
                 HStack {
                     Text("Grid pixel values:")
@@ -58,6 +58,7 @@ struct MainView: View {
             }
             .padding(16)
             .frame(width: 350)
+            //.border(.green, width: 0.5)   // DEBUG BORDER
             // MARK: BUTTON COLUMN
             VStack {
                 Spacer()
@@ -76,6 +77,7 @@ struct MainView: View {
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
                         .frame(minWidth: 140, maxWidth: 140)
                 })
+                .disabled(self.model.inColourMode)
                 Button(action: self.rotateClockwise, label: {
                     Text("Rotate Clockwise")
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
@@ -93,9 +95,9 @@ struct MainView: View {
                 })
                 HStack {
                     Toggle("Use Colours:", isOn: $boundModel.inColourMode)
-                        .frame(minWidth: 144, maxWidth: 144)
                         .toggleStyle(.switch)
                         .padding(.leading)
+                        .frame(minWidth: 160, maxWidth: 160)
                     Spacer()
                 }
                 .padding(.bottom, 8)
@@ -130,6 +132,7 @@ struct MainView: View {
                     self.g2v()
                 }
             }
+            //.border(.purple, width: 0.5)  // DEBUG BORDER
         }
     }
 }
