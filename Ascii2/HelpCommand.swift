@@ -1,5 +1,5 @@
 /*
-    Extensions.swift
+    HelpCommand.swift
     ASCII 2
 
     Copyright © 2025 Tony Smith. All rights reserved.
@@ -24,20 +24,35 @@
     SOFTWARE.
  */
 
-import Foundation
+import SwiftUI
 
 
-public extension Bundle {
+public struct HelpCommand: Commands {
     
-    var version: String {
-        return infoDictionary?["CFBundleShortVersionString"] as? String ?? "UNKNOWN"
+    // Make the `openURL` function available
+    @Environment(\.openURL) private var openURL
+    
+    private let title: String
+    private let link: String
+    
+    public var body: some Commands {
+        CommandGroup(replacing: .help) {
+            Button(self.title) {
+                if let url = URL(string: self.link) {
+                    openURL(url)
+                }
+            }
+            .keyboardShortcut("h", modifiers: [.command, .shift])
+        }
     }
     
-    var build: String {
-        return infoDictionary?["CFBundleVersion"] as? String ?? "UNKNOWN"
-    }
     
-    var appName: String {
-        return infoDictionary?["CFBundleDisplayName"] as? String ?? "UNKNOWN"
+    // MARK: - Lifecycle Functions
+    
+    public init(title: String, link: String) {
+    
+        self.title = title
+        self.link = link
     }
+
 }
