@@ -33,10 +33,11 @@ class PixelGrid {
     
     // MARK: - Public Properties
     
-    var outputToString =                true
-    var currentColour: PixelColour =    .black
-    var hexValues: String =             ""
-
+    var currentColour: PixelColour = .black
+    var hexValues: String = ""
+    var showError = false
+    var errorAlertTitle: String = ""
+    var errorAlertMessage: String = ""
 
     // MARK: - Public Computed Properties
     
@@ -71,20 +72,27 @@ class PixelGrid {
     
     var outputChoice: Int {
         get {
-            return self.outputToString ? OutputType.string.rawValue : OutputType.array.rawValue
+            return _outputChoice
         }
         set {
-            outputToString = (newValue == OutputType.string.rawValue)
+            _outputChoice = newValue
         }
     }
     
     var values: String {
         get {
-            var theHex = ""
-            let formatString = self.outputToString ? "\\x%02X" : "0x%02X";
+            var formatString = "\\x%02X";
+            if self.outputChoice == OutputType.array.rawValue {
+                formatString = "0x%02X";
+            }
+            
+            var hex = ""
+            var intLeft: UInt64 = 0
+            var intRight: UInt64 = 0
+            
             for col in 0..<8 {
-                var byteValueLeft = 0
-                var byteValueRight = 0
+                var byteValueLeft: UInt = 0
+                var byteValueRight: UInt = 0
                 
                 for row in 0..<8 {
                     if self.inColourMode {
@@ -104,21 +112,48 @@ class PixelGrid {
                     }
                 }
                 
-                theHex += String(format: formatString, byteValueLeft)
+                // Always add the left byte to the hex string
+                hex += String(format: formatString, byteValueLeft)
+                
                 if self.inColourMode {
-                    theHex += String(format: formatString, byteValueRight)
+                    // Four colour LEDs, add the right byte to the hex string
+                    hex += String(format: formatString, byteValueRight)
+                    
+                    // For the UInt64 values we need to interleave the L and R byte pairs
+                    if col < 4 {
+                        intLeft += UInt64(byteValueLeft << ((7 - (2 * col)) * 8))
+                        intLeft += UInt64(byteValueRight << ((6 - (2 * col)) * 8))
+                    } else {
+                        intRight += UInt64(byteValueLeft << ((col + ((5 - col) * 3)) * 8))
+                        intRight += UInt64(byteValueRight << ((7 - col) * 2 * 8))
+                    }
+                } else {
+                    // Add the shifted left byte to the mono integer
+                    intLeft += UInt64(byteValueLeft << ((7 - col) * 8))
                 }
                 
-                if !outputToString && col < 7 {
-                    theHex += ","
+                // Add comma separators to array output
+                if self.outputChoice == OutputType.array.rawValue && col < 7 {
+                    hex += ","
                 }
             }
             
-            if !outputToString {
-                theHex = "[\(theHex)]"
+            // Add brackets around the array values
+            if self.outputChoice == OutputType.array.rawValue {
+                hex = "[\(hex)]"
             }
             
-            return theHex
+            // Output string or array, if selected
+            if self.outputChoice != OutputType.uint.rawValue {
+                return hex
+            }
+            
+            // Output UInt64 value(s)
+            if self.inColourMode {
+                return intLeft.description + "," + intRight.description
+            } else {
+                return intLeft.description
+            }
         }
     }
 
@@ -128,6 +163,7 @@ class PixelGrid {
     private var grid: [[PixelColour]] = []
     private var _colourMode = false
     private var _colourChoice = PixelColour.red.rawValue
+    private var _outputChoice = OutputType.string.rawValue
     
 
     // MARK: - Lifecycle Functions
@@ -360,30 +396,58 @@ class PixelGrid {
         // Make sure we have a string to work with
         guard values.count > 0 else { return }
         
-        // Tidy up the string as best as possible
-        var tidyValues = values.replacingOccurrences(of: ",", with: "")
-        if !self.outputToString {
-            tidyValues = tidyValues.replacingOccurrences(of: "[", with: "")
-            tidyValues = tidyValues.replacingOccurrences(of: "]", with: "")
-            tidyValues = tidyValues.replacingOccurrences(of: "0x", with: "")
-        } else {
-            tidyValues = tidyValues.replacingOccurrences(of: "\\x", with: "")
+        var tidyValues: String
+        switch self.outputChoice {
+            case OutputType.array.rawValue, OutputType.string.rawValue:
+                // Tidy up the string as best as possible
+                tidyValues = values.replacingOccurrences(of: ",", with: "")
+                tidyValues = tidyValues.replacingOccurrences(of: "[", with: "")
+                tidyValues = tidyValues.replacingOccurrences(of: "]", with: "")
+                tidyValues = tidyValues.replacingOccurrences(of: "0x", with: "")
+                tidyValues = tidyValues.replacingOccurrences(of: "\\x", with: "")
+                
+                // Chomp strings to the expected length
+                if self.inColourMode && tidyValues.count > 32 {
+                    tidyValues = String(tidyValues.dropLast(tidyValues.count - 32))
+                }
+                
+                if !self.inColourMode && tidyValues.count > 16 {
+                    tidyValues = String(tidyValues.dropLast(tidyValues.count - 16))
+                }
+                
+                // Check the validity of the string
+                if tidyValues.count % 2 != 0 {
+                    //[self showError:@"Bad Hex String" :@"Enter a string that contains an even number of hex characters"];
+                    showError("Mis-sized Hex String")
+                    return
+                }
+                
+                drawString(tidyValues)
+            default:
+                // One or two UInt64 values
+                let haveColourData = values.contains(",")
+                if self.inColourMode && !haveColourData {
+                    showError("Unpaired colour UInt64")
+                    return
+                }
+                
+                if !self.inColourMode && haveColourData {
+                    showError("Colour UInt64 pair provided")
+                    return
+                }
+                
+                drawInt(values, haveColourData)
         }
-        
-        // Check the validity of the string
-        if tidyValues.count % 2 != 0 {
-            //[self showError:@"Bad Hex String" :@"Enter a string that contains an even number of hex characters"];
-            return
-        }
-        
-        // Chomp strings to the expected length
-        if self.inColourMode && tidyValues.count > 32 {
-            tidyValues = String(tidyValues.dropLast(tidyValues.count - 32))
-        }
-        
-        if !self.inColourMode && tidyValues.count > 16 {
-            tidyValues = String(tidyValues.dropLast(tidyValues.count - 16))
-        }
+    }
+
+
+    /**
+     Render a hex string on the pixel grid.
+     
+     - Parameters
+        - hex: The hex string.
+     */
+    func drawString(_ hex: String) {
         
         // Clear the grid
         fillAll(.white)
@@ -395,19 +459,21 @@ class PixelGrid {
         var byteRight: Int
         var cursor: Int = 0
         var col = 0
-        while (cursor < tidyValues.count - 1) {
-            if let vl = getHexValue(cursor, tidyValues) {
+        while (cursor < hex.count - 1) {
+            if let vl = getHexValue(cursor, hex) {
                 valueLeft = vl
             } else {
+                showError("Bad hex string")
                 return
             }
             
             cursor += 2
             
             if self.inColourMode {
-                if let vr = getHexValue(cursor, tidyValues) {
+                if let vr = getHexValue(cursor, hex) {
                     valueRight = vr
                 } else {
+                    showError("Bad hex string")
                     return
                 }
                 
@@ -416,7 +482,6 @@ class PixelGrid {
             
             for j in 0..<8 {
                 byteLeft = valueLeft & (1 << j)
-                
                 if self.inColourMode {
                     // Use the bit values not only to determine if a pixel is set (either bit is 1)
                     // but the colour of the set pixel:
@@ -448,7 +513,61 @@ class PixelGrid {
     }
 
 
+    /**
+     Render one or two UInt64 values to the grid.
+     */
+    func drawInt(_ values: String, _ haveColourData: Bool) {
+        
+        if haveColourData {
+            let numbers = values.components(separatedBy: ",")
+            guard let iconInt1: UInt64 = UInt64(numbers[0]) else {
+                showError("Bad UInt64 value")
+                return
+            }
+            
+            guard let iconInt2: UInt64 = UInt64(numbers[1]) else {
+                showError("Bad UInt64 value")
+                return
+            }
+            
+            for col in 0..<8 {
+                var colByteLeft: UInt64 = 0
+                var colByteRight: UInt64 = 0
+                if col < 4 {
+                    colByteLeft = (iconInt1 >> ((7 - (2 * col)) * 8)) & 0xFF
+                    colByteRight = (iconInt1 >> ((6 - (2 * col)) * 8)) & 0xFF
+                } else {
+                    colByteLeft = (iconInt2 >> ((col + ((5 - col) * 3)) * 8)) & 0xFF
+                    colByteRight = (iconInt2 >> ((7 - col) * 2 * 8)) & 0xFF
+                }
+                
+                for row in 0..<8 {
+                    let byteLeft = colByteLeft & (1 << row)
+                    let byteRight = colByteRight & (1 << row)
+                    if byteLeft != 0 || byteRight != 0 {
+                        self.grid[col][row] = PixelColour(rawValue: Int(((byteLeft >> row) << 1) | (byteRight >> row))) ?? .red
+                    }
+                }
+            }
+        } else {
+            guard let iconInt: UInt64 = UInt64(values) else {
+                showError("Bad UInt64 value")
+                return
+            }
+            
+            for col in 0..<8 {
+                let colByte = (iconInt >> (col * 8)) & 0xFF
+                for row in 0..<8 {
+                    let bit = (colByte >> row) & 0x01
+                    self.grid[col][row] = (bit == 1 ? .black : .white)
+                }
+            }
+        }
+    }
+
+
     // MARK: - Utility Functions
+
     /**
      Convert a two hex characters within a string to an interger.
      
@@ -495,5 +614,40 @@ class PixelGrid {
             }
         }
     }
+
+
+    /**
+     Trigger the presentation of the main view's Alert.
+     
+     - Parameters
+        - title:   The alert title.
+        - message: The alert message. Default: an empty string.
+     */
+    func showError(_ title: String, _ message: String = "") {
+        
+        self.errorAlertTitle = title
+        self.errorAlertMessage = message
+        self.showError = true
+    }
+
+
+    /*
+    func presentIcon(_ idx: Int) {
+        
+        let icon = iconDecode(AsciiLibrary.icons[idx])
+        retroFill(icon)
+    }
+
+
+     func iconDecode(_ icon: Icon) -> String {
+         
+         if icon.isColour {
+             return icon.data1.hexstring + icon.data2.hexstring
+         } else {
+             return icon.data1.hexstring
+         }
+     }
+     */
+
 
 }

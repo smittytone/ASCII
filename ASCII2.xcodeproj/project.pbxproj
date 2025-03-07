@@ -39,6 +39,8 @@
 		3B128C602D786C0600FC6670 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		3BFBBE952D79D23B00298EE9 /* AboutCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCommand.swift; sourceTree = "<group>"; };
 		3BFBBE972D79D56700298EE9 /* HelpCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCommand.swift; sourceTree = "<group>"; };
+		3BFBBE992D79D95300298EE9 /* LibraryCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCommand.swift; sourceTree = "<group>"; };
+		3BFBBE9D2D7AE76400298EE9 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,10 +89,12 @@
 				3B128C3C2D772AEC00FC6670 /* PixelView.swift */,
 				3B128C3E2D772BBD00FC6670 /* RowButtonView.swift */,
 				3BFBBE952D79D23B00298EE9 /* AboutCommand.swift */,
+				3BFBBE992D79D95300298EE9 /* LibraryCommand.swift */,
 				3BFBBE972D79D56700298EE9 /* HelpCommand.swift */,
 				3B128C542D785CA500FC6670 /* Enumerations.swift */,
 				3B128C602D786C0600FC6670 /* Extensions.swift */,
 				3B128C482D77559300FC6670 /* PixelGrid.swift */,
+				3BFBBE9D2D7AE76400298EE9 /* Icon.swift */,
 				3B128C332D771AC600FC6670 /* Assets.xcassets */,
 				3B128C302D771AC600FC6670 /* Preview Content */,
 			);
@@ -322,7 +326,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"Ascii2/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = Y5J3K52DNA;
@@ -355,7 +359,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"Ascii2/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = Y5J3K52DNA;

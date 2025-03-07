@@ -50,6 +50,7 @@ struct MainView: View {
                     Picker(selection: $boundModel.outputChoice, label: Text("Output values as:")) {
                         Text("String").tag(OutputType.string.rawValue)
                         Text("Array").tag(OutputType.array.rawValue)
+                        Text("UInt64").tag(OutputType.uint.rawValue)
                     }
                     .pickerStyle(.radioGroup)
                     .horizontalRadioGroupLayout()
@@ -126,13 +127,16 @@ struct MainView: View {
             }
             .padding(16)
             .frame(width: 180)
-            .onChange(of: self.model.outputToString) {
+            .onChange(of: self.model.outputChoice) {
                 // If the TextField contains data, update it if the mode changes
                 if !self.model.hexValues.isEmpty {
                     self.g2v()
                 }
             }
             //.border(.purple, width: 0.5)  // DEBUG BORDER
+            .alert(isPresented: $boundModel.showError) { () -> Alert in
+                Alert(title: Text(self.model.errorAlertTitle), message: Text(self.model.errorAlertMessage))
+            }
         }
     }
 }

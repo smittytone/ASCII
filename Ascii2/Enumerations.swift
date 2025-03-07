@@ -37,4 +37,5 @@ enum PixelColour: Int {
 enum OutputType: Int {
     case string =   1
     case array =    2
+    case uint =     3
 }

@@ -41,3 +41,16 @@ public extension Bundle {
         return infoDictionary?["CFBundleDisplayName"] as? String ?? "UNKNOWN"
     }
 }
+
+
+public extension UInt64 {
+    
+    var hexstring: String {
+        var s = ""
+        for i in 0..<8 {
+            s += String(format: "%02x", (self >> ((7 - i) * 8)) & 0xFF)
+        }
+        
+        return s
+    }
+}

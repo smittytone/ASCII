@@ -139,6 +139,8 @@ struct Ascii2App: App {
                 }
                 .keyboardShortcut("g", modifiers: [.command, .shift])
             }
+            // MARK: ICON LIBRARY MENU
+            //LibraryCommand(icons: AsciiLibrary.icons, clicker: self.model.presentIcon)
             // MARK: HELP MENU
             HelpCommand(title: "ASCII Help", link: "https://smittytone.net/ascii/index.html")
         }
