@@ -4,12 +4,13 @@ ASCII is a simple macOS tool that can be used to design and generate 8x8 glyphs 
 
 For more information on using ASCII &mdash; and a binary download &mdash; please see [this page](https://smittytone.net/ascii/index.html).
 
-Version 2.0.0 is functionally identical (almost) to 1.4.0. It includes a small improvements intended for 1.4.1: changing the hex string output type (`string` or `array`) will automaticall update the string itself.
+Version 2.0.0 includes a small improvements intended for 1.4.1: changing the hex string output type (`string` or `array`) will automaticall update the string itself. 
 
 ## Release Notes
 
 - 2.0.0 *Unreleased*
     - Ground-up rewrite in Swift and SwiftUI.
+    - Add UInt64 as an icon input/output format.
 - 1.4.0 *10 December 2020*
     - Add pixel shifting: left, right, up and down with <kbd>Cmd-arrow</kbd>.
     - Add keyboard shortcuts.
