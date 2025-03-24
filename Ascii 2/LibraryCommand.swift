@@ -29,19 +29,20 @@ import SwiftUI
 
 public struct LibraryCommand: Commands {
     
-    @Environment(\.colorScheme) private var colourScheme
-    
     @State var icons: [Icon]
     @State var clickFunction: (Int)->Void
     
     public var body: some Commands {
         CommandMenu("Icon Library") {
+            // Iterate over the icon array to generate the menu
             ForEach(self.icons) { icon in
                 Button(action: {
                     self.clickFunction(icon.id)
                 }, label: {
-                    Image(nsImage: self.getImage(icon))
-                        .renderingMode(.template)
+                    // NOTE The following line is used in order to create the Image from a CGImage.
+                    //      If we use an NSImage as the source, the rendering mode function appears
+                    //      to be ignored - or renders incorrectly.
+                    Image(decorative: self.getImage(icon), scale: 1.0).renderingMode(.template)
                     Text(icon.name)
                 })
                 Divider()
@@ -57,18 +58,28 @@ public struct LibraryCommand: Commands {
         self.icons = icons
         self.clickFunction = clicker
     }
-    
-    
+
+
     // MARK: - Icon Functions
     
-    func getImage(_ icon: Icon) -> NSImage {
+    /**
+     Generate an image derived from the supplied icon data.
+     
+     - Note This currently handles monochrome images only.
+     
+     - Parameters
+        - icon: An Icon instance, holding the bit data.
+     
+     - Returns The icon rendered as a CGImage.
+     */
+    func getImage(_ icon: Icon) -> CGImage {
         
-        if let ctx = getContext() {
-            // Set a clear backgound
+        if let ctx = getNewDrawingContext() {
+            // Clear the context backgound
             ctx.setFillColor(.clear)
             ctx.fill([CGRect(x: 0, y: 0, width: 64, height: 64)])
             
-            // Parse the UInt64 data
+            // Parse the icon's UInt64 data and draw it as blocks of 8x8 pixels
             for col in 0..<8 {
                 let colByte = (icon.data1 >> (col * 8)) & 0xFF
                 for row in 0..<8 {
@@ -81,15 +92,22 @@ public struct LibraryCommand: Commands {
             // Convert the context to an NSImage for use in the menu
             if let image = ctx.makeImage() {
                 ctx.draw(image, in: CGRect(x: 0, y: 0, width: 64, height: 64))
-                return NSImage.init(cgImage: image, size: NSSize(width: 64, height: 64))
+                return image
+                //return NSImage.init(cgImage: image, size: NSSize(width: 64, height: 64))
             }
         }
         
-        return NSImage(size: NSSize(width: 64, height: 64))
+        // This is a backstop and should never be reached
+        return NSImage(size: NSSize(width: 64, height: 64)).cgImage(forProposedRect: nil, context: nil, hints: nil)!
     }
-    
-    
-    func getContext() -> CGContext? {
+
+
+    /**
+     Generate a new bitmap drawing context in which to draw an icon image.
+     
+     - Returns The context, or `nil` on error.
+     */
+    func getNewDrawingContext() -> CGContext? {
         
         let bitmapData: CFMutableData = CFDataCreateMutable(nil, 0)
         CFDataSetLength(bitmapData, CFIndex(16384))

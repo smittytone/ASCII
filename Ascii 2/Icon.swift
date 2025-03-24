@@ -7,6 +7,16 @@ struct Icon: Identifiable {
     var isColour: Bool  = false
     var data1: UInt64   = 0
     var data2: UInt64   = 0
+    
+    var hexString: String {
+        get {
+            if self.isColour {
+                return self.data1.hexstring + self.data2.hexstring
+            } else {
+                return self.data1.hexstring
+            }
+        }
+    }
 }
 
 

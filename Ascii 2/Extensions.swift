@@ -45,6 +45,9 @@ public extension Bundle {
 
 public extension UInt64 {
     
+    /**
+     Convert and return the value as a hexadecimal string representation.
+     */
     var hexstring: String {
         var s = ""
         for i in 0..<8 {
@@ -58,8 +61,10 @@ public extension UInt64 {
 
 public extension NSColor {
     
+    /**
+     Generate a CGColor version of the NSColor.
+     */
     var cgColor: CGColor? {
-        
         let colourSpace = CGColorSpaceCreateDeviceRGB()
         guard let adaptedSelf = self.usingType(.componentBased) else { return .black }
         let colourValues: [CGFloat] = [adaptedSelf.redComponent, adaptedSelf.greenComponent, adaptedSelf.blueComponent, adaptedSelf.alphaComponent]

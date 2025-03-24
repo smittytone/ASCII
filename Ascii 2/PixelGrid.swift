@@ -631,23 +631,15 @@ class PixelGrid {
     }
 
 
-    
+    /**
+     Present a library icon on the grid.
+     
+     - Parameters
+        - idx: The index of the desired icon in the main store.
+     */
     func presentIcon(_ idx: Int) {
         
-        let icon = iconDecode(AsciiLibrary.icons[idx])
-        retroFill(icon)
+        retroFill(AsciiLibrary.icons[idx].hexString)
     }
-
-
-     func iconDecode(_ icon: Icon) -> String {
-         
-         if icon.isColour {
-             return icon.data1.hexstring + icon.data2.hexstring
-         } else {
-             return icon.data1.hexstring
-         }
-     }
-     
-
 
 }
