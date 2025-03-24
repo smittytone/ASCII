@@ -29,6 +29,8 @@ import SwiftUI
 
 public struct LibraryCommand: Commands {
     
+    @Environment(\.colorScheme) private var colourScheme
+    
     @State var icons: [Icon]
     @State var clickFunction: (Int)->Void
     
@@ -39,6 +41,7 @@ public struct LibraryCommand: Commands {
                     self.clickFunction(icon.id)
                 }, label: {
                     Image(nsImage: self.getImage(icon))
+                        .renderingMode(.template)
                     Text(icon.name)
                 })
                 Divider()
@@ -61,8 +64,8 @@ public struct LibraryCommand: Commands {
     func getImage(_ icon: Icon) -> NSImage {
         
         if let ctx = getContext() {
-            // Set a white backgound
-            ctx.setFillColor(.white)
+            // Set a clear backgound
+            ctx.setFillColor(.clear)
             ctx.fill([CGRect(x: 0, y: 0, width: 64, height: 64)])
             
             // Parse the UInt64 data
@@ -70,7 +73,7 @@ public struct LibraryCommand: Commands {
                 let colByte = (icon.data1 >> (col * 8)) & 0xFF
                 for row in 0..<8 {
                     let bit = (colByte >> row) & 0x01
-                    ctx.setFillColor(bit == 1 ? .black : .white)
+                    ctx.setFillColor(bit == 1 ? .white : .clear)
                     ctx.fill([CGRect(x: col * 8, y: row * 8, width: 8, height: 8)])
                 }
             }

@@ -39,15 +39,16 @@ struct Ascii2App: App {
     @State private var showingAboutWindow = false
     
     private let ACTION_MENU_COLOUR_TITLES = ["Switch to Colour Mode", "Switch to Mono Mode"]
-    private let WINDOW_WIDTH: CGFloat = 530
+    private let WINDOW_WIDTH: CGFloat = 510
     private let WINDOW_HEIGHT: CGFloat = 458
     
     
     var body: some Scene {
         // MARK: ASCII WINDOW
-        Window("ASCII", id: "main") {
+        Window("ASCII 2", id: "main") {
             MainView()
                 .environment(self.model)
+                .padding(0)
                 .frame(width: WINDOW_WIDTH, height: WINDOW_HEIGHT)
                 // The following added for macOS 15 builds which enforces appearance of the zoom button
                 .onReceive(NotificationCenter.default.publisher(for:
@@ -64,7 +65,7 @@ struct Ascii2App: App {
                 }
         }
         .windowResizability(.contentSize)
-        .windowToolbarStyle(.unified)
+        .windowToolbarStyle(.unified(showsTitle: true))
         .defaultWindowPlacement(self.centreWindow)
         .defaultSize(CGSize(width: WINDOW_WIDTH, height: WINDOW_HEIGHT))
         .restorationBehavior(.disabled) // macOS 15+ only
@@ -140,7 +141,7 @@ struct Ascii2App: App {
                 .keyboardShortcut("g", modifiers: [.command, .shift])
             }
             // MARK: ICON LIBRARY MENU
-            //LibraryCommand(icons: AsciiLibrary.icons, clicker: self.model.presentIcon)
+            LibraryCommand(icons: AsciiLibrary.icons, clicker: self.model.presentIcon)
             // MARK: HELP MENU
             HelpCommand(title: "ASCII Help", link: "https://smittytone.net/ascii/index.html")
         }

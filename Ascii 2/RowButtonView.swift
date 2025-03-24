@@ -1,5 +1,5 @@
 /*
-    Extensions.swift
+    RowButton.swift
     ASCII 2
 
     Copyright © 2025 Tony Smith. All rights reserved.
@@ -24,33 +24,45 @@
     SOFTWARE.
  */
 
-import Foundation
+import SwiftUI
 
 
-public extension Bundle {
+/*
+ This builds a row or column filler button.
+ */
+struct RowButtonView: View {
     
-    var version: String {
-        return infoDictionary?["CFBundleShortVersionString"] as? String ?? "UNKNOWN"
-    }
+    @Environment(PixelGrid.self) private var model: PixelGrid
     
-    var build: String {
-        return infoDictionary?["CFBundleVersion"] as? String ?? "UNKNOWN"
-    }
+    @State var rowNumber = 0
+    @State var isColumn = false
     
-    var appName: String {
-        return infoDictionary?["CFBundleDisplayName"] as? String ?? "UNKNOWN"
-    }
-}
-
-
-public extension UInt64 {
+    @State private var shiftKeyPressed: Bool = false
     
-    var hexstring: String {
-        var s = ""
-        for i in 0..<8 {
-            s += String(format: "%02x", (self >> ((7 - i) * 8)) & 0xFF)
-        }
+    
+    var body: some View {
         
-        return s
+        Image(systemName: isColumn ? "arrowtriangle.up.circle.fill" : "arrowtriangle.left.circle.fill")
+            .resizable(resizingMode: .stretch)
+            .frame(width: 16, height: 16)
+            .onModifierKeysChanged(mask: .shift) { old, new in // macOS 15+ only
+                self.shiftKeyPressed = !new.isEmpty
+            }
+            .onTapGesture {
+                self.paintRow()
+            }
+    }
+    
+    
+    /**
+     Tell the model to fill the button's referenced row or column.
+     */
+    func paintRow() {
+        
+        if self.isColumn {
+            self.model.fillColumn(self.rowNumber, self.model.currentColour, self.shiftKeyPressed)
+        } else {
+            self.model.fillRow(self.rowNumber, self.model.currentColour, self.shiftKeyPressed)
+        }
     }
 }

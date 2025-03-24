@@ -57,7 +57,7 @@ struct MainView: View {
                     Spacer()
                 }
             }
-            .padding(16)
+            .padding(16)                    // Internal
             .frame(width: 350)
             //.border(.green, width: 0.5)   // DEBUG BORDER
             // MARK: BUTTON COLUMN
@@ -66,39 +66,39 @@ struct MainView: View {
                 Button(action: self.fill, label: {
                     Text("Fill Grid")
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .frame(minWidth: 140, maxWidth: 140)
+                        .frame(minWidth: 120, maxWidth: 120)
                 })
                 Button(action: self.clear, label: {
                     Text("Clear Grid")
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .frame(minWidth: 140, maxWidth: 140)
+                        .frame(minWidth: 120, maxWidth: 120)
                 })
                 Button(action: self.invert, label: {
                     Text("Invert Pixels")
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .frame(minWidth: 140, maxWidth: 140)
+                        .frame(minWidth: 120, maxWidth: 120)
                 })
                 .disabled(self.model.inColourMode)
                 Button(action: self.rotateClockwise, label: {
                     Text("Rotate Clockwise")
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .frame(minWidth: 140, maxWidth: 140)
+                        .frame(minWidth: 120, maxWidth: 120)
                 })
                 Button(action: self.flipHorizontal, label: {
                     Text("Flip Horizontal")
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .frame(minWidth: 140, maxWidth: 140)
+                        .frame(minWidth: 120, maxWidth: 120)
                 })
                 Button(action: self.flipVertical, label: {
                     Text("Flip Vertical")
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .frame(minWidth: 140, maxWidth: 140)
+                        .frame(minWidth: 120, maxWidth: 120)
                 })
                 HStack {
-                    Toggle("Use Colours:", isOn: $boundModel.inColourMode)
+                    Toggle("Use Colour:", isOn: $boundModel.inColourMode)
                         .toggleStyle(.switch)
                         .padding(.leading)
-                        .frame(minWidth: 160, maxWidth: 160)
+                        //.frame(minWidth: 132, maxWidth: 132)
                     Spacer()
                 }
                 .padding(.bottom, 8)
@@ -117,16 +117,19 @@ struct MainView: View {
                 Button(action: self.g2v, label: {
                     Text("Grid to Values")
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .frame(minWidth: 140, maxWidth: 140)
+                        .frame(minWidth: 120, maxWidth: 120)
                 })
                 Button(action: self.v2g, label: {
                     Text("Values to Grid")
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .frame(minWidth: 140, maxWidth: 140)
+                        .frame(minWidth: 120, maxWidth: 120)
                 })
             }
-            .padding(16)
-            .frame(width: 180)
+            .padding(.leading, 0)
+            .padding(.trailing, 16)
+            .padding(.bottom, 16)
+            .padding(.top, 16)
+            .frame(width: 160)
             .onChange(of: self.model.outputChoice) {
                 // If the TextField contains data, update it if the mode changes
                 if !self.model.hexValues.isEmpty {

@@ -631,7 +631,7 @@ class PixelGrid {
     }
 
 
-    /*
+    
     func presentIcon(_ idx: Int) {
         
         let icon = iconDecode(AsciiLibrary.icons[idx])
@@ -647,7 +647,7 @@ class PixelGrid {
              return icon.data1.hexstring
          }
      }
-     */
+     
 
 
 }

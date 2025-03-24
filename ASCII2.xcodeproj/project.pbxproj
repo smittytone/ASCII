@@ -18,6 +18,8 @@
 		3B128C4B2D77711900FC6670 /* MainViewFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C4A2D77711900FC6670 /* MainViewFunctions.swift */; };
 		3B128C552D785CA500FC6670 /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C542D785CA500FC6670 /* Enumerations.swift */; };
 		3B128C612D786C0600FC6670 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128C602D786C0600FC6670 /* Extensions.swift */; };
+		3B98AEED2D915E7300B677A5 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFBBE9D2D7AE76400298EE9 /* Icon.swift */; };
+		3B98AEEE2D915E7F00B677A5 /* LibraryCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFBBE992D79D95300298EE9 /* LibraryCommand.swift */; };
 		3BFBBE962D79D23B00298EE9 /* AboutCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFBBE952D79D23B00298EE9 /* AboutCommand.swift */; };
 		3BFBBE982D79D56700298EE9 /* HelpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFBBE972D79D56700298EE9 /* HelpCommand.swift */; };
 /* End PBXBuildFile section */
@@ -37,6 +39,7 @@
 		3B128C5B2D7861FB00FC6670 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		3B128C5C2D7861FB00FC6670 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		3B128C602D786C0600FC6670 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		3BA134912D8D9FAE006184F2 /* Ascii2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ascii2.entitlements; sourceTree = "<group>"; };
 		3BFBBE952D79D23B00298EE9 /* AboutCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCommand.swift; sourceTree = "<group>"; };
 		3BFBBE972D79D56700298EE9 /* HelpCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCommand.swift; sourceTree = "<group>"; };
 		3BFBBE992D79D95300298EE9 /* LibraryCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCommand.swift; sourceTree = "<group>"; };
@@ -57,7 +60,7 @@
 		3B128BF82D771AA900FC6670 = {
 			isa = PBXGroup;
 			children = (
-				3B128C352D771AC600FC6670 /* Ascii2 */,
+				3B128C352D771AC600FC6670 /* Ascii 2 */,
 				3B128C5D2D78620300FC6670 /* Misc */,
 				3B128C022D771AA900FC6670 /* Products */,
 			);
@@ -79,7 +82,7 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		3B128C352D771AC600FC6670 /* Ascii2 */ = {
+		3B128C352D771AC600FC6670 /* Ascii 2 */ = {
 			isa = PBXGroup;
 			children = (
 				3B128C322D771AC600FC6670 /* Ascii2App.swift */,
@@ -96,9 +99,10 @@
 				3B128C482D77559300FC6670 /* PixelGrid.swift */,
 				3BFBBE9D2D7AE76400298EE9 /* Icon.swift */,
 				3B128C332D771AC600FC6670 /* Assets.xcassets */,
+				3BA134912D8D9FAE006184F2 /* Ascii2.entitlements */,
 				3B128C302D771AC600FC6670 /* Preview Content */,
 			);
-			path = Ascii2;
+			path = "Ascii 2";
 			sourceTree = "<group>";
 		};
 		3B128C5D2D78620300FC6670 /* Misc */ = {
@@ -188,6 +192,8 @@
 				3B128C3F2D772BBD00FC6670 /* RowButtonView.swift in Sources */,
 				3BFBBE962D79D23B00298EE9 /* AboutCommand.swift in Sources */,
 				3B128C612D786C0600FC6670 /* Extensions.swift in Sources */,
+				3B98AEED2D915E7300B677A5 /* Icon.swift in Sources */,
+				3B98AEEE2D915E7F00B677A5 /* LibraryCommand.swift in Sources */,
 				3B128C4B2D77711900FC6670 /* MainViewFunctions.swift in Sources */,
 				3B128C492D77559300FC6670 /* PixelGrid.swift in Sources */,
 				3B128C3D2D772AEC00FC6670 /* PixelView.swift in Sources */,
@@ -322,12 +328,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Ascii2/Ascii2.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Ascii 2/Ascii2.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 17;
-				DEVELOPMENT_ASSET_PATHS = "\"Ascii2/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Ascii 2/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = Y5J3K52DNA;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -355,12 +361,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Ascii2/Ascii2.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Ascii 2/Ascii2.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 17;
-				DEVELOPMENT_ASSET_PATHS = "\"Ascii2/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Ascii 2/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = Y5J3K52DNA;
 				ENABLE_HARDENED_RUNTIME = YES;
